@@ -1,5 +1,18 @@
+/Past Runs
 
-.DS_Store
-.DS_Store
+# venv
+.venv/
+# env files
 .env
+# Jupyter
+.ipynb_checkpoints/
+# Python
+__pycache__/
+*.pyc
+# OS
 .DS_Store
+# Results
+results/
+
+# Locks (we DO commit uv.lock, so do NOT ignore it)
+# uv.lock
