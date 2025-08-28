@@ -1,116 +1,100 @@
 # llm_estimate_lrs
 
-Estimate diagnostic likelihood ratios (LRs) with LLMs and evaluate agreement with literature‑reported LRs using multiplicative Bland–Altman analysis and ordinal agreement metrics. This repo contains two notebooks:
+Estimate diagnostic likelihood ratios (LRs) with large language models (LLMs) and evaluate agreement with literature‑reported LRs using multiplicative Bland–Altman analysis and ordinal agreement metrics.
 
+**Notebooks**
 - `lr_scraper_estimator.ipynb` — builds prompts and calls OpenAI models to estimate LRs, writing a filled spreadsheet.
-- `data_analysis.ipynb` — analyzes agreement (bias, LoA, coverage limits, subgroup tests) and ordinal agreement (Cohen’s κ), and generates publication‑ready figures/tables.
-
+- `data_analysis.ipynb` — computes bias/LoA, coverage limits (50–99%), subgroup tests, ordinal agreement (Cohen’s κ), and generates publication‑ready figures/tables.
 
 Preprint link: coming soon
 Publication link: coming less soon
 
 ---
 
-## Quick start (UV: reproducible Python without Conda)
+## Quick start (UV: reproducible Python env)
 
-1. **Install uv; create and activate a venv**
-   ```bash
-   pip install uv
-   uv venv --python 3.11
-   # macOS/Linux:
-   source .venv/bin/activate
-   # Windows PowerShell:
-   .venv\Scripts\Activate.ps1
+1. **Install uv; create and activate a virtual env**
+```bash
+pip install uv
+uv venv --python 3.11
+# macOS/Linux:
+source .venv/bin/activate
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
 ```
 
-2. **Install dependencies (creates uv.lock)**
-   ```bash
+2. **Install dependencies (creates `uv.lock`)**
+```bash
 uv sync
 ```
 
-3. **Set Secrets**
-
-Create .env at repo root 
-
+3. **Set secrets**
+Create a file named `.env` at the repo root:
+```ini
 OPENAI_API_KEY=sk-...
+```
+(see .env.example)
 
-(See .env.example)
-
-4. **Launch Jupyuter**
-   ```bash
+4. **Launch Jupyter**
+```bash
 uv run jupyter lab
 ```
 
+The notebooks will run with the exact, pinned versions in `uv.lock`.
+
+---
+
 ## Repository layout
 
+```
 .
-├── results/                   # outputs; dated subfolders are created automatically
 ├── lr_scraper_estimator.ipynb
 ├── data_analysis.ipynb
 ├── pyproject.toml
 ├── uv.lock
 ├── .env.example
 ├── .gitignore
+├── results/                 # outputs; dated subfolders are created automatically
 └── README.md
+```
 
-## What you will customize
+---
 
-In lr_scraper_estimator.ipynb
-	•	File IO
-	•	INPUT_FILE, OUTPUT_FILE (Excel paths for categories and filled outputs)
-	•	Models
-	•	MODELS (e.g., "gpt-5", "gpt-5-mini", "gpt-4o-2024-11-20", "o3-2025-04-16")
-	•	MODEL_CAPABILITIES flags (reasoning vs non‑reasoning; verbosity support)
-	•	Prompt scaffolding
-	•	SYSTEM_CORE, DEFINITION, BANDS
-	•	Few‑shot exemplars: FEW_SHOT_RICH, FEW_SHOT_MIN
-	•	API behavior
-	•	Reasoning effort (e.g., {"reasoning": {"effort": "medium"}})
-	•	Any request throttling/backoff
+## What you should customize
 
-In data_analysis.ipynb
-	•	Output directories
-	•	WORKING_DIR, and a dated OUTPUT_DIR = results/YYYY-MM-DD (auto‑created)
-	•	Model columns / panels
-	•	Which LR columns to analyze/plot (e.g., lr_gpt-5, lr_o3-2025-04-16, lr_gpt-4o-2024-11-20)
-	•	Qualitative bands (ordered)
-	•	CATS and LR_BANDS used in κ/plots
-	•	Plot style
-	•	Matplotlib font set to DejaVu Sans to avoid Unicode glyph warnings
-	•	Export formats (PDF preferred; TIFF with LZW if required)
+### In `lr_scraper_estimator.ipynb`
+- **I/O paths**: `INPUT_FILE`, `OUTPUT_FILE` (Excel paths).
+- **Models**: `MODELS` (e.g., `"gpt-5"`, `"gpt-5-mini"`, `"gpt-4o-2024-11-20"`, `"o3-2025-04-16"`).
+- **Model flags**: `MODEL_CAPABILITIES` (reasoning vs non‑reasoning; verbosity support).
+- **Prompt scaffolding**: `SYSTEM_CORE`, `DEFINITION`, `BANDS`; few‑shot exemplars `FEW_SHOT_RICH` / `FEW_SHOT_MIN`.
+- **API behavior**: set reasoning effort for reasoning models (e.g., `"medium"`).
 
+### In `data_analysis.ipynb`
+- **Output dirs**: `WORKING_DIR`; auto‑dated `OUTPUT_DIR = results/YYYY-MM-DD` is created if missing.
+- **Model columns**: choose which LR columns to analyze and plot.
+- **Ordinal bands**: `CATS` and `LR_BANDS` used for κ and plots.
+- **Plot style**: the notebook sets Matplotlib to **DejaVu Sans** to avoid Unicode glyph warnings (≤, ≥, –).
 
-## Reproduce the paper’s outputs
-	1.	Estimate LRs
-Run all cells in lr_scraper_estimator.ipynb. Produces a filled workbook with model LR columns.
-	2.	Analyze
-Run data_analysis.ipynb to generate:
-	•	Bland–Altman panels (log‑scale analysis; labels shown as LR fold)
-	•	Coverage tables (50/75/90/95/99%) with 95% CIs in ×‑fold units
-	•	Subgroup comparisons (Welch t; Levene (median))
-	•	Ordinal agreement (percent agreement; Cohen’s κ unweighted/linear/quadratic; optional Fleiss κ across models)
-	•	Publication‑ready figures and Word tables
-	3.	Outputs
-Saved under results/YYYY-MM-DD/.
+---
+
+## Reproduce a run non‑interactively (optional)
+
+```bash
+uv run papermill lr_scraper_estimator.ipynb out/scraper_run.ipynb
+uv run papermill data_analysis.ipynb      out/analysis_run.ipynb
+```
+
+---
 
 ## Troubleshooting
-	•	OpenAI error: ensure OPENAI_API_KEY is set and the model IDs are available to your account.
-	•	Glyph warnings (≤, ≥, –): the analysis notebook sets Matplotlib to DejaVu Sans; keep that or escape math as $\leq$.
-	•	Missing packages: re‑run uv sync.
 
+- **OpenAI error**: ensure `OPENAI_API_KEY` is set and you have access to the specified model IDs.
+- **Glyph warnings (≤, ≥, –)**: keep the default DejaVu Sans settings in the analysis notebook or escape math as `$\leq$`/`$\geq$`.
+- **Missing packages**: run `uv sync` to install exact dependencies from `pyproject.toml`/`uv.lock`.
 
-## License and citation
-	•	License: see LICENSE.
-	•	Please cite the repository and accompanying manuscript when using these materials.
+---
 
+## License & citation
 
-tl;dr: What a new user can do exactly
-	1.	git clone … && cd llm_estimate_lrs
-	2.	pip install uv
-	3.	uv venv --python 3.11 && source .venv/bin/activate  (Windows: .venv\Scripts\Activate.ps1)
-	4.	uv sync  (creates uv.lock, installs pinned deps)
-	5.	Copy .env.example → .env and paste your real OPENAI_API_KEY.
-	6.	uv run jupyter lab and open the notebooks.
-	7.	In lr_scraper_estimator.ipynb, set INPUT_FILE, OUTPUT_FILE, MODELS, etc. Run all.
-	8.	In data_analysis.ipynb, set WORKING_DIR and confirm OUTPUT_DIR. Run all.
-	9.	Outputs appear in results/YYYY-MM-DD
+- License: MIT (see `LICENSE`).
+- Please cite the repository and accompanying manuscript when using these materials.

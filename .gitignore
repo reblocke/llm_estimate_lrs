@@ -16,3 +16,4 @@ results/
 
 # Locks (we DO commit uv.lock, so do NOT ignore it)
 # uv.lock
+.vscode/settings.json
