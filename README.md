@@ -44,7 +44,53 @@ The notebooks will run with the exact, pinned versions in `uv.lock`.
 
 ---
 
-See [`CLAUDE.md`](CLAUDE.md) for repository layout, customization points, troubleshooting, and developer/agent instructions.
+## Repository layout
+
+```
+.
+├── lr_scraper_estimator.ipynb
+├── data_analysis.ipynb
+├── pyproject.toml
+├── uv.lock
+├── .env.example
+├── .gitignore
+├── results/                 # outputs; dated subfolders are created automatically
+└── README.md
+```
+
+---
+
+## What you should customize
+
+### In `lr_scraper_estimator.ipynb`
+- **I/O paths**: `INPUT_FILE`, `OUTPUT_FILE` (Excel paths).
+- **Models**: `MODELS` (e.g., `"gpt-5"`, `"gpt-5-mini"`, `"gpt-4o-2024-11-20"`, `"o3-2025-04-16"`).
+- **Model flags**: `MODEL_CAPABILITIES` (reasoning vs non‑reasoning; verbosity support).
+- **Prompt scaffolding**: `SYSTEM_CORE`, `DEFINITION`, `BANDS`; few‑shot exemplars `FEW_SHOT_RICH` / `FEW_SHOT_MIN`.
+- **API behavior**: set reasoning effort for reasoning models (e.g., `"medium"`).
+
+### In `data_analysis.ipynb`
+- **Output dirs**: `WORKING_DIR`; auto‑dated `OUTPUT_DIR = results/YYYY-MM-DD` is created if missing.
+- **Model columns**: choose which LR columns to analyze and plot.
+- **Ordinal bands**: `CATS` and `LR_BANDS` used for κ and plots.
+- **Plot style**: the notebook sets Matplotlib to **DejaVu Sans** to avoid Unicode glyph warnings (≤, ≥, –).
+
+---
+
+## Reproduce a run non‑interactively (optional)
+
+```bash
+uv run papermill lr_scraper_estimator.ipynb out/scraper_run.ipynb
+uv run papermill data_analysis.ipynb      out/analysis_run.ipynb
+```
+
+---
+
+## Troubleshooting
+
+- **OpenAI error**: ensure `OPENAI_API_KEY` is set and you have access to the specified model IDs.
+- **Glyph warnings (≤, ≥, –)**: keep the default DejaVu Sans settings in the analysis notebook or escape math as `$\leq$`/`$\geq$`.
+- **Missing packages**: run `uv sync` to install exact dependencies from `pyproject.toml`/`uv.lock`.
 
 ---
 
