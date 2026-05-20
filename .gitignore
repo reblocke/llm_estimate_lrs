@@ -6,6 +6,8 @@
 .env
 # Jupyter
 .ipynb_checkpoints/
+tmp/*_executed.ipynb
+tmp/pdfs/*_audit.png
 # Python
 __pycache__/
 *.pyc
