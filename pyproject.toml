@@ -1,7 +1,7 @@
 [project]
 name = "llm-estimate-lrs"
 version = "0.1.0"
-description = "Estimate diagnostic likelihood ratios with LLMs and assess agreement with literature."
+description = "Generate diagnostic likelihood-ratio outputs with LLMs and assess agreement with literature-reported values."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

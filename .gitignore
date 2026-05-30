@@ -1,21 +1,29 @@
-/Past Runs
+# Historical/private working artifacts
+/Past Runs/
+/Paper/
+/tmp/
+/Results/
+/results/
 
-# venv
+# Virtual environments and local editor state
 .venv/
-# env files
+.vscode/
+
+# Environment/secrets
 .env
-# Jupyter
+
+# Jupyter/cache artifacts
 .ipynb_checkpoints/
-tmp/*_executed.ipynb
-tmp/pdfs/*_audit.png
-# Python
 __pycache__/
 *.pyc
+
+# Generated archives and office binaries
+*.zip
+*.pptx
+*.docx
+
 # OS
 .DS_Store
-# Results
-results/
 
 # Locks (we DO commit uv.lock, so do NOT ignore it)
 # uv.lock
-.vscode/settings.json
