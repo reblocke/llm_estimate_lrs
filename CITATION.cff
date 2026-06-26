@@ -1,8 +1,31 @@
 cff-version: 1.2.0
-message: "If you use this repository, please cite the repository and the commit or release used."
+message: "If you use this repository, please cite the repository release or commit used."
 title: "LLM-Estimated Diagnostic Likelihood Ratios"
 type: software
+version: "0.1.0"
+date-released: "2026-06-26"
+license: MIT
 repository-code: "https://github.com/reblocke/llm_estimate_lrs"
+keywords:
+  - diagnostic likelihood ratios
+  - large language models
+  - diagnostic reasoning
+  - calibration
+  - reproducible research
 authors:
+  - family-names: Chong
+    given-names: Paul
+  - family-names: He
+    given-names: Shuhan
+  - family-names: Samadian
+    given-names: Kian
+  - family-names: Mohamed
+    given-names: Amal
+  - family-names: Peng
+    given-names: Boyu
+  - family-names: Chua
+    given-names: Emma
+  - family-names: Rohlfsen
+    given-names: Cory
   - family-names: Locke
     given-names: Brian W.

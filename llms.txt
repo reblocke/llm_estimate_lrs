@@ -22,13 +22,19 @@ Status: No publication DOI is assigned in this repository; use repository README
 - `uv.lock`
 
 ## Data and Reuse Boundaries
-Generated LLM outputs and literature-derived comparison data; avoid adding API keys or private prompts.
+Generated LLM outputs and literature-derived comparison data; avoid adding API keys, private prompts, manuscript drafts, reviewer-response letters, local execution outputs, or historical working folders.
 
 ## Workflow
-python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt; then open the relevant notebook or run the README-defined command.
+Install dependencies with `uv`, then open notebooks or run the README-defined commands:
+
+```bash
+pip install uv
+uv sync
+uv run jupyter lab
+```
 
 ## Dependencies
-Jupyter notebooks and repository README
+Pinned Python environment in `pyproject.toml` and `uv.lock`; see `README.md` for runnable notebook commands.
 
 ## Citation
 No publication DOI is assigned to this repository. Cite the GitHub repository URL and the commit or release used.
@@ -36,7 +42,7 @@ No publication DOI is assigned to this repository. Cite the GitHub repository UR
 ## License
 MIT License for repository code; see `LICENSE`. Third-party and publisher materials remain under their original terms.
 
-## Agent Cautions
-- Do not re-add a README appendix aimed primarily at LLMs; integrate user-facing details into normal README sections.
+## Public Reuse Notes
+- Use `README.md` as the human-facing overview.
 - Keep restricted clinical data, private drafts, publisher PDFs, local paths, and generated outputs out of public documentation unless explicitly reviewed.
 - Prefer concise summaries plus links to citable records over copied manuscript or publisher text.

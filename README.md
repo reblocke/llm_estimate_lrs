@@ -37,7 +37,7 @@ uv run jupyter lab
 To run notebooks that query the OpenAI API, create a local `.env` file:
 
 ```ini
-OPENAI_API_KEY=sk-...
+OPENAI_API_KEY=your_api_key_here
 ```
 
 The main analysis notebooks can be executed without API calls because they use the included workbooks:
@@ -78,7 +78,7 @@ Fresh model-query runs may differ from the included workbook because API models 
 
 ## Citation
 
-Please cite the accompanying manuscript and this repository when using these materials. A formal citation will be added when the manuscript is published or the repository is archived with a DOI.
+Please cite the accompanying manuscript and the exact repository release or commit used. The `v0.1.0` GitHub release is the code snapshot prepared to support manuscript resubmission. A formal DOI can be added later if the repository is archived with a DOI-minting service.
 
 ## License
 
@@ -94,3 +94,4 @@ This repository is released under the MIT License. See `LICENSE`.
 ### Data and Reuse
 
 Generated LLM outputs and literature-derived comparison data; avoid adding API keys or private prompts.
+Manuscript drafts, reviewer-response letters, local execution outputs, and historical working folders are not tracked in this public repository.
