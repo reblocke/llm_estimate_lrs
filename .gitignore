@@ -2,11 +2,22 @@
 /Past Runs/
 /Paper/
 /tmp/
-/results/
+
+# Generated analysis and replication outputs. The compact reference contract is tracked.
+/results/*
+!/results/reference/
+!/results/reference/**
+/runs/
+/dist/
+/release-staging/
 
 # Virtual environments and local editor state
 .venv/
 .vscode/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
 
 # Environment/secrets
 .env

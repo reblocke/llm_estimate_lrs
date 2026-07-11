@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "prompt_id": "main-estimator-v1",
+  "status": "immutable_historical_research_artifact",
+  "source_notebook": "lr_scraper_estimator.ipynb",
+  "system_messages": [
+    "You are a Bayesian diagnostic assistant.\nEstimate a numeric likelihood ratio (LR) for a finding with respect to a diagnosis.\nReturn only a JSON object matching the schema: {\"value\": <float>}, where value > 0.",
+    "Definition:\nLR = P(finding | diagnosis) / P(finding | not-diagnosis)",
+    "LR evidence bands (reference):\n>10 strong for; 5-10 moderate for; 2–5 weak for;\n0.5–2 negligible;\n0.2-0.5 weak against; 0.1-0.2 moderate against; ≤0.1 strong against"
+  ],
+  "few_shot_sets": {
+    "rich_8": [
+      {
+        "condition": "deep vein thrombosis",
+        "finding": "femoral vein noncompressaible on ultrasound",
+        "value": 16.0
+      },
+      {
+        "condition": "pericarditis",
+        "finding": "pleuritic chest pain improved by leaning forward",
+        "value": 5.2
+      },
+      {
+        "condition": "pulmonary embolism",
+        "finding": "tachycardia >100 bpm",
+        "value": 2.2
+      },
+      {
+        "condition": "urinary tract infection",
+        "finding": "malodorous urine",
+        "value": 1.1
+      },
+      {
+        "condition": "myocardial infarction",
+        "finding": "enjoys playing chess",
+        "value": 1.0
+      },
+      {
+        "condition": "appendicitis",
+        "finding": "no RLQ tenderness",
+        "value": 0.45
+      },
+      {
+        "condition": "pneumothorax",
+        "finding": "bilateral lung sliding present on US",
+        "value": 0.18
+      },
+      {
+        "condition": "HIV infection",
+        "finding": "4th‑generation Ag/Ab screen negative beyond window",
+        "value": 0.05
+      }
+    ],
+    "minimal_2": [
+      {
+        "condition": "deep vein thrombosis",
+        "finding": "femoral vein noncompressaible on ultrasound",
+        "value": 16.0
+      },
+      {
+        "condition": "myocardial infarction",
+        "finding": "enjoys playing chess",
+        "value": 1.0
+      }
+    ]
+  },
+  "selection_rule": {
+    "reasoning_model": "minimal_2",
+    "non_reasoning_model": "rich_8"
+  },
+  "user_message_template": "Condition: {diagnosis}\nFinding: {finding}",
+  "assistant_example_template": "{\"value\": {float_value}}",
+  "structured_output": {
+    "class_name": "LRResponse",
+    "fields": {
+      "value": "float"
+    },
+    "postcondition": "finite and strictly positive"
+  },
+  "accepted_model_parameters": {
+    "gpt-4o-2024-11-20": {
+      "temperature": 0.2,
+      "few_shot_set": "rich_8"
+    },
+    "o3-2025-04-16": {
+      "reasoning_effort": "medium",
+      "few_shot_set": "minimal_2"
+    },
+    "gpt-5": {
+      "reasoning_effort": "medium",
+      "text_verbosity": "low",
+      "few_shot_set": "minimal_2"
+    }
+  },
+  "max_retries": 8
+}

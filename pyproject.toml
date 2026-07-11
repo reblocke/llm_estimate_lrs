@@ -1,6 +1,6 @@
 [project]
 name = "llm-estimate-lrs"
-version = "0.1.0"
+version = "1.0.0"
 description = "Generate diagnostic likelihood-ratio outputs with LLMs and assess agreement with literature-reported values."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -28,9 +28,31 @@ dependencies = [
   "requests>=2.31"
 ]
 
-[tool.uv]
-dev-dependencies = [
+[project.urls]
+Homepage = "https://doi.org/10.1038/s41598-026-61766-2"
+Repository = "https://github.com/reblocke/llm_estimate_lrs"
+Issues = "https://github.com/reblocke/llm_estimate_lrs/issues"
+Article = "https://doi.org/10.1038/s41598-026-61766-2"
+
+[dependency-groups]
+dev = [
   "ruff>=0.5",
   "black>=24.4",
-  "pre-commit>=3.7"
+  "pre-commit>=3.7",
+  "pytest>=8.2",
+  "pytest-socket>=0.7",
+  "jsonschema>=4.23",
+  "pyyaml>=6.0",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --disable-socket"
+pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

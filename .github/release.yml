@@ -1,0 +1,21 @@
+changelog:
+  categories:
+    - title: Reproducibility
+      labels:
+        - reproducibility
+    - title: Data and provenance
+      labels:
+        - data
+        - provenance
+    - title: Documentation
+      labels:
+        - documentation
+    - title: Maintenance
+      labels:
+        - maintenance
+    - title: Other changes
+      labels:
+        - "*"
+  exclude:
+    labels:
+      - skip-changelog

@@ -1,0 +1,701 @@
+row_id,master_row_number,source_sheet,source_sheet_row,condition_full,match_key_sha256,match_occurrence,master_key_count,source_key_count,match_status
+lr_0001,2, of Endotracheal Tube Placement,3,Confirmation of Endotracheal Tube Placement,237e79b63be386049d17d9aeb145314244e55879ca3539129ab41893b427e0bc,1,1,1,exact_occurrence_match
+lr_0002,3, of Endotracheal Tube Placement,4,Confirmation of Endotracheal Tube Placement,15dfd60131709a5a5d5651187f31d20370b582346e56e78dd7e857c856df45a3,1,1,1,exact_occurrence_match
+lr_0003,4,fficult Endotracheal Intubation,3,Difficult Endotracheal Intubation,5ce48025383d08890279734eca9edb619989b65a620aee62e0829a812aba7eae,1,1,1,exact_occurrence_match
+lr_0004,5,fficult Endotracheal Intubation,4,Difficult Endotracheal Intubation,12df407f873fba0a5fb681d2449ed7e697c4d38b80644612e6000f99ea539cf8,1,1,1,exact_occurrence_match
+lr_0005,6,fficult Endotracheal Intubation,5,Difficult Endotracheal Intubation,5bf1084366b945689dea85ae0f2fe008de35d262b17500c63f862e63276dab44,1,1,1,exact_occurrence_match
+lr_0006,7,fficult Endotracheal Intubation,6,Difficult Endotracheal Intubation,952215cc3b48b27b199f54a38dc247bb1b9cc8e5faf515f70532890e76ef42a6,1,1,1,exact_occurrence_match
+lr_0007,8,fficult Endotracheal Intubation,7,Difficult Endotracheal Intubation,0619d0c8bd91f562cec58bf9aa7a09a3c4da752f12c38b739e0c57953bfe88a4,1,1,1,exact_occurrence_match
+lr_0008,9,fficult Endotracheal Intubation,8,Difficult Endotracheal Intubation,a199fe81c333c2bbd0590083525f6a8fa61d518cae332f4def9c39d8074c720a,1,1,1,exact_occurrence_match
+lr_0009,10,fficult Endotracheal Intubation,9,Difficult Endotracheal Intubation,4ffb312f142e79bce4a9c88dd90ef72b01afd8cafcf872976fab6b84f2465728,1,1,1,exact_occurrence_match
+lr_0010,11,fficult Endotracheal Intubation,10,Difficult Endotracheal Intubation,055c677bf117eeaf2e3aaec2fce345cdcbcbd2eca52ecb2ae2140bedc9254c2b,1,1,1,exact_occurrence_match
+lr_0011,12,fficult Endotracheal Intubation,11,Difficult Endotracheal Intubation,c0d98083fde05f2b3e5e91281e27edbec9dd8d5c00871b672a577eb67639adfd,1,1,1,exact_occurrence_match
+lr_0012,13,fficult Endotracheal Intubation,12,Difficult Endotracheal Intubation,40ba178d85a7c6b44246b0ba303deb863d4dcb9eccd579396aad6f9262873531,1,1,1,exact_occurrence_match
+lr_0013,14,fficult Endotracheal Intubation,13,Difficult Endotracheal Intubation,793aee9a1b1652c24a5755f9fbad79afcbf78097abd247174683b38fa66f8868,1,1,1,exact_occurrence_match
+lr_0014,15,fficult Endotracheal Intubation,14,Difficult Endotracheal Intubation,02636d9620513a80ef452ab92fafd84a78d9e53fc4287eb136f2aacada4fe708,1,1,1,exact_occurrence_match
+lr_0015,16,fficult Endotracheal Intubation,15,Difficult Endotracheal Intubation,7ecacfbb36b837d33f538d99ceafd9f0040faf706951d48125716746190d078d,1,1,1,exact_occurrence_match
+lr_0016,17,fficult Endotracheal Intubation,16,Difficult Endotracheal Intubation,ffba81767087c92d6c6d02a0e3b33f46a74c911cc2b8ddff72f13665d3d7d406,1,1,1,exact_occurrence_match
+lr_0017,18,Acute Coronary Syndrome,3,Acute Coronary Syndrome,956c227f58c8b64857c59fb0367b72cc4afe72c8c69c7c5605e2cbbb41da2e6f,1,1,1,exact_occurrence_match
+lr_0018,19,Acute Coronary Syndrome,4,Acute Coronary Syndrome,1a923ce7bf351749e152a69a83843bd445b32e82f179ad35ef902ba1ed0b6f55,1,1,1,exact_occurrence_match
+lr_0019,20,Acute Coronary Syndrome,5,Acute Coronary Syndrome,9543a639cad3155595f8ffdbae4fba30a5375fca6b2d03b2d0461b1506cdde1b,1,1,1,exact_occurrence_match
+lr_0020,21,Acute Coronary Syndrome,6,Acute Coronary Syndrome,ef56129c4b146713739a1398919febdfb735cea9e55011101a82f04ac8b46657,1,1,1,exact_occurrence_match
+lr_0021,22,Acute Coronary Syndrome,7,Acute Coronary Syndrome,1688f8dec181671ecdbc659b0581715b39c2fcdfa30899fee5bff20d1beb2758,1,1,1,exact_occurrence_match
+lr_0022,23,Acute Coronary Syndrome,8,Acute Coronary Syndrome,5488021a063580a6e7942f77f1ea32f4619c618366f4cf2aa886c65700d8936a,1,1,1,exact_occurrence_match
+lr_0023,24,Acute Coronary Syndrome,9,Acute Coronary Syndrome,a84cb3dc3fd4ef5ec94151e96ce110dbf1bb87070594ebf94eb83dc75d31e611,1,1,1,exact_occurrence_match
+lr_0024,25,Acute Coronary Syndrome,10,Acute Coronary Syndrome,c839b3645d828f4eac864fd18018654658fa0a57697e38d4951ac2f1ddc0c3c9,1,1,1,exact_occurrence_match
+lr_0025,26,Acute Coronary Syndrome,11,Acute Coronary Syndrome,107b25540e0bf91092b6933d824e0668aa21046e34df852bfd4cd9e827bfa3e5,1,1,1,exact_occurrence_match
+lr_0026,27,Acute Coronary Syndrome,12,Acute Coronary Syndrome,eb48183c8145b285053718aba1172a7e94b724fbdaef248d5bb43e9841b2940b,1,1,1,exact_occurrence_match
+lr_0027,28,Acute Coronary Syndrome,13,Acute Coronary Syndrome,fb3960156156563e44607b35e6dac5035d49f4d2f9082683a86737b5a20adec9,1,1,1,exact_occurrence_match
+lr_0028,29,Acute Coronary Syndrome,14,Acute Coronary Syndrome,1f2eaef02983027809718ced22d922325f274e10d4dabbc18d7a6f3fe4854116,1,1,1,exact_occurrence_match
+lr_0029,30,Acute Coronary Syndrome,15,Acute Coronary Syndrome,5092fb91cdd11cc7e955cd75d2210193054144e60e3399f1263086319303495a,1,1,1,exact_occurrence_match
+lr_0030,31,Acute Coronary Syndrome,16,Acute Coronary Syndrome,9285fa7c3c2098f50083605fb0922495824d6b7778e3f66c7f17998d2bc9ff08,1,1,1,exact_occurrence_match
+lr_0031,32,Acute Coronary Syndrome,17,Acute Coronary Syndrome,3c25227f3b928bb96dffcfa21d2094c5c6808f9abbcc0a174f4c3cc7362d274c,1,1,1,exact_occurrence_match
+lr_0032,33,Acute Coronary Syndrome,18,Acute Coronary Syndrome,5badbb14de3c2be3c2a48e00cc165046107f90055049cc4fa0f68fd9a1625b65,1,1,1,exact_occurrence_match
+lr_0033,34,Acute Coronary Syndrome,19,Acute Coronary Syndrome,cb6899c9ea345413902d587904481ecfaa55b3f9e109a8f4e2dee4b6d43a34cd,1,1,1,exact_occurrence_match
+lr_0034,35,Acute Coronary Syndrome,20,Acute Coronary Syndrome,95cfaa41184229cc0691ac66077250eb55ffad6b59785d69a373c7cc45c114f4,1,1,1,exact_occurrence_match
+lr_0035,36,Acute Coronary Syndrome,21,Acute Coronary Syndrome,d73dffd040e492bdd787276d21c478397c594d88d8a1de6f02750416b74674d2,1,1,1,exact_occurrence_match
+lr_0036,37,Acute Coronary Syndrome,22,Acute Coronary Syndrome,a276156b2102e7dd9c18bf885a14f9da45a9eedb814d9f9a838c491cc972a557,1,1,1,exact_occurrence_match
+lr_0037,38,Acute Coronary Syndrome,23,Acute Coronary Syndrome,ba6aac4072c800fefaf9f1c47d088a4f402665951277553dec38b2116bb55808,1,1,1,exact_occurrence_match
+lr_0038,39,Acute Coronary Syndrome,24,Acute Coronary Syndrome,069561271749b47a827424d6b9110725c7c24ec448218717d9bdf67b42403396,1,1,1,exact_occurrence_match
+lr_0039,40,Acute Coronary Syndrome,25,Acute Coronary Syndrome,b2c94a5df3db1c7cba7b1e2b1d7d5a9750350684353440a0b1d972a292692c6a,1,1,1,exact_occurrence_match
+lr_0040,41,Acute Coronary Syndrome,26,Acute Coronary Syndrome,252ea24af2c8a4dda14e1de08a12d12103f242850f9d9b4c3d2a51170fa48061,1,1,1,exact_occurrence_match
+lr_0041,42,Acute Coronary Syndrome,27,Acute Coronary Syndrome,551dd5916d2f205c3b16d87b7330568360a80edc1cb62828b1be671f1142cfb4,1,1,1,exact_occurrence_match
+lr_0042,43,Acute Coronary Syndrome,28,Acute Coronary Syndrome,a10e5418c3603be4a640e205ec72392d4c9302b6d3a848bdf5a72b00b927a356,1,1,1,exact_occurrence_match
+lr_0043,44,Acute Coronary Syndrome,29,Acute Coronary Syndrome,fdb484d425f2e5df2439734396d84ce765913c455bd5a60792e6cbbf76f61215,1,1,1,exact_occurrence_match
+lr_0044,45,Acute Coronary Syndrome,30,Acute Coronary Syndrome,8ede90d4f6bf07784cba8572645f27c78f63842381f524335cdf60c105653eca,1,1,1,exact_occurrence_match
+lr_0045,46,Acute Coronary Syndrome,31,Acute Coronary Syndrome,ffd0916d02655b343f9a90672be0bb9cb8b5bc3bc68a6a6ce7e9c4542781e7ff,1,1,1,exact_occurrence_match
+lr_0046,47,Acute Coronary Syndrome,32,Acute Coronary Syndrome,96ec3d6f4860b273776eca4a538cd1f47cb6c7f8a5179699124653e3da9fed2f,1,1,1,exact_occurrence_match
+lr_0047,48,Acute Coronary Syndrome,33,Acute Coronary Syndrome,c22d3c025b766ba2a5298f6104fadbea587c1020e8db91411ec17d960740df37,1,1,1,exact_occurrence_match
+lr_0048,49,Acute Coronary Syndrome,34,Acute Coronary Syndrome,03f2f80b6f5e086dde6a49e7d2532453f248f0edee9dfc4ef4ac320bb6bfe1c5,1,1,1,exact_occurrence_match
+lr_0049,50,Acute Coronary Syndrome,35,Acute Coronary Syndrome,8e1c67e781ab988312d82678d1a1386936dfb249de9b028fb50fa1711f988030,1,1,1,exact_occurrence_match
+lr_0050,51,Acute Coronary Syndrome,36,Acute Coronary Syndrome,fed5a615a8d8f8aed20a058c4892d2fce8dc6ced9e8e6f35583b364d111446ad,1,1,1,exact_occurrence_match
+lr_0051,52,Acute Coronary Syndrome,37,Acute Coronary Syndrome,4ad1d5842fc33f5b9c6046087c94b908ca5bb20c8de27d057140b24a274307be,1,1,1,exact_occurrence_match
+lr_0052,53,Acute Coronary Syndrome,38,Acute Coronary Syndrome,5cdb21aecb3a164bf6974b1cf5cce581dd28c675a14f7534b0fc6c082c531025,1,1,1,exact_occurrence_match
+lr_0053,54,Acute Coronary Syndrome,39,Acute Coronary Syndrome,bd2ba17859e9cbe566e786b84a76c64a3caed70ab0f8ddf1a2cf63aae31dac3e,1,1,1,exact_occurrence_match
+lr_0054,55,Acute Coronary Syndrome,40,Acute Coronary Syndrome,ed1e78abfa2c8602e6a1cdf7776dcaea0ac76d4203d3c089fb9f731b0d9eb442,1,1,1,exact_occurrence_match
+lr_0055,56,Acute Coronary Syndrome,41,Acute Coronary Syndrome,9427811b7f419ed6e537d89a7f29a2095f67eb1b1c122db14e7e1e35e763aee9,1,1,1,exact_occurrence_match
+lr_0056,57,Acute Coronary Syndrome,42,Acute Coronary Syndrome,3318fc15173d62956b9f32f1fda75f692423a3c8c1a171dc8d67f954d3aeea45,1,1,1,exact_occurrence_match
+lr_0057,58,Acute Coronary Syndrome,43,Acute Coronary Syndrome,e5e207529fdd2146c954ee95d993202860b62847115eb18049eda582860ff4a2,1,1,1,exact_occurrence_match
+lr_0058,59,Acute Coronary Syndrome,44,Acute Coronary Syndrome,fe5292686dcc320642b311dd9db2402bb837f54d3a5c2d891b17d4a49e31c429,1,1,1,exact_occurrence_match
+lr_0059,60,Acute Coronary Syndrome,45,Acute Coronary Syndrome,1e136fe6913cdabeaf20efaddde120b0b5f8ea177c93cdb531e5d93bd4ae521e,1,1,1,exact_occurrence_match
+lr_0060,61,Acute Coronary Syndrome,46,Acute Coronary Syndrome,922c8392fca2672e374b3e1c1cca32aa4bfb20d22450c18d6dae10f08443dc1b,1,1,1,exact_occurrence_match
+lr_0061,62,Acute Coronary Syndrome,47,Acute Coronary Syndrome,02b098ee2d1b2887e02473eb674c94ddaad70fcf518bd00bb7a388b92e1be31e,1,1,1,exact_occurrence_match
+lr_0062,63,Acute Coronary Syndrome,48,Acute Coronary Syndrome,c5d0f5064f926f25372aad9973fba94bf0c2076d8c0b13cc576fdf256f05ffb7,1,1,1,exact_occurrence_match
+lr_0063,64,Acute Coronary Syndrome,49,Acute Coronary Syndrome,4e10f434bef2e0b8bf5a9f4d4c687f4dca183199cff65b8577f1957c41bf6dfd,1,1,1,exact_occurrence_match
+lr_0064,65,Acute Coronary Syndrome,50,Acute Coronary Syndrome,677cd69f22571cffae8c023faf6001c425ea7dd50a63d3af79465904863fec01,1,1,1,exact_occurrence_match
+lr_0065,66,Acute Coronary Syndrome,51,Acute Coronary Syndrome,bde1238161245694a564e846c7e1bb74d0bf33916d186477ab3c145f608b66bd,1,1,1,exact_occurrence_match
+lr_0066,67,Acute Coronary Syndrome,52,Acute Coronary Syndrome,486c92f0783ba5e83708e82402641f9ceeba8b2aa4763125b23b70b138265e98,1,1,1,exact_occurrence_match
+lr_0067,68,Acute Coronary Syndrome,53,Acute Coronary Syndrome,7d7a3050b389c3965fa2d7de5ec1ec2472e1c2d996f162e149158bfcc9e1cd30,1,1,1,exact_occurrence_match
+lr_0068,69,Acute Coronary Syndrome,54,Acute Coronary Syndrome,f91a76c1d1e2c8e17336996ca2e45f4738a139c448476313065d815ac27bfd81,1,1,1,exact_occurrence_match
+lr_0069,70,Acute Coronary Syndrome,55,Acute Coronary Syndrome,b0f49140b2cde17135b4c7bbe8f733d9cf1d70be83d8840660c308cf8f820c78,1,1,1,exact_occurrence_match
+lr_0070,71,Acute Coronary Syndrome,56,Acute Coronary Syndrome,d1b0d9ff172f7900d4135977938b3c2e9a5cc92f9054fca548d8a5fec75c1381,1,1,1,exact_occurrence_match
+lr_0071,72,Acute Coronary Syndrome,57,Acute Coronary Syndrome,0938f2b627c6928c75626fa0f7bd9134c1452f5bf8932559717fc63bc1db7f6d,1,1,1,exact_occurrence_match
+lr_0072,73,Acute Coronary Syndrome,58,Acute Coronary Syndrome,5c30f6d1e63958c6fe5b43719040b376faa4e7ee58ed2942d61b37487214a0ed,1,1,1,exact_occurrence_match
+lr_0073,74,Acute Coronary Syndrome,59,Acute Coronary Syndrome,462fec2ad650604e1b03d375a389003e9678ba64223395b9fe6b8be2b3632e84,1,1,1,exact_occurrence_match
+lr_0074,75,Acute Coronary Syndrome,60,Acute Coronary Syndrome,91fa85134d6c0371d81a4f2145a2367b4b3da6b2b5167933f48dc4b04e3cb014,1,1,1,exact_occurrence_match
+lr_0075,76,Acute Coronary Syndrome,61,Acute Coronary Syndrome,0a04c26067f828a83f8c74b11443ed2b929b42371d290c2f47937afa36d09393,1,1,1,exact_occurrence_match
+lr_0076,77,Acute Coronary Syndrome,62,Acute Coronary Syndrome,a5fe670d096a0a8f5d076e0f9b4e0716f1ea042cdd167c1eee15fdca6954226e,1,1,1,exact_occurrence_match
+lr_0077,78,Acute Coronary Syndrome,63,Acute Coronary Syndrome,0f6d6543c56f571865807d89bf72f3efdb4a28c01b1ab199047a1fd61fa9dd59,1,1,1,exact_occurrence_match
+lr_0078,79,Acute Coronary Syndrome,64,Acute Coronary Syndrome,f7b55e70725f1ea37d71495618bfc249cd46fb8fecb1d4e1d4453800ab563777,1,1,1,exact_occurrence_match
+lr_0079,80,Acute Coronary Syndrome,65,Acute Coronary Syndrome,6e1e219a1aeec6834dbe818040436876a1829565a221f9663bc9c302b837dcae,1,1,1,exact_occurrence_match
+lr_0080,81,Acute Coronary Syndrome,66,Acute Coronary Syndrome,b0d3bc7a4a9d44ed5e93757159506f28180a061f7ed968b5d9edd37e3abd88be,1,1,1,exact_occurrence_match
+lr_0081,82,Acute Coronary Syndrome,67,Acute Coronary Syndrome,28c7aa02d3d478eaa7ef3ee366a6fbb25c28e1527786c9cdd1d7feccf92aa035,1,1,1,exact_occurrence_match
+lr_0082,83,Acute Coronary Syndrome,68,Acute Coronary Syndrome,3c6989f4f862cbe64ba1b792fc62513e0cf1aee885273e4d9388dcba49dabb66,1,1,1,exact_occurrence_match
+lr_0083,84,Acute Coronary Syndrome,69,Acute Coronary Syndrome,03298caf47c0b5882d9d828181ad3fd0d8d66b9b72849d38faa5f1124ce9b0c1,1,1,1,exact_occurrence_match
+lr_0084,85,Acute Coronary Syndrome,70,Acute Coronary Syndrome,6f7553e520c63f09ca29240a75778726739c33282dc7a65bc07db3fb527c755a,1,1,1,exact_occurrence_match
+lr_0085,86,Acute Coronary Syndrome,71,Acute Coronary Syndrome,303cce55b70e2aa27d9e4de2904f5210d3a78a3b0fa7e83c74aac5fc635d136e,1,1,1,exact_occurrence_match
+lr_0086,87,Acute Coronary Syndrome,72,Acute Coronary Syndrome,92ba753d172aa9182d8a2e7d818ddcfecfa025a89f27def1136e4afc3f6b1536,1,1,1,exact_occurrence_match
+lr_0087,88,Acute Coronary Syndrome,73,Acute Coronary Syndrome,ff7bdd0a95231368b523a6c2acb3bca470b0d1dfd6344e92a00c6f064c703fd1,1,1,1,exact_occurrence_match
+lr_0088,89,Acute Coronary Syndrome,74,Acute Coronary Syndrome,ebc57790e2e2b3a17f0f79512e6475924be07c892f3fde66fcf21fdcd5cd397e,1,1,1,exact_occurrence_match
+lr_0089,90,Acute Coronary Syndrome,75,Acute Coronary Syndrome,376ada816ffa15fa137142c33bd852d138749c12fe913dbf7e3efa7fa38c07c0,1,1,1,exact_occurrence_match
+lr_0090,91,Acute Coronary Syndrome,76,Acute Coronary Syndrome,0278e044edd8c2ecc9e522be072a17e04fd31332d550af3a2a7b1140641668a4,1,1,1,exact_occurrence_match
+lr_0091,92,Acute Coronary Syndrome,77,Acute Coronary Syndrome,9e5e74a5aa2da26d0692ae468c122a0a08a9aa8587d9c009ca39b22abc874d70,1,1,1,exact_occurrence_match
+lr_0092,93,Acute Coronary Syndrome,78,Acute Coronary Syndrome,c975d55e048b351c87ba0ba9d8afe4a78bd24d898280c46490e3299606634c93,1,1,1,exact_occurrence_match
+lr_0093,94,Acute Coronary Syndrome,79,Acute Coronary Syndrome,309862864720e70675e67a5389541ef2cf3967dae58aba8a42f3447b3a98c843,1,1,1,exact_occurrence_match
+lr_0094,95,Acute Coronary Syndrome,80,Acute Coronary Syndrome,02afd482e804158b8d1adfb8e3c355f63eb9975b2a0d8693c9e66f36ec636999,1,1,1,exact_occurrence_match
+lr_0095,96,Acute Coronary Syndrome,81,Acute Coronary Syndrome,838cf0f1d5b9d5c433410511e326992d991b3371f40cebcdde4cce3ab9c92bfa,1,1,1,exact_occurrence_match
+lr_0096,97,Acute Coronary Syndrome,82,Acute Coronary Syndrome,63c51bd16eca12227e59baa1c2f42757c52bb8029355689a3d378340f2be6c1d,1,1,1,exact_occurrence_match
+lr_0097,98,Acute Coronary Syndrome,83,Acute Coronary Syndrome,73783bcba22f36a8c01baa20de9abc5ad7621c63061ed54ebeea7e1465705332,1,1,1,exact_occurrence_match
+lr_0098,99,Acute Coronary Syndrome,84,Acute Coronary Syndrome,75d6e55859a1a4edece97eb00b9a8bc2514c7e0daec1a2dac7a338a80eaee7c2,1,1,1,exact_occurrence_match
+lr_0099,100,Acute Coronary Syndrome,85,Acute Coronary Syndrome,b11e9a0d003f29b65cd25551c0d27e1ac2f32edc32bb11da63247a531a580519,1,1,1,exact_occurrence_match
+lr_0100,101,Acute Coronary Syndrome,86,Acute Coronary Syndrome,c99f4a1e4243b1bac10845e979bcfc67df9f3feb4fe6814a78c8796c999660d5,1,1,1,exact_occurrence_match
+lr_0101,102,Acute Coronary Syndrome,87,Acute Coronary Syndrome,ffc17081322c5d621907564b48f4e757f3170dd073c0da1ca7341e8ac669252e,1,1,1,exact_occurrence_match
+lr_0102,103,Acute Coronary Syndrome,88,Acute Coronary Syndrome,74bbf2651dd5c31a469a326f3a924bbccbce4be9bfa54f95e5325605a8db0563,1,1,1,exact_occurrence_match
+lr_0103,104,Acute Coronary Syndrome,89,Acute Coronary Syndrome,314874a56db8025dfa298c6160b82ac8b3e98638fdfd42055b4ebcc957f33b52,1,1,1,exact_occurrence_match
+lr_0104,105,Acute Coronary Syndrome,90,Acute Coronary Syndrome,868ee537a772e050fab494f71a6cb4e096edf4c13511dee1d7067ab6fc63fe13,1,1,1,exact_occurrence_match
+lr_0105,106,Acute Coronary Syndrome,91,Acute Coronary Syndrome,fd281930dedf2a41e9c907261a9d51f7454b0464b0dfa156c1a60389f30886a9,1,1,1,exact_occurrence_match
+lr_0106,107,Acute Coronary Syndrome,92,Acute Coronary Syndrome,f0f47a8122cc86510fb57c0e226a477ad8f5dfd88d0586c7776072f36e7df52b,1,1,1,exact_occurrence_match
+lr_0107,108,Aortic Dissection,3,Aortic Dissection,5dae066b7728bdd94d30c24936deb5d51cbac407e28f99c1f9313eada3c8d283,1,1,1,exact_occurrence_match
+lr_0108,109,Aortic Dissection,4,Aortic Dissection,965b834ad8a7808de1144760de6a1394fb98c588f8eb5e17fa0e8f676cb17106,1,1,1,exact_occurrence_match
+lr_0109,110,Aortic Dissection,5,Aortic Dissection,0bcab5eff3a344e3ef5ad407d3f7947176faf854690ff6c233d5079729010546,1,1,1,exact_occurrence_match
+lr_0110,111,Aortic Dissection,6,Aortic Dissection,aef9c0fa151bc0c628f6b8bb0e223cf59fa277e353d617e57089e1f68723b947,1,1,1,exact_occurrence_match
+lr_0111,112,Aortic Dissection,7,Aortic Dissection,d02e5fbce970338f609041104e50f25ae4e57d3f1e2c6884eafc811ff9b0d518,1,1,1,exact_occurrence_match
+lr_0112,113,Aortic Dissection,8,Aortic Dissection,abf7f2a8a452932441d53f39e13df959c0661ae68451d767dc725b6661dfe571,1,1,1,exact_occurrence_match
+lr_0113,114,Aortic Dissection,9,Aortic Dissection,2625a4bc5e2ecac225cbf4a9bfe5d9c1f4f15edc7730b3dfad6b961de14698c9,1,1,1,exact_occurrence_match
+lr_0114,115,Aortic Dissection,10,Aortic Dissection,0afc224769c5881b9f123b87e7b82ad712f0275676bf52cd8b1aca4af970c508,1,1,1,exact_occurrence_match
+lr_0115,116,Aortic Dissection,11,Aortic Dissection,6b66647c415b328fe6cb69ff16e5cc6cfa4373383783494b4f0ecf4b1c96fc2f,1,1,1,exact_occurrence_match
+lr_0116,117,Aortic Dissection,12,Aortic Dissection,1eb2ab18143f46285aeefde82230245e0e640cd4dd1b05cda814c91718df1403,1,1,1,exact_occurrence_match
+lr_0117,118,Aortic Dissection,13,Aortic Dissection,788ee09d4856a96987df09f5d8875798de3ad0fd034baaa64726a556c5087b66,1,1,1,exact_occurrence_match
+lr_0118,119,Aortic Dissection,14,Aortic Dissection,f3030f1b31ff4d924114b9d49bcd03f8b3cba4acb93ed2b6b0a8212968a41aba,1,1,1,exact_occurrence_match
+lr_0119,120,Aortic Dissection,15,Aortic Dissection,2fcc60519521f64455ed748c79cab1134b5aabed07c782e08c9fda7a0d67407f,1,1,1,exact_occurrence_match
+lr_0120,121,Aortic Dissection,16,Aortic Dissection,07c24cd02695e0218471097a37301a882784c88db689972a40f32c3670fb47b5,1,1,1,exact_occurrence_match
+lr_0121,122,Aortic Dissection,17,Aortic Dissection,51003a8f85770289f716337693f6e3f8a5dd340d80fc08f78beda482efe72299,1,1,1,exact_occurrence_match
+lr_0122,123,Aortic Dissection,18,Aortic Dissection,318bad830dad9135381d41d36517c46b4c0fd2f6421945f6fff70bc1a77c455b,1,1,1,exact_occurrence_match
+lr_0123,124,Aortic Dissection,19,Aortic Dissection,83a486ad2eac642acecc8b68b39c32aeef5238f7f32d471625e4ee14f493e1c2,1,1,1,exact_occurrence_match
+lr_0124,125,Aortic Dissection,20,Aortic Dissection,900b71649543b8d8492987328a7c870c7a616ba3a854b01da9b685f824c98a37,1,1,1,exact_occurrence_match
+lr_0125,126,Deep Venous Thrombosis (DVT),3,Deep Venous Thrombosis (DVT),0e09a3a87213e5c8f96765ba3fad102310dc3556ae6e307bc30c39468f7952a3,1,1,1,exact_occurrence_match
+lr_0126,127,Deep Venous Thrombosis (DVT),4,Deep Venous Thrombosis (DVT),a2bcb6f98d7ee5ed95030831547de94ea10f97622bba51cc4b230412ce579f2a,1,1,1,exact_occurrence_match
+lr_0127,128,Deep Venous Thrombosis (DVT),5,Deep Venous Thrombosis (DVT),810bd6b1a81aa97309617efd4bf1269e3ae89da65aeb53a97ea766d6e323bf84,1,1,1,exact_occurrence_match
+lr_0128,129,Deep Venous Thrombosis (DVT),6,Deep Venous Thrombosis (DVT),83e06fa2c935bcfc1a8bb6907dbe54453b97562109f3d14a5efa7d74f2adcf55,1,1,1,exact_occurrence_match
+lr_0129,130,Deep Venous Thrombosis (DVT),7,Deep Venous Thrombosis (DVT),2a7baf771e9c0ef8883704bd8e675573cf533f8a9e302a944e8e4c2e74d0492b,1,1,1,exact_occurrence_match
+lr_0130,131,Deep Venous Thrombosis (DVT),8,Deep Venous Thrombosis (DVT),cada8b1ec253b51d4dfab49e178ea1a6df744d2d639541f40fe8e568ee9c3f6e,1,1,1,exact_occurrence_match
+lr_0131,132,to Acute Heart Failure Syndrome,3,Dyspnea Due to Acute Heart Failure Syndrome,c2faffd5865a7a94f3d2a99ad781ee4f9c9d5041b31077a74396fe9dbbb8edeb,1,1,1,exact_occurrence_match
+lr_0132,133,to Acute Heart Failure Syndrome,4,Dyspnea Due to Acute Heart Failure Syndrome,167a04397317d4dedebb46a87e51f7b8a2192d4b8a10ff3ae4c3820fdd508a01,1,1,1,exact_occurrence_match
+lr_0133,134,to Acute Heart Failure Syndrome,5,Dyspnea Due to Acute Heart Failure Syndrome,2f72b877c050e4a2ae4d04002a261e74c9ee0606a6103770b6279f8ec5d5a187,1,1,1,exact_occurrence_match
+lr_0134,135,to Acute Heart Failure Syndrome,6,Dyspnea Due to Acute Heart Failure Syndrome,3c8f0ade5ee2ff242f3188e634c37c4c2f9b75e82dd2462a4848870ceab0afb7,1,1,1,exact_occurrence_match
+lr_0135,136,to Acute Heart Failure Syndrome,7,Dyspnea Due to Acute Heart Failure Syndrome,fb81282632b097996facc17eb0571812d32f223899564c55c2643bbf0cf9b15d,1,1,1,exact_occurrence_match
+lr_0136,137,to Acute Heart Failure Syndrome,8,Dyspnea Due to Acute Heart Failure Syndrome,d956ea576983962e79dd4c72f43e2b43194f1e5e53b82192d070cf035bdeb4a2,1,1,1,exact_occurrence_match
+lr_0137,138,to Acute Heart Failure Syndrome,9,Dyspnea Due to Acute Heart Failure Syndrome,13af7a5ad502afc0df9ba524c75da976c9afe5ab85dfba147a29098120ab6bbc,1,1,1,exact_occurrence_match
+lr_0138,139,to Acute Heart Failure Syndrome,10,Dyspnea Due to Acute Heart Failure Syndrome,22f51d4e2267e22cd827259a5e35a04a3b910faee60ae3566a1e5b7d2e848158,1,1,1,exact_occurrence_match
+lr_0139,140,to Acute Heart Failure Syndrome,11,Dyspnea Due to Acute Heart Failure Syndrome,8af8a01a81b99b247a7d89b7d7061639211f4901311a5201019a71d3750cd01d,1,1,1,exact_occurrence_match
+lr_0140,141,to Acute Heart Failure Syndrome,12,Dyspnea Due to Acute Heart Failure Syndrome,8bc2f3f7fac9c88373c8528294c4e2ccad1d3cbe2105ba42f0e6a14710463d22,1,1,1,exact_occurrence_match
+lr_0141,142,to Acute Heart Failure Syndrome,13,Dyspnea Due to Acute Heart Failure Syndrome,b3e4ed6ae0833b62ce4aef673ed7fcf3c34e6956850dcfc1af001e0bb6ce7c25,1,1,1,exact_occurrence_match
+lr_0142,143,to Acute Heart Failure Syndrome,14,Dyspnea Due to Acute Heart Failure Syndrome,5a3e6122a43b3d6dfb6ed242a8149ea60a6658fcabedf468b0b526e510997dd1,1,1,1,exact_occurrence_match
+lr_0143,144,th Chronic Respiratory Disease),3,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),e7d3aee545c065b57962ec826fa4d820ef60702d1dd4aeb0d2a90376df6bd2c0,1,1,1,exact_occurrence_match
+lr_0144,145,th Chronic Respiratory Disease),4,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),7c5676be219ab5685f0d55c0d9135e95a1f607857916b232a2b7d5128e902e6a,1,1,1,exact_occurrence_match
+lr_0145,146,th Chronic Respiratory Disease),5,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),75d7694a12e99d52ebf030d5a0dbc734ad5c8c45611170369f16963dc3da1811,1,1,1,exact_occurrence_match
+lr_0146,147,th Chronic Respiratory Disease),6,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),530718e4466cd107d4fb7eb8854ac4010fba0703ab4d6945da82f806474b2a4a,1,1,1,exact_occurrence_match
+lr_0147,148,th Chronic Respiratory Disease),7,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),0dcc91a73e3e1ceeeec0b249c6b0db33d79aef067e90265702b9d1712a775a70,1,1,1,exact_occurrence_match
+lr_0148,149,th Chronic Respiratory Disease),8,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),ab551b92d7372bacd958dc1f10fa801f5076c013fb0f5d477b01849f403bdb53,1,1,1,exact_occurrence_match
+lr_0149,150,th Chronic Respiratory Disease),9,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),b8514444539b42ccac5735f1cb165c31609bf0ea0509b3ed07061bdb65d837b0,1,1,1,exact_occurrence_match
+lr_0150,151,th Chronic Respiratory Disease),10,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),c57d12bb12b50eb0646b12febb46a0091e6c604926d8b5554d2e3bb0516f037a,1,1,1,exact_occurrence_match
+lr_0151,152,th Chronic Respiratory Disease),11,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),05bd5af3f4a59a2f0e7b784f0c32b010b703afa8a958d6514231ffabc1369153,1,1,1,exact_occurrence_match
+lr_0152,153,th Chronic Respiratory Disease),12,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),98ff6e336adc235e8bd19fd1eb18fcb085bc9c1cbb98691871f945f3f35f8a60,1,1,1,exact_occurrence_match
+lr_0153,154,th Chronic Respiratory Disease),13,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),0a108190db33a44566ac3bdf75fc40862f11082e31c4ddd287f7e7b4f55ec814,1,1,1,exact_occurrence_match
+lr_0154,155,th Chronic Respiratory Disease),14,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),98dbfe1f3d3eb69d11a17728c0769dcddd684df15cb5fb0c36138c435d16ab52,1,1,1,exact_occurrence_match
+lr_0155,156,th Chronic Respiratory Disease),15,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),3c915a03042c99ffc643367e011f71e1228cb72371d3c4cfdf60475ded7795ab,1,1,1,exact_occurrence_match
+lr_0156,157,th Chronic Respiratory Disease),16,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),9bbfe9a00fb77cd54a961af2fd4375d597046857fcc926579095d8d06f8a84d6,1,1,1,exact_occurrence_match
+lr_0157,158,th Chronic Respiratory Disease),17,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),bf490307ff096884cdf382fced493d99b027b6441117d2690556fb3cc88c9250,1,1,1,exact_occurrence_match
+lr_0158,159,th Chronic Respiratory Disease),18,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),cecfa1850ab7418f2c682f84abf246bfee52def0b45cf0ce8b979c68ae1cdf70,1,1,1,exact_occurrence_match
+lr_0159,160,th Chronic Respiratory Disease),19,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),d752a89edef507652972e7d7f145265042babd48e51502b1c559573918f83ac3,1,1,1,exact_occurrence_match
+lr_0160,161,th Chronic Respiratory Disease),20,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),7ae1683584ea81664defef0deda0cf1319506787ab78103175ffa84efea6c6cb,1,1,1,exact_occurrence_match
+lr_0161,162,th Chronic Respiratory Disease),21,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),6efbc5f309f2a087d77ef6916efe060f77dd26553598ffa434e73efba0acc1f4,1,1,1,exact_occurrence_match
+lr_0162,163,th Chronic Respiratory Disease),22,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),701193698d64793527e1456e264b11b7015e4290002b8d88ae53b9a1b88fe26f,1,1,1,exact_occurrence_match
+lr_0163,164,th Chronic Respiratory Disease),23,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),f6d0ecaf599d0f6c6c664f2e87ed255dd77ea4f8137f6bb9d7a2fbd0141e60c9,1,1,1,exact_occurrence_match
+lr_0164,165,th Chronic Respiratory Disease),24,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),c8fc3d5624e20d1a5e807620fd99ea91387d669d8d9a9322f9b9da8257a53a57,1,1,1,exact_occurrence_match
+lr_0165,166,th Chronic Respiratory Disease),25,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),fbb9fe0a1cc261210218bf78ff30710273d2e53b95f060eecec7d5c104a7ac1f,1,1,1,exact_occurrence_match
+lr_0166,167,th Chronic Respiratory Disease),26,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),8c5a7ed0e6d0b8e98f57aa51e86049e8c13b791643bf68d2cdfb61ec33e740cd,1,1,1,exact_occurrence_match
+lr_0167,168,th Chronic Respiratory Disease),27,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),621b07c1ea31bacbac18a7eab27aa419a09b7a36ee880df665a2767264465156,1,1,1,exact_occurrence_match
+lr_0168,169,th Chronic Respiratory Disease),28,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),036deb4f50e1a21d2935fdfabaa7d54ac10f4578367cd14f9e74f6ca6e5bf801,1,1,1,exact_occurrence_match
+lr_0169,170,th Chronic Respiratory Disease),29,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),ad7f0d521d5825bfd685ae907883f387040b1e68168b8bfd3e7e54fd1e25e1fb,1,1,1,exact_occurrence_match
+lr_0170,171,th Chronic Respiratory Disease),30,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),0a543914a9ac52942d3cb066cd6c2e079c0efc93e9a55524402435650208f8b7,1,1,1,exact_occurrence_match
+lr_0171,172,th Chronic Respiratory Disease),31,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),30fbd385d44e460148e039904348325c1ada3d372cdaab0eae6efe4c055ef62e,1,1,1,exact_occurrence_match
+lr_0172,173,th Chronic Respiratory Disease),32,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),a0df35324f9774b4de94625c08cc657f59443d5ae71fb8b5c8e088e04b8bd0a6,1,1,1,exact_occurrence_match
+lr_0173,174,th Chronic Respiratory Disease),33,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),77c4f53f0eb46ca83b6f69cebf2392476fe50c729d28d3cecf52e220f9fbf69f,1,1,1,exact_occurrence_match
+lr_0174,175,th Chronic Respiratory Disease),34,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),8ec003c07598140eb086f0f720dec1ecf7b828b2329c38e8235b605088aebd4f,1,1,1,exact_occurrence_match
+lr_0175,176,th Chronic Respiratory Disease),35,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),2677d49989763d5d699b6f97a3ad6254b6378417bec6d86d32830b5c258e4501,1,1,1,exact_occurrence_match
+lr_0176,177,th Chronic Respiratory Disease),36,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),8ad6553d672c021774d015791a33fadbc115c352aa55174a9aecf31be28bc800,1,1,1,exact_occurrence_match
+lr_0177,178,th Chronic Respiratory Disease),37,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),4db72023670998849be254040eadbef316139c5777f597ed4d06a2ae95fc1c64,1,1,1,exact_occurrence_match
+lr_0178,179,th Chronic Respiratory Disease),38,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),9c3b197a8755fe6a4376d041f086ce1eb3dca56eeb4e35cc945654982c34e34b,1,1,1,exact_occurrence_match
+lr_0179,180,th Chronic Respiratory Disease),39,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),ccb85ae695fdb58226b0ba3443838234256df47f1896d91eebb5af1ff7e1c045,1,1,1,exact_occurrence_match
+lr_0180,181,th Chronic Respiratory Disease),40,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),937f3a562c11ea33fd4e2d6be72df6a1ccc2587de094d61f42ed4079dcba6817,1,1,1,exact_occurrence_match
+lr_0181,182,th Chronic Respiratory Disease),41,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),1cdd68a7245d4fe20803570b3f9733710db76e00857806a5201814d988ac9cbc,1,1,1,exact_occurrence_match
+lr_0182,183,th Chronic Respiratory Disease),42,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),adc30e63521962589ff5ceb5c1ec84399eb2f5807a0dd714e28e067c712f5c45,1,1,1,exact_occurrence_match
+lr_0183,184,th Chronic Respiratory Disease),43,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),ef91f002803cca368d1781d934a433754b11af88aca0470015c319ac602b198c,1,1,1,exact_occurrence_match
+lr_0184,185,th Chronic Respiratory Disease),44,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),da13bb18191c4cd311e46fcded95cf14a5488e8190d016df287bce216a617b97,1,1,1,exact_occurrence_match
+lr_0185,186,th Chronic Respiratory Disease),45,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),b9274032bb8eba63f9fa99b7866630b77e72862e5353cc433d85df381146fba6,1,1,1,exact_occurrence_match
+lr_0186,187,th Chronic Respiratory Disease),46,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),9028ced7059131a91c4b554aa982b0101fc11d333d99ad294cd953a5f0eba202,1,1,1,exact_occurrence_match
+lr_0187,188,th Chronic Respiratory Disease),47,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),0ff7082c2bd2d8f68aa80d235854a9e478d16a7a769c1b897946fd0028562d1b,1,1,1,exact_occurrence_match
+lr_0188,189,th Chronic Respiratory Disease),48,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),fb2283095bd7db49db51a948d3d42fd5411699a39085583e09d11af5230dbe30,1,1,1,exact_occurrence_match
+lr_0189,190,th Chronic Respiratory Disease),49,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),4a836f2b3e3698c3f8c28256b3945744d7035334b2d6e9f2aa3d27999d6fed28,1,1,1,exact_occurrence_match
+lr_0190,191,th Chronic Respiratory Disease),50,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),10ee96b43d64908556480ecd3a58bece31fa4d2a00972063dee04d9440760d60,1,1,1,exact_occurrence_match
+lr_0191,192,th Chronic Respiratory Disease),51,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),82815ca8bfbbda21d7c2f4ee629cf2f60a7132f42c711c52f80d04b9680cada7,1,1,1,exact_occurrence_match
+lr_0192,193,th Chronic Respiratory Disease),52,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),d04b76fe8175676e29e3650286cd5a573eef60ea36f3faf2be2d13215a0aa80c,1,1,1,exact_occurrence_match
+lr_0193,194,th Chronic Respiratory Disease),53,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),edaca4d433f20f66e7d61ecefea2bb80f0a1829646fceaf78c25b39e6d0e10e5,1,1,1,exact_occurrence_match
+lr_0194,195,th Chronic Respiratory Disease),54,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),605152a14c9e14ebc30e03262459181ad673c50e0906c4863ebbeb9bc573255f,1,1,1,exact_occurrence_match
+lr_0195,196,th Chronic Respiratory Disease),55,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),82ca6f7c0dcdee2870cf344c7a8d26229673c58a8332dd838280d1d9f05b9d89,1,1,1,exact_occurrence_match
+lr_0196,197,th Chronic Respiratory Disease),56,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),8ce63e6a80471d4b13b055e7437a5b7b2d4e85429b1bfbf8b889acf6c7296c60,1,1,1,exact_occurrence_match
+lr_0197,198,th Chronic Respiratory Disease),57,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),97a3e4d7aa653ad4b9d8b53ae37030155685855e72a647a244682e6829b12952,1,1,1,exact_occurrence_match
+lr_0198,199,th Chronic Respiratory Disease),58,Dyspnea Due to Heart Failure (in a patient with Chronic Respiratory Disease),e77120b7634ad1327602e71fec533a8e49b33d303df7892d9999d178f76bc737,1,1,1,exact_occurrence_match
+lr_0199,200,ut Chronic Respiratory Disease),3,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),2339d879ce2cf328a0a3fe2ca3ad9d814230694101432fa1cfa4b4db6cb32101,1,1,1,exact_occurrence_match
+lr_0200,201,ut Chronic Respiratory Disease),4,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f6314a4d313caa9bf89374a7ee48d1892664cf1ef0348a486c726c1a01abfca6,1,1,1,exact_occurrence_match
+lr_0201,202,ut Chronic Respiratory Disease),5,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),c8621c07a1793bb95061b212f58ec4c68cc31bbe9ee02791731f1aa0f6062807,1,1,1,exact_occurrence_match
+lr_0202,203,ut Chronic Respiratory Disease),6,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),c5c47f269ae05d06c0d2170be8a4e22af8e4b4540968feee20e8e586c3ac6350,1,1,1,exact_occurrence_match
+lr_0203,204,ut Chronic Respiratory Disease),7,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f752e0ecd6ea2c99eed6e733df26a37b19125e02f83c5ddc14066d7a80d868b9,1,1,1,exact_occurrence_match
+lr_0204,205,ut Chronic Respiratory Disease),8,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),77fdfe3aaa477d86907ab6302c2bf19fa593d35f87f2e75c596990429df61163,1,1,1,exact_occurrence_match
+lr_0205,206,ut Chronic Respiratory Disease),9,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),cda4bd3b40fa585ddba68c984cf0f14487b88274f8f714945b0609478c16b132,1,1,1,exact_occurrence_match
+lr_0206,207,ut Chronic Respiratory Disease),10,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),ced28fd8d62bdbfc576832c56d2d826a3bcdce70f107b958e1c4a8a0d6dfd7b2,1,1,1,exact_occurrence_match
+lr_0207,208,ut Chronic Respiratory Disease),11,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),85fbc1e319ab6671201ba0295605762058b1519b98a0c7165091b17132a9ebe1,1,1,1,exact_occurrence_match
+lr_0208,209,ut Chronic Respiratory Disease),12,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),116ab433ba1dd46f01d97c51f6fbee2d3824a535d260a436f9e1c938aa49d16a,1,1,1,exact_occurrence_match
+lr_0209,210,ut Chronic Respiratory Disease),13,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),5b406f8b7d6de6e56b0e653aa87813573c9bad70f04fd1f672ef92ece9d8a755,1,1,1,exact_occurrence_match
+lr_0210,211,ut Chronic Respiratory Disease),14,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),ecc444465a1a6283fd5c421746a8f9980f146ee748d0f23e80a9b1c04539f213,1,1,1,exact_occurrence_match
+lr_0211,212,ut Chronic Respiratory Disease),15,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f803c3ac11f816a9176900eaaeac08ab89bee9635afd5ee36ea9cf282213a3de,1,1,1,exact_occurrence_match
+lr_0212,213,ut Chronic Respiratory Disease),16,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f110531ad8ceddeb66f2db7981037e18583490e7a5d0208499630ededce606e1,1,1,1,exact_occurrence_match
+lr_0213,214,ut Chronic Respiratory Disease),17,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),54c587c949cc7d87ffa7b89081a562221c05bea98498bfefffa64cf74d586a8e,1,1,1,exact_occurrence_match
+lr_0214,215,ut Chronic Respiratory Disease),18,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),d004b15ff18721232ad9f3b3334ca56a8da57373f9f6db2c225ed94bee02c5c3,1,1,1,exact_occurrence_match
+lr_0215,216,ut Chronic Respiratory Disease),19,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),b967e582bd9d9c8f70a2a0d9d1061910979bc5665dff48bee57910cebbd01a0d,1,1,1,exact_occurrence_match
+lr_0216,217,ut Chronic Respiratory Disease),20,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),2ce65cb67b74fad5ede3ac48098b3ca249f62a8e8535d1b7eadb3365bdfd818d,1,1,1,exact_occurrence_match
+lr_0217,218,ut Chronic Respiratory Disease),21,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),1849826a8bfb5f6bc0ea6bd45de58c171b353b8efa629a8958eda5d82c2b9308,1,1,1,exact_occurrence_match
+lr_0218,219,ut Chronic Respiratory Disease),22,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),10dc001ed9b22435ed8fe711b6a4ed1a98eac71ec45a4cfe591df4d34cfeca67,1,1,1,exact_occurrence_match
+lr_0219,220,ut Chronic Respiratory Disease),23,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),95cd652f31190a1d625b8b7f072a2f6574bb26bf85c99a2a550f4956563184ee,1,1,1,exact_occurrence_match
+lr_0220,221,ut Chronic Respiratory Disease),24,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),96dad7d5a544a15b3241c90deafac6fedae694ccb83c6fe86ae29ad42c8fd130,1,1,1,exact_occurrence_match
+lr_0221,222,ut Chronic Respiratory Disease),25,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),18afaef565f842a927201c4e8a95fdb033a4843a7a511e7d2a517afffdca6dff,1,1,1,exact_occurrence_match
+lr_0222,223,ut Chronic Respiratory Disease),26,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),16f42dd54d3844be7df8a298cbbba59147e006e9171468fcf454057d340716a4,1,1,1,exact_occurrence_match
+lr_0223,224,ut Chronic Respiratory Disease),27,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),6e2e7407bbc3c57c18599f004ce67c50b515eeb01e8172468d2d121491bbfc5e,1,1,1,exact_occurrence_match
+lr_0224,225,ut Chronic Respiratory Disease),28,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),7d50b547949ca7b99d416d0a3f25091414cc0af18e5931e9ac680283a88bc23a,1,1,1,exact_occurrence_match
+lr_0225,226,ut Chronic Respiratory Disease),29,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),b90d52030935a9d4577a8de698eb7c4d13692da5901f0efc3ae7cb0adac8e585,1,1,1,exact_occurrence_match
+lr_0226,227,ut Chronic Respiratory Disease),30,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),727b46f96f3c18383dad74932bde3a1f0399f78481a5d8cb2427ac90ae61a21b,1,1,1,exact_occurrence_match
+lr_0227,228,ut Chronic Respiratory Disease),31,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),339bd3a20e5dce081a423b0f7ce712d7f0ac323e5c2f8e57d8f24eac8e27d51c,1,1,1,exact_occurrence_match
+lr_0228,229,ut Chronic Respiratory Disease),32,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f15bb6b68797b9e913cf08e07be808bb9cff3e3234b9885ef02300ea81635c91,1,1,1,exact_occurrence_match
+lr_0229,230,ut Chronic Respiratory Disease),33,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),92418903f17d3815fe0faff3837a4fba4667f0ec848ece7b9e77679a89c85a1a,1,1,1,exact_occurrence_match
+lr_0230,231,ut Chronic Respiratory Disease),34,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),1358fac694382bf74f2194884fa17a8c24a69520d27a640d0d3abb4252cd5042,1,1,1,exact_occurrence_match
+lr_0231,232,ut Chronic Respiratory Disease),35,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),ad144a07d2ada03f586841c6c939d6aa43084dd7d7b13be96f5c25d8cec34f7c,1,1,1,exact_occurrence_match
+lr_0232,233,ut Chronic Respiratory Disease),36,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),508f3059548b54ddbf52b1a4f7c30564dada8222906c66f480031969c23dab44,1,1,1,exact_occurrence_match
+lr_0233,234,ut Chronic Respiratory Disease),37,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),fff59b418f2c371d18a07d0fedab04440fa111c4bf0bd22c365616e8d982cdf6,1,1,1,exact_occurrence_match
+lr_0234,235,ut Chronic Respiratory Disease),38,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),684b8bc6b143e5a577a197c5733f7be4cc40defda8f75158abbf11a91239d1fe,1,1,1,exact_occurrence_match
+lr_0235,236,ut Chronic Respiratory Disease),39,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),7bf1c9d684d666d8aee61eccca6f20f7507332304cf2cb1700e61311851a3232,1,1,1,exact_occurrence_match
+lr_0236,237,ut Chronic Respiratory Disease),40,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),de6887e0ffc7f6800244a2839b189d2be67bd0d1c3b22e17440e503b17697d22,1,1,1,exact_occurrence_match
+lr_0237,238,ut Chronic Respiratory Disease),41,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),0776783269ce3cfd79bc69bfbd0f6aff47d3c0d5b7c8565dc7b7a48e8bfebe98,1,1,1,exact_occurrence_match
+lr_0238,239,ut Chronic Respiratory Disease),42,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),d2c16b99dcb423e9a6fd43a66c79c519ea3a69fe80227242dbe5db945890a1d8,1,1,1,exact_occurrence_match
+lr_0239,240,ut Chronic Respiratory Disease),43,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),c660ac9e32b220e89e5045c30fbf5cbffd234f9bf297aaf2348f1aad5917627b,1,1,1,exact_occurrence_match
+lr_0240,241,ut Chronic Respiratory Disease),44,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),eb9cf70b2ae6a94ad6f1bf974c6a18e63069ff381133fa1adb907b458c9c6eaf,1,1,1,exact_occurrence_match
+lr_0241,242,ut Chronic Respiratory Disease),45,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),c7daf823ceb101dbebc48ba198675fa316d0d58512452a5ec4ad32a3e302db23,1,1,1,exact_occurrence_match
+lr_0242,243,ut Chronic Respiratory Disease),46,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),decc961b914363ba822ee1e74f818c0162ead090ff1c72f215d6477a1ec0a8a5,1,1,1,exact_occurrence_match
+lr_0243,244,ut Chronic Respiratory Disease),47,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),fb3f0a43d9c8e6822639c1d9ffd8dbcac3fe06c48b4cce78b09dda0925271b6b,1,1,1,exact_occurrence_match
+lr_0244,245,ut Chronic Respiratory Disease),48,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),44550f138a24f56e8bc2120152c8f1181d6d9cf0c0e114449a0e09483f677506,1,1,1,exact_occurrence_match
+lr_0245,246,ut Chronic Respiratory Disease),49,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),735291d25513b448017675bec0b6aa4e093cfde4d75b203543882cd0384f7240,1,1,1,exact_occurrence_match
+lr_0246,247,ut Chronic Respiratory Disease),50,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),bc99aac84ceea6a371eeee9464c66f8fcca88fd533b8bec610c7d27339de2563,1,1,1,exact_occurrence_match
+lr_0247,248,ut Chronic Respiratory Disease),51,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),1beddb4d2859387a4774dd97ea76d7289eaee6ee16a57f6891d9816d5b66283e,1,1,1,exact_occurrence_match
+lr_0248,249,ut Chronic Respiratory Disease),52,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),49b9a0694008f36d60c98eb1c83fe39f34784ac0cf59c985c8059926740c073f,1,1,1,exact_occurrence_match
+lr_0249,250,ut Chronic Respiratory Disease),53,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),89da40465e4dfc738e528c2f3c34f572a638c4066aa8a33f73901acb70fa1dbf,1,1,1,exact_occurrence_match
+lr_0250,251,ut Chronic Respiratory Disease),54,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),978d89d857825c52fd7049facde7d0f4c2b4db1871cc1e1df7574019f42c73c3,1,1,1,exact_occurrence_match
+lr_0251,252,ut Chronic Respiratory Disease),55,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),6f4dac7f05aeb0d46af20774c052e557a981b461244fc8efa03948487e8f3bf0,1,1,1,exact_occurrence_match
+lr_0252,253,ut Chronic Respiratory Disease),56,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),5b3f3b44ddba0963e9567e978b8014a775704a8084211ff58c502e5d435d5a6d,1,1,1,exact_occurrence_match
+lr_0253,254,ut Chronic Respiratory Disease),57,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),fff4f6e262b78e55674c8f5b498f3b915e8d73901b8d505a4ba22422d2225a39,1,1,1,exact_occurrence_match
+lr_0254,255,ut Chronic Respiratory Disease),58,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),682661fb8b31efb5eb5c100eff505ec318504a65c145e4929b52c78b81b9a247,1,1,1,exact_occurrence_match
+lr_0255,256,ut Chronic Respiratory Disease),59,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),9ba6a5c772f7a9169ea75ff4770dd4e4dabd108e057510c54cfcd3b54f64ca52,1,1,1,exact_occurrence_match
+lr_0256,257,ut Chronic Respiratory Disease),60,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),dc3bd32ebc3439c830e3110c68094eb9690fd49cc7b3162e22e98db5c4683b08,1,1,1,exact_occurrence_match
+lr_0257,258,ut Chronic Respiratory Disease),61,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),c2ad805d99a0169cb71c11288e98d79d13b2540243fb86d87ee3c383f3158d1b,1,1,1,exact_occurrence_match
+lr_0258,259,ut Chronic Respiratory Disease),62,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),b68ff3873d8a26305729c2c9d505cf6eff3a3c1c20121608d6edf41e76092869,1,1,1,exact_occurrence_match
+lr_0259,260,ut Chronic Respiratory Disease),63,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),a063eafb8aef1b4a827c3bed8d7065baa64e8a7e025d581a7e39cf85f0478163,1,1,1,exact_occurrence_match
+lr_0260,261,ut Chronic Respiratory Disease),64,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),e68e7f2ab995d5bcd6f72e0bda8d55cfae0324fc60b6887f9080c5d79d468367,1,1,1,exact_occurrence_match
+lr_0261,262,ut Chronic Respiratory Disease),65,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),557f96d1308c46e943d27a6d5fb50d896e25310b89741a08c9949e3bdc83a29c,1,1,1,exact_occurrence_match
+lr_0262,263,ut Chronic Respiratory Disease),66,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),02c0654ce57d9baae8ca4b1ff5f98ff4b1d88774f4fc0be06e4eacad704c7cf6,1,1,1,exact_occurrence_match
+lr_0263,264,ut Chronic Respiratory Disease),67,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),369360da38a98c37789546541d22291d030877943f7be28feb8ee96b84b760e7,1,1,1,exact_occurrence_match
+lr_0264,265,ut Chronic Respiratory Disease),68,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),9f5d9a90e5e68511a86db908c7407600111c4b7e1d60cb0b999a05fa2a042437,1,1,1,exact_occurrence_match
+lr_0265,266,ut Chronic Respiratory Disease),69,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),06f26395b388f1a294faac1606ef8ab3af2bb78dc48e52764c2fd674e33440c2,1,1,1,exact_occurrence_match
+lr_0266,267,ut Chronic Respiratory Disease),70,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),2f3bfc4d35790a31e1250c5ba2c831211e32c3cc6a40c2c2bb41a40638ad8bce,1,1,1,exact_occurrence_match
+lr_0267,268,ut Chronic Respiratory Disease),71,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),fe6d57db7d9d6fc19b948ef78040167241b6d7acc08dcfc25f3957f041b129f0,1,1,1,exact_occurrence_match
+lr_0268,269,ut Chronic Respiratory Disease),72,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),3179ad3fd13f7767aff5108d1dfe5137d18121323a8f20b1fa2ae76aef547060,1,1,1,exact_occurrence_match
+lr_0269,270,ut Chronic Respiratory Disease),73,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),d62747ed639c0e3dc0377f2ab716c8f4b3b31641d0667aaa86f048854f4c4bf5,1,1,1,exact_occurrence_match
+lr_0270,271,ut Chronic Respiratory Disease),74,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),03b2a06ee017ea43a0877bc991b9118333ce2c8283d1cb4060b3260c498dc72a,1,1,1,exact_occurrence_match
+lr_0271,272,ut Chronic Respiratory Disease),75,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),8c489ea2311424ab3a3b74686c775af5176baf16c4cd79653512388aa023c6c2,1,1,1,exact_occurrence_match
+lr_0272,273,ut Chronic Respiratory Disease),76,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),afa3d0ca73aec493a84a278332dc9c3859616b2591f606cad266a41896f5d872,1,1,1,exact_occurrence_match
+lr_0273,274,ut Chronic Respiratory Disease),77,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),ae6c206a381151baa725232df2e74734f5b8d5fab80268ffbe05146cc84c7680,1,1,1,exact_occurrence_match
+lr_0274,275,ut Chronic Respiratory Disease),78,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),75a462e637641e06c6bff96be97037f49cb00761a3d0e8dc147cd1c562c14e41,1,1,1,exact_occurrence_match
+lr_0275,276,ut Chronic Respiratory Disease),79,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),02e549fa3b2a799f4a34fd5bd239643706158c41ce4763e73868cbb2484a0fb6,1,1,1,exact_occurrence_match
+lr_0276,277,ut Chronic Respiratory Disease),80,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),179ddcabf9879087c32b3c17fb24231c694bf9c96d4ba20b1f9ee4c06f5f7c6a,1,1,1,exact_occurrence_match
+lr_0277,278,ut Chronic Respiratory Disease),81,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),2dab6d21dd747cb58aacaecf75419d64606c3fc97f96f9295599c37c86876fc5,1,1,1,exact_occurrence_match
+lr_0278,279,ut Chronic Respiratory Disease),82,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),497826c30e260f910439e6a4d5ec846600493f6f8db1eb7a476e17bc7a346c08,1,1,1,exact_occurrence_match
+lr_0279,280,ut Chronic Respiratory Disease),83,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f132082aacdc58de101c8cf772ddbe0e6d0456a07fe45c140253859ee5f4ef5a,1,1,1,exact_occurrence_match
+lr_0280,281,ut Chronic Respiratory Disease),84,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f91e153dbfd73efeae832bfcce818f5ad7ce75ae356ad62d76da595cd5564a4b,1,1,1,exact_occurrence_match
+lr_0281,282,ut Chronic Respiratory Disease),85,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),93335afc523909c595d3795a7f6d557667f7bafdfedaec775711a7a20b666d41,1,1,1,exact_occurrence_match
+lr_0282,283,ut Chronic Respiratory Disease),86,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),6d7cfbef4511a0812489349e1546623a3674576087df4de1e8ddd938591a0f82,1,1,1,exact_occurrence_match
+lr_0283,284,ut Chronic Respiratory Disease),87,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),be7dae3a283bec64e2c70d1ac74f231f34f2804d52c2b9c16c5f11d0ebefe98a,1,1,1,exact_occurrence_match
+lr_0284,285,ut Chronic Respiratory Disease),88,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),af3f83e75ef30477b3a5f9f7f8d206966cce92acdb5740cb7a3f59110ca9d83e,1,1,1,exact_occurrence_match
+lr_0285,286,ut Chronic Respiratory Disease),89,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),88aca8a334f044f05ece4fa0a2fcc73334c058a8639f291eae1523695c903cfb,1,1,1,exact_occurrence_match
+lr_0286,287,ut Chronic Respiratory Disease),90,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),f80d33f554ff11fb91d8fd9449799fbdaff27a15513916c316e5886866dd8393,1,1,1,exact_occurrence_match
+lr_0287,288,ut Chronic Respiratory Disease),91,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),c7b5617b3a65765563380cf0ad9ba45339b007940226f7f652874d323f919169,1,1,1,exact_occurrence_match
+lr_0288,289,ut Chronic Respiratory Disease),92,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),374691a992985f21a32ec83886c3afee5f8c917d2b007014349247ca634829c2,1,1,1,exact_occurrence_match
+lr_0289,290,ut Chronic Respiratory Disease),93,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),6d67c53b6a822d21105b9f1c9fd73d382406aec5e6910eab3e11df32bb035698,1,1,1,exact_occurrence_match
+lr_0290,291,ut Chronic Respiratory Disease),94,Dyspnea Due to Heart Failure (in a patient without Chronic Respiratory Disease),296fd1410904dd2f306173eab8d903a32e5ef21a18dd6ceccc3a9bfd95d6eafb,1,1,1,exact_occurrence_match
+lr_0291,292,modynamically Unstable Patients,3,Fluid Responsiveness in Hemodynamically Unstable Patients,eaa89c3158c54b55121321d4657ee38dd8b95c93d3165f7ec935831fc702cc4c,1,1,1,exact_occurrence_match
+lr_0292,293,modynamically Unstable Patients,4,Fluid Responsiveness in Hemodynamically Unstable Patients,cf3d2f7a94de2388163d58ab93d74d154e1614088d2a807a5981f82e250c21d3,1,1,1,exact_occurrence_match
+lr_0293,294,modynamically Unstable Patients,5,Fluid Responsiveness in Hemodynamically Unstable Patients,86302ecdbb60fd96ba72a92a2ac38499d4c403618520088ba5b3e0f3dceb0d28,1,1,1,exact_occurrence_match
+lr_0294,295,he Diagnosis of Cardiac Syncope,3,Cardiac Syncope,3c5935ac4a7a3b4c4300fad1151da3e68368380aa3eb43c1459590594e61b554,1,1,1,exact_occurrence_match
+lr_0295,296,he Diagnosis of Cardiac Syncope,4,Cardiac Syncope,5f1dcf4544d4dff13facbec053dc71bef30f868f067056d759eed9cf9efe8dca,1,1,1,exact_occurrence_match
+lr_0296,297,he Diagnosis of Cardiac Syncope,5,Cardiac Syncope,08e38306a5424b2b18b1cee4c6312d63a094a63f59a8b2f3bdd57731555d4bb4,1,1,1,exact_occurrence_match
+lr_0297,298,he Diagnosis of Cardiac Syncope,6,Cardiac Syncope,6821ce3df8802b95b7d6022d22627aa085d37478a61ec56d47c80b64119ae39c,1,1,1,exact_occurrence_match
+lr_0298,299,he Diagnosis of Cardiac Syncope,7,Cardiac Syncope,7415728171492ad9787e43e4ae5feff8a0b4cd8abe71c0da99659a81a519ebf8,1,1,1,exact_occurrence_match
+lr_0299,300,he Diagnosis of Cardiac Syncope,8,Cardiac Syncope,6acd31553d2100418a7583837e22e653300d7ee67d5d31e5cb28fc4079ee6c6f,1,1,1,exact_occurrence_match
+lr_0300,301,he Diagnosis of Cardiac Syncope,9,Cardiac Syncope,ecfa5b85789188918d57faa73e7ae942135812e1afabff31c374e09bfecd3540,1,1,1,exact_occurrence_match
+lr_0301,302,he Diagnosis of Cardiac Syncope,10,Cardiac Syncope,024488a7dafaa79cfc398759c296437b642cf35c11c013f4c6153abf1d2d792a,1,1,1,exact_occurrence_match
+lr_0302,303,he Diagnosis of Cardiac Syncope,11,Cardiac Syncope,f43e44a14d2cdcfd388ed51eee3523e2e991e4426b5e55cc825325ffdae477d5,1,1,1,exact_occurrence_match
+lr_0303,304,he Diagnosis of Cardiac Syncope,12,Cardiac Syncope,c42a30c64ac834803c362e520ea205d99a9579034850d97c0af85f4c4e6acad2,1,1,1,exact_occurrence_match
+lr_0304,305,he Diagnosis of Cardiac Syncope,13,Cardiac Syncope,c843959a9fa295e541aadb89e11104c305b59cc3134949a73ce6aed2dd0d2c9f,1,1,1,exact_occurrence_match
+lr_0305,306,he Diagnosis of Cardiac Syncope,14,Cardiac Syncope,cf240c7111d7ffca62e44170595e23b147b283bd6e47fe8ed408d7da9dd8f5cc,1,1,1,exact_occurrence_match
+lr_0306,307,he Diagnosis of Cardiac Syncope,15,Cardiac Syncope,428e9c8c42f5e64038e53f7d9d2130f6503700b131150d66b43d39daf683e7f2,1,1,1,exact_occurrence_match
+lr_0307,308,he Diagnosis of Cardiac Syncope,16,Cardiac Syncope,52a82bd5d8288ff966061f8a91d3a4de5c2da3145bf20a15c679ba5700f21da9,1,1,1,exact_occurrence_match
+lr_0308,309,he Diagnosis of Cardiac Syncope,17,Cardiac Syncope,fdcf719c0beed0e02d0a38505853e9c687c57c1baf1fa92cb0d1e1be89b5d670,1,1,1,exact_occurrence_match
+lr_0309,310,he Diagnosis of Cardiac Syncope,18,Cardiac Syncope,3613aec0ef6ca2236d567f3e5e4a6ad1b7153b52c159605db6b1840244471ddf,1,1,1,exact_occurrence_match
+lr_0310,311,he Diagnosis of Cardiac Syncope,19,Cardiac Syncope,02daba5381fd73a2028d2996a7dffd7687ff639e228ec032c8035fe9437e759e,1,1,1,exact_occurrence_match
+lr_0311,312,he Diagnosis of Cardiac Syncope,20,Cardiac Syncope,5b03cf523d083f1ccfa405cd41f3580b4fa948ac87f568159368965997df171a,1,1,1,exact_occurrence_match
+lr_0312,313,he Diagnosis of Cardiac Syncope,21,Cardiac Syncope,d4f9ac6d619313f07dda0ce9f50d3774ab69744bd21444add939317b465be679,1,1,1,exact_occurrence_match
+lr_0313,314,he Diagnosis of Cardiac Syncope,22,Cardiac Syncope,b16bf4da809c76bec2c4667325e4ea44765ac884998278001764489afcf2faec,1,1,1,exact_occurrence_match
+lr_0314,315, Elevated Intracranial Pressure,3,Elevated Intracranial Pressure,7bfa881f5ea3e06098274c926c7976966d0811638d84d4e0dd4e34eadafa8c2c,1,1,1,exact_occurrence_match
+lr_0315,316, Elevated Intracranial Pressure,4,Elevated Intracranial Pressure,3af914995159f2a93ad0370db5f5035b2cde4e5aaa4f8b91ac6d628f158ca062,1,1,1,exact_occurrence_match
+lr_0316,317, Elevated Intracranial Pressure,5,Elevated Intracranial Pressure,c260407d738b922c24bd33f8427ac4f8229a0eeb14ddb6d5d2f35520824b72e6,1,1,1,exact_occurrence_match
+lr_0317,318, Elevated Intracranial Pressure,6,Elevated Intracranial Pressure,b7092228cd7a19163a65b9f8f47006618a08518a62a9c20031fa91f8bee69fe8,1,1,1,exact_occurrence_match
+lr_0318,319, Elevated Intracranial Pressure,7,Elevated Intracranial Pressure,4f1f3c26c68a07b0edac140fb2be7bffe8d9c928c1a2d0949ec55a395f6ffcd5,1,1,1,exact_occurrence_match
+lr_0319,320, Elevated Intracranial Pressure,8,Elevated Intracranial Pressure,62b8725012ba83425f12946605f0a5bab459079341374bbdccfa15e73e798663,1,1,1,exact_occurrence_match
+lr_0320,321,in Penetrating Extremity Trauma,3,Arterial Injury in Penetrating Extremity Trauma,d8023b77e75bf443b0ff22b2209cecef47fa4d0c63a5faf665cfac29ff99ea10,1,1,1,exact_occurrence_match
+lr_0321,322,in Penetrating Extremity Trauma,4,Arterial Injury in Penetrating Extremity Trauma,82514a0e96601a7ebaa16e75ecdb2bc67e68109a718994e685e4e71711bd6a49,1,1,1,exact_occurrence_match
+lr_0322,323,trasound for Retinal Detachment,3,Retinal Detachment,fb7a0b94072bf7aef506c58b2c412ea114017721c73014c37336f30f6d90c90e,1,1,1,exact_occurrence_match
+lr_0323,324,trasound for Retinal Detachment,4,Retinal Detachment,ff900ac49af1ac3388fc95555b230f48f676f282184495d2a3ec2d497be5cb77,1,1,1,exact_occurrence_match
+lr_0324,325,esting for Giant Cell Arteritis,3,Giant Cell Arteritis,b44d551d1f929fee1f50eddccfc9b116f3cf171ad6ffa7ca87b1855523bab1f8,1,1,1,exact_occurrence_match
+lr_0325,326,esting for Giant Cell Arteritis,4,Giant Cell Arteritis,ce5fc91d385c0bda34f8a968ce8664b0a8c0f6748f8258b5a8425d83a713a018,1,1,1,exact_occurrence_match
+lr_0326,327,esting for Giant Cell Arteritis,5,Giant Cell Arteritis,df70299b914352fc43d198f4ffcbe8021f07128a0db6a947c60f08ff97504ecb,1,1,1,exact_occurrence_match
+lr_0327,328,esting for Giant Cell Arteritis,6,Giant Cell Arteritis,9c4e6d3096c2b770ca7a1a852bcf2bfab83e168642653ad44d99ee763f635c33,1,1,1,exact_occurrence_match
+lr_0328,329,esting for Giant Cell Arteritis,7,Giant Cell Arteritis,d1816a1e0f3f6897957ed32503a489674457a65fdd92a1415bfcfe5d587d5b00,1,1,1,exact_occurrence_match
+lr_0329,330,esting for Giant Cell Arteritis,8,Giant Cell Arteritis,50868223d9607c412e4c1f2104f50de4fc7c099ae70d368df69504ea81917d33,1,1,1,exact_occurrence_match
+lr_0330,331,esting for Giant Cell Arteritis,9,Giant Cell Arteritis,ec22da648c217b16e5bc2bd2fa20ea0bdcb0d1e3ffd1a2365c03fc27c972d6aa,1,1,1,exact_occurrence_match
+lr_0331,332,esting for Giant Cell Arteritis,10,Giant Cell Arteritis,541502feab3a1f4e989636a7cb2ef91bd0d62bc253f78b3032b12b4bf408e561,1,1,1,exact_occurrence_match
+lr_0332,333,esting for Giant Cell Arteritis,11,Giant Cell Arteritis,e0d26ae8ee558bb600177489c83d5275f121298fe65ba1a98db2ae21c434941c,1,1,1,exact_occurrence_match
+lr_0333,334,esting for Giant Cell Arteritis,12,Giant Cell Arteritis,15c2b6bf11f1366912d4fa259f81126f42767e3dcb673143de3bc6033bc6d9f3,1,1,1,exact_occurrence_match
+lr_0334,335,tion of Small Bowel Obstruction,3,Small Bowel Obstruction,fd5f713f711ef9beafa3608ba87f478ce62a5d000f481790f6d4e07e33a13179,1,1,1,exact_occurrence_match
+lr_0335,336,tion of Small Bowel Obstruction,4,Small Bowel Obstruction,2c50ed7952ff27096106ff72d3ee17643b1587b3093d947e5a331af97b902a24,1,1,1,exact_occurrence_match
+lr_0336,337,f Diagnostic Tests for Syphilis,3,Syphilis,46266165cf3955a3aa7053349d55f00aeef73770ea136a10a9d420ad002a3a97,1,1,1,exact_occurrence_match
+lr_0337,338,f Diagnostic Tests for Syphilis,4,Syphilis,f902850933f0ee667dce9985561457077ce4c3a76f03031b7618ae7df8fed02f,1,1,1,exact_occurrence_match
+lr_0338,339,f Diagnostic Tests for Syphilis,5,Syphilis,9393de9a1b5eb683ac79b7044a6283077e202632c70955416d48979e83935719,1,1,1,exact_occurrence_match
+lr_0339,340,f Diagnostic Tests for Syphilis,6,Syphilis,d4bb8bf5cf0368d967503cef8889face4555d141f7c76410908c0741776de530,1,1,1,exact_occurrence_match
+lr_0340,341,f Diagnostic Tests for Syphilis,7,Syphilis,bf6628d19fa20bc64613b2384fa1eb1156dc3f59dc6872a7df50ee9a9e078e83,1,1,1,exact_occurrence_match
+lr_0341,342,f Diagnostic Tests for Syphilis,8,Syphilis,3c9cc9b6471efdf35683d039d4793a225aba07d7453a528716c747e9b90e7b03,1,1,1,exact_occurrence_match
+lr_0342,343,gnosis of Pneumonia in Children,3,Pneumonia in Children,7755263520296b28fca3117bcd0c7d7325d67d8ba768afc9bd34bc19e2d12ea7,1,1,1,exact_occurrence_match
+lr_0343,344,gnosis of Pneumonia in Children,4,Pneumonia in Children,253b6728a7e53dcbbed459afa1c2b08addb9baa4cfad4af088c6dcf97e281ecc,1,1,1,exact_occurrence_match
+lr_0344,345,nal Injuries After Blunt Trauma,3,Thoracoabdominal Injuries After Blunt Trauma,e0b89a25477d526eeb86dc12f64ebafd98e642e6e7303933f97f615f23554870,1,1,1,exact_occurrence_match
+lr_0345,346,nal Injuries After Blunt Trauma,4,Thoracoabdominal Injuries After Blunt Trauma,76b02bc0de7589988776edcd44b13485c7bb1cb5e2b99b29ec5176c92cd53233,1,1,1,exact_occurrence_match
+lr_0346,347,cute Onset Flashes and Floaters,3,Retinal Pathology in Patients with Acute Onset Flashes and Floaters,dbabd492a731bf90fbd349803fccc01209afda5ab1c58d4dfbb064a51c2156d0,1,1,1,exact_occurrence_match
+lr_0347,348,cute Onset Flashes and Floaters,4,Retinal Pathology in Patients with Acute Onset Flashes and Floaters,ce18deb4005671e692d4bacbd90b5e32c7d81c801435d87b0964df1e90ad5cae,1,1,1,exact_occurrence_match
+lr_0348,349,cute Onset Flashes and Floaters,5,Retinal Pathology in Patients with Acute Onset Flashes and Floaters,7b9ebd784bee4f539ceaa513f6ec15aec2d44db7d0bf780529f291e6a3e1ebe9,1,1,1,exact_occurrence_match
+lr_0349,350,cute Onset Flashes and Floaters,6,Retinal Pathology in Patients with Acute Onset Flashes and Floaters,cfff5f45c25ef8fcc2708b22fada055eeb113bd68b60ebb83e02eee44ef3e402,1,1,1,exact_occurrence_match
+lr_0350,351,cute Onset Flashes and Floaters,7,Retinal Pathology in Patients with Acute Onset Flashes and Floaters,697399bc27b71f647d75f63f01415682f3c2f330480b4a38e3ab8fbb72f69171,1,1,1,exact_occurrence_match
+lr_0351,352,Hypovolemia,3,Hypovolemia,57b215ce75fcb6938250e4a63ada073a65372f0be3300bf70e6955b592e59f2e,1,1,1,exact_occurrence_match
+lr_0352,353,Hypovolemia,4,Hypovolemia,f924003ebb94cac0ea67bac7eb02d867f657a7c1ccc0f0f1670b44898f1a83e2,1,1,1,exact_occurrence_match
+lr_0353,354,Hypovolemia,5,Hypovolemia,99f4e157d639ea8f00c14298a81e8774be3266a62e5c8cbfb248d40fbc164d11,1,1,1,exact_occurrence_match
+lr_0354,355,Hypovolemia,6,Hypovolemia,43838dd42cd8a0c85cee2071cc5d46d3506da9b6a3b0e8ee6d648ebe4ed50908,1,1,1,exact_occurrence_match
+lr_0355,356,Hypovolemia,7,Hypovolemia,e46b879bdf7c93d10234a6577b02e607026ec062caa239ba0df265b264606745,1,1,1,exact_occurrence_match
+lr_0356,357,Hypovolemia,8,Hypovolemia,7c0cd3dfd5aff98b5d2f9840fcf491bfe241c6f98933977b16873dad1d5fd0bf,1,1,1,exact_occurrence_match
+lr_0357,358,Hypovolemia,9,Hypovolemia,c9eb6fb4cf82519120cf1e0cd41038efd6a0fdac3526cf807ade2420df0ab81b,1,1,1,exact_occurrence_match
+lr_0358,359,Hypovolemia,10,Hypovolemia,1134447983e4546383823471b2bda26f04691d6c64026f6c3118ac6541fe8cf3,1,1,1,exact_occurrence_match
+lr_0359,360,Hypovolemia,11,Hypovolemia,5185dff7eb5a85bc33623b660fe2a001b38b3264e7726c1bfbe7005242d88674,1,1,1,exact_occurrence_match
+lr_0360,361,Hypovolemia,12,Hypovolemia,8615b4aa560c00edde861db47b168a5bd3897cf08265e0994c4c099ddcd2505f,1,1,1,exact_occurrence_match
+lr_0361,362,Hypovolemia,13,Hypovolemia,0c64799ab5ebcdbaa67732b4be6190711db6eeb97c4359c0cd68109a37c770dc,1,1,1,exact_occurrence_match
+lr_0362,363,Hypovolemia,14,Hypovolemia,9d12cf9d24fd6a21134683faf4dd35f346661e85e4ce6f4e4a42313e89806f06,1,1,1,exact_occurrence_match
+lr_0363,364,Hypovolemia,15,Hypovolemia,27920230ab68280f4cff00e8d58c63c2a15bd0d0bfa7c656c5b8c04ccb55f102,1,1,1,exact_occurrence_match
+lr_0364,365,Hypovolemia,16,Hypovolemia,b34b3bd25cf2e705cd31781c4f442483c529da0b6f143678313cb0547604b046,1,1,1,exact_occurrence_match
+lr_0365,366,Hypovolemia,17,Hypovolemia,39ff264260123e6c2ef66366c2976f94657031307f7b0f9f41119f6cd2a063e4,1,1,1,exact_occurrence_match
+lr_0366,367,Hypovolemia,18,Hypovolemia,dfdeee6381d5acfba4017b588179a98f9c30f9b5a97066cf1f79c6f2fcc22832,1,1,1,exact_occurrence_match
+lr_0367,368,Hypovolemia,19,Hypovolemia,6e9f260de9492dad923bfea600e3158bdc5ff9d8bbc278e313a1f81e8db42738,1,1,1,exact_occurrence_match
+lr_0368,369,Hypovolemia,20,Hypovolemia,ea8160e9cd3d5f65e34e67aa4974e04242ea8976e5a99ec643b0fc12a06ae052,1,1,1,exact_occurrence_match
+lr_0369,370,Hypovolemia,21,Hypovolemia,8ba0b93689aa1af5e08b7f2467f3b4a607ec3153fffda70dbf7362054569e89a,1,1,1,exact_occurrence_match
+lr_0370,371,Hypovolemia,22,Hypovolemia,6975d60b834e8635877061b43d82ca6f7953b061e02fcc48c9627e43a4c51ba5,1,1,1,exact_occurrence_match
+lr_0371,372,Hypovolemia,23,Hypovolemia,c5412aacd01dbb03ead207f1a71c5dfa1cab543e7454ee708e3f4dab68be595b,1,1,1,exact_occurrence_match
+lr_0372,373,Hypovolemia,24,Hypovolemia,8123b456ca791871cdb5cc7511bad5f5479f74486ccd5cbf55477447461e0d93,1,1,1,exact_occurrence_match
+lr_0373,374,Malaria in Returning Travelers,3,Malaria in Returning Travelers,1f73762b74813fcd3ab66f44081e2f54839eb90b7c31526f77b0a9ec7d9becd3,1,1,1,exact_occurrence_match
+lr_0374,375,Malaria in Returning Travelers,4,Malaria in Returning Travelers,d86b90191f3713fdcd41d68fefef8400eb475eceb5d0ebdd9f889c088e30b389,1,1,1,exact_occurrence_match
+lr_0375,376,Malaria in Returning Travelers,5,Malaria in Returning Travelers,20f45917dfa1113d18a13ac314228e9d57271a0165e9a70fdb7e228ac66c523a,1,1,1,exact_occurrence_match
+lr_0376,377,Malaria in Returning Travelers,6,Malaria in Returning Travelers,f05f82c2efa73c05b0e184d0aadcfb0719dd6487a83cbd2b182d9dfc73fa2f19,1,1,1,exact_occurrence_match
+lr_0377,378,Malaria in Returning Travelers,7,Malaria in Returning Travelers,36e76bc2cf7eed36dbcc0c722a5c5f77b5a9ce8b694d768146dec124e559408f,1,1,1,exact_occurrence_match
+lr_0378,379,Malaria in Returning Travelers,8,Malaria in Returning Travelers,6d10e5fb77ffc0a547f4b32ea01431073166c0532ae978266f8dee593c83f727,1,1,1,exact_occurrence_match
+lr_0379,380,Malaria in Returning Travelers,9,Malaria in Returning Travelers,e594f2a0589c260b07b03c1b40c8de190c66c6275f72cd1027888e4a25c3a490,1,1,1,exact_occurrence_match
+lr_0380,381,Malaria in Returning Travelers,10,Malaria in Returning Travelers,7351d0c1acd24459dc1f6d1469372faf4b58a659ab0b2223c1a63103a55eea4c,1,1,1,exact_occurrence_match
+lr_0381,382,Malaria in Returning Travelers,11,Malaria in Returning Travelers,1c7669e35127d12b5ba1ffc1fc1bfa6ae4d68a974e96b80118b0f25081363763,1,1,1,exact_occurrence_match
+lr_0382,383,Malaria in Returning Travelers,12,Malaria in Returning Travelers,c91f806bc67893efde0473d37ac5df095915fcf0f3eadc1d61f9d1e20d83d600,1,1,1,exact_occurrence_match
+lr_0383,384,Malaria in Returning Travelers,13,Malaria in Returning Travelers,39a015b4b2edfa2413c45aad47bdcc2b9eaa6e7413da6bd2b9448d9589d2163c,1,1,1,exact_occurrence_match
+lr_0384,385,Malaria in Returning Travelers,14,Malaria in Returning Travelers,bb91140c1d13156e07c4afd0069cb0ace154119966c36022e0599632072e765b,1,1,1,exact_occurrence_match
+lr_0385,386,Malaria in Returning Travelers,15,Malaria in Returning Travelers,cbfd5cdd8d0d780ae589fb2965c311ade10f26b1a1c333cabae1e92e8e0dfba8,1,1,1,exact_occurrence_match
+lr_0386,387,Malaria in Returning Travelers,16,Malaria in Returning Travelers,58f5974c74b7540136c483e79a596a69186ea612eab3e5177d0a52cfd27425fc,1,1,1,exact_occurrence_match
+lr_0387,388,Malaria in Returning Travelers,17,Malaria in Returning Travelers,4d5bdefbf12c091044a06ec77fa676ad3904754c092db98aee91efd0f6ff4762,1,1,1,exact_occurrence_match
+lr_0388,389,Malaria in Returning Travelers,18,Malaria in Returning Travelers,80391eab0ac27720f28931434b787fb0725b078c0d6b506b203b372a065dd736,1,1,1,exact_occurrence_match
+lr_0389,390,Malaria in Returning Travelers,19,Malaria in Returning Travelers,399e06b9dc582340ed051ffc123b61ce1713acbb56e346853ef102074dd4b7f9,1,1,1,exact_occurrence_match
+lr_0390,391,Malaria in Returning Travelers,20,Malaria in Returning Travelers,3f4f5e8e73f1bf395e03ba59df7eea760b3252579e919282e7b9bb1b289dd8c5,1,1,1,exact_occurrence_match
+lr_0391,392,Malaria in Returning Travelers,21,Malaria in Returning Travelers,0271c0ea349128aeb9e474c03be10a00588a43ea3d5ad1c9fd94d1eb4d3c658e,1,1,1,exact_occurrence_match
+lr_0392,393,Malaria in Returning Travelers,22,Malaria in Returning Travelers,c0072bc07c11d7d940625661689a9f26fa3bb9a78e4cc1e6ec98d79137489287,1,1,1,exact_occurrence_match
+lr_0393,394,Malaria in Returning Travelers,23,Malaria in Returning Travelers,96011b1da03b1d87366ad4043865f638f55ae405f379e7fbf922aba91793e2da,1,1,1,exact_occurrence_match
+lr_0394,395,Malaria in Returning Travelers,24,Malaria in Returning Travelers,0c63d4c7e789c907d93df35012fa296fb6d5f96637c35e2a1ad9f81af857268b,1,1,1,exact_occurrence_match
+lr_0395,396,Malaria in Returning Travelers,25,Malaria in Returning Travelers,b8a425a206a5d75eada03fbfcb07b4531908eb0cd29ef9766c8c21a8bf4ec386,1,1,1,exact_occurrence_match
+lr_0396,397,Malaria in Returning Travelers,26,Malaria in Returning Travelers,394d81276378168b7b8f25b5faf8da0a933c7f40dfb399382387531bf25e9a61,1,1,1,exact_occurrence_match
+lr_0397,398,Malaria in Returning Travelers,27,Malaria in Returning Travelers,c9e48f810ae444e0caf38e078985a5c5bbec6b86d217f8b538231c75b7c96e97,1,1,1,exact_occurrence_match
+lr_0398,399,Malaria in Returning Travelers,28,Malaria in Returning Travelers,51b6af29ccee8192ef06282a4ada20ccdb157ad2c98ae4d8cd30f719e2b618eb,1,1,1,exact_occurrence_match
+lr_0399,400,Malaria in Returning Travelers,29,Malaria in Returning Travelers,c81ceaed1e8e5a0b65fb89881b84a66737cff204a456bd6de2fbe416a6ee5164,1,1,1,exact_occurrence_match
+lr_0400,401,Malaria in Returning Travelers,30,Malaria in Returning Travelers,cf72208eb56ba7346763c8fea2c14f6d9be882e616fbae0964fc9ad962914bfc,1,1,1,exact_occurrence_match
+lr_0401,402,eomyelitis in Diabetic Patients,3,Osteomyelitis in Diabetic Patients,fed0dd75de31389b24a624ed0036223d8fb0669c16c1394420f314107d7d5dc2,1,1,1,exact_occurrence_match
+lr_0402,403,eomyelitis in Diabetic Patients,4,Osteomyelitis in Diabetic Patients,145781deb8525ac88a2d95dd9e46c8c4c4cef7b3069dcc8939ac4fe3ab938d72,1,1,1,exact_occurrence_match
+lr_0403,404,eomyelitis in Diabetic Patients,5,Osteomyelitis in Diabetic Patients,3bac1b8a1ee7a70737b3d1090348cb8c132f8a76b2cfb5f42cde465917a31973,1,1,1,exact_occurrence_match
+lr_0404,405,eomyelitis in Diabetic Patients,6,Osteomyelitis in Diabetic Patients,cf7f274bc038deb19697760f1658682b620a88c69df19d4d27a87ce7937778f6,1,1,1,exact_occurrence_match
+lr_0405,406,eomyelitis in Diabetic Patients,7,Osteomyelitis in Diabetic Patients,af92cfa68347d2ef858d81d3806f1cdea391a594363ad3af3e7c65c8e1d8e10e,1,1,1,exact_occurrence_match
+lr_0406,407,eomyelitis in Diabetic Patients,8,Osteomyelitis in Diabetic Patients,f0baab38f0b6a68f699cf4d5288b1899ac744f84c65decdb6e9c084c6f67dcf6,1,1,1,exact_occurrence_match
+lr_0407,408,eomyelitis in Diabetic Patients,9,Osteomyelitis in Diabetic Patients,176de188d836aa68af16827c405c948da96f6043a21a21c80b2e6fcddf24307d,1,1,1,exact_occurrence_match
+lr_0408,409,eomyelitis in Diabetic Patients,10,Osteomyelitis in Diabetic Patients,6c456f380d56c0497c989c72126fde1c5c9e48b949ce6c1c1566e57e71fa02e5,1,1,1,exact_occurrence_match
+lr_0409,410,eomyelitis in Diabetic Patients,11,Osteomyelitis in Diabetic Patients,78ba071e56d556a285201736f6260bbae93d480dc8d33338a0a9097d59c14d19,1,1,1,exact_occurrence_match
+lr_0410,411,eomyelitis in Diabetic Patients,12,Osteomyelitis in Diabetic Patients,fd914e34a2151cfe12373baf5ad113c02bcdebd5d341075a34baee4e11eb6787,1,1,1,exact_occurrence_match
+lr_0411,412,eomyelitis in Diabetic Patients,13,Osteomyelitis in Diabetic Patients,fd28685eb32bd7067e517492b24424fd88e5e4e6cf2d0d401ceb080d39ebdb81,1,1,1,exact_occurrence_match
+lr_0412,413,eomyelitis in Diabetic Patients,14,Osteomyelitis in Diabetic Patients,f85a2de3efca81b37d4195bcceabb27389d4eb89bfffb45b5669eb2559c169c6,1,1,1,exact_occurrence_match
+lr_0413,414,eomyelitis in Diabetic Patients,15,Osteomyelitis in Diabetic Patients,1c8d2b9b66a9cf1e3e34f9dd271cdc3dad33ff490fc0092117474dfbb00b89f2,1,1,1,exact_occurrence_match
+lr_0414,415,eomyelitis in Diabetic Patients,16,Osteomyelitis in Diabetic Patients,7240a7aa1f7f773c86ed7092ad1be7d907c3697873ddcf3d07e0f0c670222811,1,1,1,exact_occurrence_match
+lr_0415,416,eomyelitis in Diabetic Patients,17,Osteomyelitis in Diabetic Patients,d46420494016bcf6344e536cd7138f62c298ffe9845328710b773435de0f0933,1,1,1,exact_occurrence_match
+lr_0416,417,Pertussis (Whooping Cough),3,Pertussis (Whooping Cough),0b2bb1b8508cefce93ccf4c0d1c68f03903815fbc91ac43635cc2607d5d66d24,1,1,1,exact_occurrence_match
+lr_0417,418,Pertussis (Whooping Cough),4,Pertussis (Whooping Cough),463d1422cd31d4a9627bf91c86f587cb2507323f8b83e769bb1d546123dd6962,1,1,1,exact_occurrence_match
+lr_0418,419,Pertussis (Whooping Cough),5,Pertussis (Whooping Cough),9f592e0bf0c2fae2849bf96c5db7ddfaa6dc46c4c10663751dd0ee29aa470d89,1,1,1,exact_occurrence_match
+lr_0419,420,Pertussis (Whooping Cough),6,Pertussis (Whooping Cough),4060cb4a7c7cc63ba79cae87be4466ddc72bbbba0c83e3b4153800f6f878a7bd,1,1,1,exact_occurrence_match
+lr_0420,421,Pertussis (Whooping Cough),7,Pertussis (Whooping Cough),9d399016c71d29fa951c514a15004d7df2fe3ad1f3657ad56daf7573d5bebf0a,1,1,1,exact_occurrence_match
+lr_0421,422,Pertussis (Whooping Cough),8,Pertussis (Whooping Cough),96b0f9c0de740f4e32f6a4c40552246820b4e6a13ee37d510dba4a20810ed386,1,1,1,exact_occurrence_match
+lr_0422,423,Streptococal Pharyngitis,3,Streptococal Pharyngitis,75765c469c111186086b47695ed05ba7bc4ea214786604888d5f654ac6376d67,1,1,1,exact_occurrence_match
+lr_0423,424,Streptococal Pharyngitis,4,Streptococal Pharyngitis,d3af0cc5bb6bc328f2f0cbef6e7b1959d53d93c4b7691b1a8a4deba7f0f14ff0,1,1,1,exact_occurrence_match
+lr_0424,425,Streptococal Pharyngitis,5,Streptococal Pharyngitis,2f99b3dc72cd0889e86781742356c44df97fa18a59aa9f2a03836d5612e68d4f,1,1,1,exact_occurrence_match
+lr_0425,426,Streptococal Pharyngitis,6,Streptococal Pharyngitis,b8d717367f7d619477200e34f749cff18689fae53c65a593aef63db5f48aed2d,1,1,1,exact_occurrence_match
+lr_0426,427,Streptococal Pharyngitis,7,Streptococal Pharyngitis,63896f63169636c88f7e91ef1486e60afd0cbb283b8aa3c8586fb2799c4f4563,1,1,1,exact_occurrence_match
+lr_0427,428,Streptococal Pharyngitis,8,Streptococal Pharyngitis,9d472833b09c3a182f539089c2eb7d69c77f5831eeb79cc6dfa2a674b6fde026,1,1,1,exact_occurrence_match
+lr_0428,429,Streptococal Pharyngitis,9,Streptococal Pharyngitis,4d78822b50044c830e78bacdd5025fbbfe44a18519000b3b83dc35811887259c,1,1,1,exact_occurrence_match
+lr_0429,430,Streptococal Pharyngitis,10,Streptococal Pharyngitis,daae14e0c5181eb083c99eda95fa830488d374a3625ff1e3d48b1f80157bcb1e,1,1,1,exact_occurrence_match
+lr_0430,431,Streptococal Pharyngitis,11,Streptococal Pharyngitis,c9183a5ac144d7a9a5e5628e72b44b0de3cf67fe16aa3afae489d291b2ca20ee,1,1,1,exact_occurrence_match
+lr_0431,432,Streptococal Pharyngitis,12,Streptococal Pharyngitis,fa6bee75c11f2961be4cb422d6907daa076b5e53b4216e6d0b55e5a3a7386658,1,1,1,exact_occurrence_match
+lr_0432,433,Streptococal Pharyngitis,13,Streptococal Pharyngitis,97519305f44fd2267205064e2e34286acb9c5378802fc7991ced5f48b44d9d1c,1,1,1,exact_occurrence_match
+lr_0433,434,Streptococal Pharyngitis,14,Streptococal Pharyngitis,700ed5c0163f8c6d22b17a1005c5feb6c3d3e8e78c34ea2e22a16c71ca4c62d0,1,1,1,exact_occurrence_match
+lr_0434,435,Streptococal Pharyngitis,15,Streptococal Pharyngitis,9469632851f698740cc1c14d7bbc8396ed30cafea3e9e1b5b337e52f40f1a279,1,1,1,exact_occurrence_match
+lr_0435,436,Streptococal Pharyngitis,16,Streptococal Pharyngitis,1a944b2a9113967307bac3f802f9a1897b80f69e5ce5f260b67b7e403b91dad3,1,1,1,exact_occurrence_match
+lr_0436,437,Streptococal Pharyngitis,17,Streptococal Pharyngitis,e9de0028e1f562f697131bb1c5e3cc482be6819e561427720bf23957363c9032,1,1,1,exact_occurrence_match
+lr_0437,438,Streptococal Pharyngitis,18,Streptococal Pharyngitis,8e6b56567b42ce5737f0ad271ab7ef154aa2b33201c17c33b3e5630689ce33ce,1,1,1,exact_occurrence_match
+lr_0438,439,Streptococal Pharyngitis,19,Streptococal Pharyngitis,d36c6b2fefbae4c02980bab2248d5dca66137892fe3e222c4778e6c02987444b,1,1,1,exact_occurrence_match
+lr_0439,440,Streptococal Pharyngitis,20,Streptococal Pharyngitis,6b88a51e0cf4e5a1040a181ecea00b20d56bd9aafb745547edf51613556e9b1c,1,1,1,exact_occurrence_match
+lr_0440,441,Streptococal Pharyngitis,21,Streptococal Pharyngitis,b841a39f56083a241b28629286568711311c2dd5b449677dbffc72374939bcca,1,1,1,exact_occurrence_match
+lr_0441,442,Streptococal Pharyngitis,22,Streptococal Pharyngitis,ddb7b2ec2e5f0035f042c0c39cce9e2493a71c4e34124fbd3262779a5fc0fa92,1,1,1,exact_occurrence_match
+lr_0442,443,Streptococal Pharyngitis,23,Streptococal Pharyngitis,27bc3c779d6b4458c24b7f960bfd21162197cb9136c4f06a479f916ca453e7a6,1,1,1,exact_occurrence_match
+lr_0443,444,Streptococal Pharyngitis,24,Streptococal Pharyngitis,c7abab6b29a4905ae1431f0670a9d05142d9448eb9a681318ce5d1d947dc2217,1,1,1,exact_occurrence_match
+lr_0444,445,Streptococal Pharyngitis,25,Streptococal Pharyngitis,2fc9fda4da495c1c8c0f2ed7b00099460aff694580034d32769065f23933c5d5,1,1,1,exact_occurrence_match
+lr_0445,446,Streptococal Pharyngitis,26,Streptococal Pharyngitis,bd81207837e9450eb60724427f32996c4ceb7b3999ae0dd85637dfa4cfbfdade,1,1,1,exact_occurrence_match
+lr_0446,447,Streptococal Pharyngitis,27,Streptococal Pharyngitis,58b8444b3e799bda0a50301ecfbe57090578ae15de295b50961a1397181756e5,1,1,1,exact_occurrence_match
+lr_0447,448,Streptococal Pharyngitis,28,Streptococal Pharyngitis,142a2b1c2e65ff84194e5d739762670c7cb5cc06847f47b5857927b76a4c61f2,1,1,1,exact_occurrence_match
+lr_0448,449,Streptococal Pharyngitis,29,Streptococal Pharyngitis,bd81b1b3b1375d64bf6284578f601f05f43abde0c734375dc5fba21970d39572,1,1,1,exact_occurrence_match
+lr_0449,450,Streptococal Pharyngitis,30,Streptococal Pharyngitis,3ffeea729d23048e5441535869d95ba0f9b62a0813ec53d54fc6ba10d6b2c130,1,1,1,exact_occurrence_match
+lr_0450,451,Streptococal Pharyngitis,31,Streptococal Pharyngitis,76268dfc199fa41e7e131b8f38cf0e45a4517449d4deb69fa18168c32ae58ca2,1,1,1,exact_occurrence_match
+lr_0451,452,Streptococal Pharyngitis,32,Streptococal Pharyngitis,19476441419963ab05a944ac3b8bb9a275e47c26da8a4735fe76e9909ac04374,1,1,1,exact_occurrence_match
+lr_0452,453,Streptococal Pharyngitis,33,Streptococal Pharyngitis,f136a425741d41ad2f0219e8aedc432b8fc67c76a49e252584c6d408ee3c24ee,1,1,1,exact_occurrence_match
+lr_0453,454,Streptococal Pharyngitis,34,Streptococal Pharyngitis,93114ed58e1e7d8e8295a34ba4943c675eb18033e53ec4a5856cf56b64bce40f,1,1,1,exact_occurrence_match
+lr_0454,455,Streptococal Pharyngitis,35,Streptococal Pharyngitis,e0dd4f273beeb6b87bad62c6d41763f1a68b41f2f5c663a0a84d3da5e7747d00,1,1,1,exact_occurrence_match
+lr_0455,456,Streptococal Pharyngitis,36,Streptococal Pharyngitis,ebd835826b1aa0903253d5c81c0ccf42160e803003027ee4f575681ef1a59bf7,1,1,1,exact_occurrence_match
+lr_0456,457,Streptococal Pharyngitis,37,Streptococal Pharyngitis,017962774703a5d884ab509aceb89603d482ec35cc808f517df2eea8be2fd59a,1,1,1,exact_occurrence_match
+lr_0457,458,Streptococal Pharyngitis,38,Streptococal Pharyngitis,d8121bb90d6acaa23f4f5e5ff18ec2c316ec4fb50a3dd0a5745040d3dd6ffa3b,1,1,1,exact_occurrence_match
+lr_0458,459,Streptococal Pharyngitis,39,Streptococal Pharyngitis,f8b01a5503b9eff1eb21047dceff029c5e29e173058db42375b39a2c1d5ca7e7,1,1,1,exact_occurrence_match
+lr_0459,460,Streptococal Pharyngitis,40,Streptococal Pharyngitis,aee8f8fa49e9696dc7ecbf4a419567fc87aacc35d87f43214f758ee5a163a62b,1,1,1,exact_occurrence_match
+lr_0460,461,Streptococal Pharyngitis,41,Streptococal Pharyngitis,a5088f620ff8f902fe99b892820c431ad6e4cbf1d584adbe09b2f23f7c567bc5,1,1,1,exact_occurrence_match
+lr_0461,462,Streptococal Pharyngitis,42,Streptococal Pharyngitis,6d915dd566a8f9200ebcf2111e349671f97077eb991e722ff0d7c8a11702c2ad,1,1,1,exact_occurrence_match
+lr_0462,463,Streptococal Pharyngitis,43,Streptococal Pharyngitis,c282d71e5b58ee86ad5fb68ee04e9a7973b4c6ceb4eefa58eea668f4cfaec254,1,1,1,exact_occurrence_match
+lr_0463,464,Streptococal Pharyngitis,44,Streptococal Pharyngitis,b8f30c4a9acc8aba92bf00296c479d4ab10eec2beb10da4a265ad1aa3102d3d8,1,1,1,exact_occurrence_match
+lr_0464,465,Streptococal Pharyngitis,45,Streptococal Pharyngitis,94296ba92a047af387b3a0556e4878af2740139a7044849a321883b9868c23c9,1,1,1,exact_occurrence_match
+lr_0465,466,Streptococal Pharyngitis,46,Streptococal Pharyngitis,975b91e19429c4876bd17ff253e16746f3a598a35c1f1875e0c7b474a8bb3279,1,1,1,exact_occurrence_match
+lr_0466,467,Streptococal Pharyngitis,47,Streptococal Pharyngitis,43a3f9c4f6c185606eb14629b1c18bee8f128bc93e7eed0849c4262b4e72af8f,1,1,1,exact_occurrence_match
+lr_0467,468,Streptococal Pharyngitis,48,Streptococal Pharyngitis,bc8adc691a4b4dc4a64df3ba666ca483a442c0fa28d72988eb4421d5808db0e3,1,1,1,exact_occurrence_match
+lr_0468,469,Streptococal Pharyngitis,49,Streptococal Pharyngitis,8dc7dd0983442c12691502f3c13332741ad027c6195ff3f96f3a57eb4945daf3,1,1,1,exact_occurrence_match
+lr_0469,470,Streptococal Pharyngitis,50,Streptococal Pharyngitis,f2e7f99d22caa03b8d324adbfecb1db21068c96d0e77dcf8b84a09f47b9c5cf2,1,1,1,exact_occurrence_match
+lr_0470,471,Streptococal Pharyngitis,51,Streptococal Pharyngitis,4c15a42302c288fbf52f2a7fda2bfeb174f023eccdb9382dff4684cd0924e90e,1,1,1,exact_occurrence_match
+lr_0471,472,Hemorrhagic Stroke,3,Hemorrhagic etiology in patient who has a Stroke,4a04a1670700556b5c4c740227e582a2ebc9150d1c0d774833872a15d08d3fff,1,1,1,exact_occurrence_match
+lr_0472,473,Hemorrhagic Stroke,4,Hemorrhagic etiology in patient who has a Stroke,a618e31aa309798df61940c7444969b8dc05841359f4639c5da82930a55b3e5a,1,1,1,exact_occurrence_match
+lr_0473,474,Hemorrhagic Stroke,5,Hemorrhagic etiology in patient who has a Stroke,8ac9342dea9541d46733f132f86aecf488d38d1ad755cc8ab5e3eae172c51913,1,1,1,exact_occurrence_match
+lr_0474,475,Hemorrhagic Stroke,6,Hemorrhagic etiology in patient who has a Stroke,c4045cc0b6cf1a99bc17b01a6ac88b067d2d739bd3216660543a2f65f9bd354f,1,1,1,exact_occurrence_match
+lr_0475,476,Hemorrhagic Stroke,7,Hemorrhagic etiology in patient who has a Stroke,d5baa2680b2b27a8353886bd7373b7e4e6a1298ddacc72dfd48763c9b1a28b63,1,1,1,exact_occurrence_match
+lr_0476,477,Hemorrhagic Stroke,8,Hemorrhagic etiology in patient who has a Stroke,c025b4d462ba6a2d7866a96a0f72ffdb6ed50b093edf8bf6454d094f0112d838,1,1,1,exact_occurrence_match
+lr_0477,478,Hemorrhagic Stroke,9,Hemorrhagic etiology in patient who has a Stroke,c91555b935d7ddb472896ec57cbf4b4b14cce65ed16ca09d2f547e64aa4f6ce0,1,1,1,exact_occurrence_match
+lr_0478,479,Hemorrhagic Stroke,10,Hemorrhagic etiology in patient who has a Stroke,51fb8f9e2f6a71e3772d991472dc30426897f0b831d520d620cfbd0fa0e9715c,1,1,1,exact_occurrence_match
+lr_0479,480,Hemorrhagic Stroke,11,Hemorrhagic etiology in patient who has a Stroke,93b5995f4e76acb3bc3ed86b031199cef746a73ca7e4801fdde890ed4794b797,1,1,1,exact_occurrence_match
+lr_0480,481,Hemorrhagic Stroke,12,Hemorrhagic etiology in patient who has a Stroke,318fa16ec579a40016efca3a2d38ca67a3c93d39c42a80287cc504969d57d39a,1,1,1,exact_occurrence_match
+lr_0481,482,Hemorrhagic Stroke,13,Hemorrhagic etiology in patient who has a Stroke,7bd5609cc44760ae2edff182ab0e9dfc67af15f38fe5846caa9b5a7331f67f1c,1,1,1,exact_occurrence_match
+lr_0482,483,Hemorrhagic Stroke,14,Hemorrhagic etiology in patient who has a Stroke,61d7ee3adf1918c1722fb96f26d9eebc93669bda2faba0bd648850bdecf630e6,1,1,1,exact_occurrence_match
+lr_0483,484,Hemorrhagic Stroke,15,Hemorrhagic etiology in patient who has a Stroke,fd261586d00485e49fc853880c2eb134023ab76407d5c5701e6d79cdb9e6b665,1,1,1,exact_occurrence_match
+lr_0484,485,Hemorrhagic Stroke,16,Hemorrhagic etiology in patient who has a Stroke,d769952827465a34714eae70da9e1fd4c9864e4ea92413f7aa4af834d2fff7bb,1,1,1,exact_occurrence_match
+lr_0485,486,Hemorrhagic Stroke,17,Hemorrhagic etiology in patient who has a Stroke,5efd529d0b4b83941fa25e73f006e8bc2ae135b4329c621f7e472cd784d53f1c,1,1,1,exact_occurrence_match
+lr_0486,487,Hemorrhagic Stroke,18,Hemorrhagic etiology in patient who has a Stroke,458373d1d8e2071798141fd64040e3fcf19079b9a3051b4ba77148503cd5f077,1,1,1,exact_occurrence_match
+lr_0487,488,Hemorrhagic Stroke,19,Hemorrhagic etiology in patient who has a Stroke,2e7432e6020d0b48c41baad1a389f24895c97b2f7faf3f4083208a255daf7446,1,1,1,exact_occurrence_match
+lr_0488,489,Hemorrhagic Stroke,20,Hemorrhagic etiology in patient who has a Stroke,236d875a8739ff8a1c93e7246daf7e9e82112a867278df7d419a5f7ab7d169bd,1,1,1,exact_occurrence_match
+lr_0489,490,Hemorrhagic Stroke,21,Hemorrhagic etiology in patient who has a Stroke,d51492bffa715aff34f649d8bec5f9f5b9374a9d3fff2a1d0d536cc56433aeb8,1,1,1,exact_occurrence_match
+lr_0490,491,Hemorrhagic Stroke,22,Hemorrhagic etiology in patient who has a Stroke,4dcb52aa8cab3e4d61aac64e2772f75ff9caf6f02edf91cf9e60c22a4e556ebf,1,1,1,exact_occurrence_match
+lr_0491,492,Hemorrhagic Stroke,23,Hemorrhagic etiology in patient who has a Stroke,46a72681eb095af606595267488591d302a170e001244e90ce822d6eeb1f27e9,1,1,1,exact_occurrence_match
+lr_0492,493,Hemorrhagic Stroke,24,Hemorrhagic etiology in patient who has a Stroke,cc8408ebf4d2f0467b1bac372180d90fae0470235efb57a1f2ea7d18c4987a45,1,1,1,exact_occurrence_match
+lr_0493,494,Hemorrhagic Stroke,25,Hemorrhagic etiology in patient who has a Stroke,85d89e9b586b1c358f13793beebd037a79af55dbb0a2b528e5bee35a792629d4,1,1,1,exact_occurrence_match
+lr_0494,495,Hemorrhagic Stroke,26,Hemorrhagic etiology in patient who has a Stroke,6d39f82856064f2bc53ed2f091a177141d746ea7d710ecf66f62d4e0135855e1,1,1,1,exact_occurrence_match
+lr_0495,496,Hemorrhagic Stroke,27,Hemorrhagic etiology in patient who has a Stroke,0c810dc51439a38fb1e3223023636d082f5ffbacde4162fd9baf1eb4fef0f99a,1,1,1,exact_occurrence_match
+lr_0496,497,Hemorrhagic Stroke,28,Hemorrhagic etiology in patient who has a Stroke,84a764ac1834a4ec2fb81aa299c8912423570d98136248956f9082da8d3b757f,1,1,1,exact_occurrence_match
+lr_0497,498,Hemorrhagic Stroke,29,Hemorrhagic etiology in patient who has a Stroke,f89a3e97a93393168d83eef99f08b926bd25e9751d637af3a4bb414ebdad68f2,1,1,1,exact_occurrence_match
+lr_0498,499,Hemorrhagic Stroke,30,Hemorrhagic etiology in patient who has a Stroke,13869332cc223736846d1b1c02cd56f62613683a1401e654a3f4fb4b4159db07,1,1,1,exact_occurrence_match
+lr_0499,500,Hemorrhagic Stroke,31,Hemorrhagic etiology in patient who has a Stroke,6b7991983f49662f0c15501299aca4fa013530e446e701146ebbc18ded1ebb5c,1,1,1,exact_occurrence_match
+lr_0500,501,Hemorrhagic Stroke,32,Hemorrhagic etiology in patient who has a Stroke,19404b93e45f92db532cfdf7432b637abe0315e60cdd75052096cae826c9d837,1,1,1,exact_occurrence_match
+lr_0501,502,Hemorrhagic Stroke,33,Hemorrhagic etiology in patient who has a Stroke,38526002d52907e389db618717ddfe142df9e7053ca4dd155035b063ee6b279b,1,1,1,exact_occurrence_match
+lr_0502,503,Hemorrhagic Stroke,34,Hemorrhagic etiology in patient who has a Stroke,98a9d8ede90099d1137c892ad268a1f5abbe5c2f604a71c14a7e9ae79447b17a,1,1,1,exact_occurrence_match
+lr_0503,504,Hemorrhagic Stroke,35,Hemorrhagic etiology in patient who has a Stroke,e8355480262c7ccab1770b03a45452ea675715bf1832ead86e6ab6bf57587186,1,1,1,exact_occurrence_match
+lr_0504,505,Hemorrhagic Stroke,36,Hemorrhagic etiology in patient who has a Stroke,8c2fb028bd0b9ecff2b3f07062b6afd8d314ede2e0997de03164e88ef317b7c0,1,1,1,exact_occurrence_match
+lr_0505,506,Hemorrhagic Stroke,37,Hemorrhagic etiology in patient who has a Stroke,8b3b38fccfdcd9d12dfa418c1c7bf30f15094e68417aa41b95e60ccf241875eb,1,1,1,exact_occurrence_match
+lr_0506,507,Hemorrhagic Stroke,38,Hemorrhagic etiology in patient who has a Stroke,c3cbf9401ee67cf44c692efba469071c6cb1139fff70f928c56b6b23513ea52f,1,1,1,exact_occurrence_match
+lr_0507,508,Hemorrhagic Stroke,39,Hemorrhagic etiology in patient who has a Stroke,e0cbad66335eecfdacfef01a15e37ff4ff8c120b226d963ab8839f5ba9ee2ed4,1,1,1,exact_occurrence_match
+lr_0508,509,Hemorrhagic Stroke,40,Hemorrhagic etiology in patient who has a Stroke,985b8564295e449e03cd11bfdaf15a673b7ae8c2720d5d11404f696af080fdbf,1,1,1,exact_occurrence_match
+lr_0509,510,Hemorrhagic Stroke,41,Hemorrhagic etiology in patient who has a Stroke,73fed9da6a0157405987a78b329f5b768ab8bbc376457d8c05a249a858c9af71,1,1,1,exact_occurrence_match
+lr_0510,511,Hemorrhagic Stroke,42,Hemorrhagic etiology in patient who has a Stroke,f94b64919ee461a69d884b8baae5e6a7e87f28be5e88d6b85b8d1af02468d936,1,1,1,exact_occurrence_match
+lr_0511,512,Hemorrhagic Stroke,43,Hemorrhagic etiology in patient who has a Stroke,f6893c86a2323df62c25dd26c7c2d67459ca7439f508887941cc91461f8df642,1,1,1,exact_occurrence_match
+lr_0512,513,Hemorrhagic Stroke,44,Hemorrhagic etiology in patient who has a Stroke,8facc82ba1a773e10484fb8009390c5a5338fc7ff20c95028ae6db85ad75b867,1,1,1,exact_occurrence_match
+lr_0513,514,Hemorrhagic Stroke,45,Hemorrhagic etiology in patient who has a Stroke,71c172c600d4033aae669efd46b5c12313cee837021d95808edbb42417436349,1,1,1,exact_occurrence_match
+lr_0514,515,Hemorrhagic Stroke,46,Hemorrhagic etiology in patient who has a Stroke,363187830b1d285c4bd28a90d0a8ddcceaccac82532b6a95a670e3338f2f87da,1,1,1,exact_occurrence_match
+lr_0515,516,Hemorrhagic Stroke,47,Hemorrhagic etiology in patient who has a Stroke,3eabe88227393a51758be50b758cd00e33e9d056ec7952978a770efaabeeba0e,1,1,1,exact_occurrence_match
+lr_0516,517,Hemorrhagic Stroke,48,Hemorrhagic etiology in patient who has a Stroke,bac7f0ff61f615d99323e42012d3bdce64ea4b8c015cadc224b1b7a505c614cd,1,1,1,exact_occurrence_match
+lr_0517,518,Hemorrhagic Stroke,49,Hemorrhagic etiology in patient who has a Stroke,4ea3050009f3ca742206a746a68a6225138c1f1eff798123842df3aae1baae4b,1,1,1,exact_occurrence_match
+lr_0518,519,Hemorrhagic Stroke,50,Hemorrhagic etiology in patient who has a Stroke,5e41c5ec82506b8137aa814b9ab7d1ed9c34540c31f7c4539edbc27b1e2ed19b,1,1,1,exact_occurrence_match
+lr_0519,520,Hemorrhagic Stroke,51,Hemorrhagic etiology in patient who has a Stroke,6e5f3bc49237d04d3a47ef5628ffdefc714161132219cc79c062d8390c625841,1,1,1,exact_occurrence_match
+lr_0520,521,Hemorrhagic Stroke,52,Hemorrhagic etiology in patient who has a Stroke,e18599842f061516646ef3dc28ff0b67c8eab85b4b9cda6021c0594a69d386c4,1,1,1,exact_occurrence_match
+lr_0521,522,Hemorrhagic Stroke,53,Hemorrhagic etiology in patient who has a Stroke,5c571e4aa9b4834f9ae963b95299c7d9f4bd4208fdf02262de2b836f828b9832,1,1,1,exact_occurrence_match
+lr_0522,523,Hemorrhagic Stroke,54,Hemorrhagic etiology in patient who has a Stroke,959e0face37f8b829a5c8d801719cd6285641dde0778c4f59e8c3bba4c621614,1,1,1,exact_occurrence_match
+lr_0523,524,Hemorrhagic Stroke,55,Hemorrhagic etiology in patient who has a Stroke,0215f784241cb594de40c3c726cec1525ddfe931993457d3223dc56077506fa9,1,1,1,exact_occurrence_match
+lr_0524,525,Hemorrhagic Stroke,56,Hemorrhagic etiology in patient who has a Stroke,a6b2015c93c964c835cb82c4be3e9154157920a39c3ff4425346e483de949b14,1,1,1,exact_occurrence_match
+lr_0525,526,Hemorrhagic Stroke,57,Hemorrhagic etiology in patient who has a Stroke,5bed6ce2a80887fb7987594a74aaf36e01e93d917138cbacb7f512d31dbe387f,1,1,1,exact_occurrence_match
+lr_0526,527,Hemorrhagic Stroke,58,Hemorrhagic etiology in patient who has a Stroke,c510f7e89b1ca28a621f64b822dfa3adb3cd2a04cf102fd5da3322847ad7fff5,1,1,1,exact_occurrence_match
+lr_0527,528,Migraine,3,Migraine,c77c2f6d34cf535a732d95119f4e5ecdd7c01e189b13026680e648c0437bb3a1,1,1,1,exact_occurrence_match
+lr_0528,529,Myasthenia Gravis,3,Myasthenia Gravis,885f7b4343ee5b6a1e72a0dac1db32376ae802a2f4d3531734906104bda5a20f,1,1,1,exact_occurrence_match
+lr_0529,530,Myasthenia Gravis,4,Myasthenia Gravis,3831f320928d567206060e04f702f3bdb206f855396e1f9f3f3db73d2876a659,1,1,1,exact_occurrence_match
+lr_0530,531,Myasthenia Gravis,5,Myasthenia Gravis,e05b7261f0ccaf4c79e0d269e18f8dfe68dcb809a64f604bf62b09ffcfd23550,1,1,1,exact_occurrence_match
+lr_0531,532,Myasthenia Gravis,6,Myasthenia Gravis,b2263c96e72443450d22dce231d21ff4f6c7cda09409025e9aaa9cc8e1edb602,1,1,1,exact_occurrence_match
+lr_0532,533,Myasthenia Gravis,7,Myasthenia Gravis,0afc7266f17a26a36843940d6fa5a14f22147fed28e6405075127a00684b3212,1,1,1,exact_occurrence_match
+lr_0533,534,Myasthenia Gravis,8,Myasthenia Gravis,3eea17b80f0ef57800b35f1908865a684b5856b6bc76590f7397111c4e79a609,1,1,1,exact_occurrence_match
+lr_0534,535,Myasthenia Gravis,9,Myasthenia Gravis,b03fbab5ddc91c7ebb11cac10e9a27fd3d72a84507a4de30e0719a4167e8ad7b,1,1,1,exact_occurrence_match
+lr_0535,536,Myasthenia Gravis,10,Myasthenia Gravis,9d7094efe7145575884bd3ab0ada2c0783dbb39d08f0b72f0699f37628659e08,1,1,1,exact_occurrence_match
+lr_0536,537,Myasthenia Gravis,11,Myasthenia Gravis,c4d8601881a5611c1766cfe3a692e41618672690241f90e78424ec9b1ca9d984,1,1,1,exact_occurrence_match
+lr_0537,538,Myasthenia Gravis,12,Myasthenia Gravis,15206d9ad81883ba79fa83297d272bf94e153d210bc8d1f8dee3bd4bfc11263d,1,1,1,exact_occurrence_match
+lr_0538,539,Myasthenia Gravis,13,Myasthenia Gravis,7e44c30c47e5695206a2f6877bccd6afde203bee0a31cc2d71efc609fc68cf22,1,1,1,exact_occurrence_match
+lr_0539,540,Myasthenia Gravis,14,Myasthenia Gravis,211919b0979d3c9abbd7a470b8f351813c01e09ba02cf26d4ec24cbd294b2f37,1,1,1,exact_occurrence_match
+lr_0540,541,Myasthenia Gravis,15,Myasthenia Gravis,8bbda853452b04b047782438db1c1f005cb66c7848f320829af2a737f9d337a9,1,1,1,exact_occurrence_match
+lr_0541,542,Myasthenia Gravis,16,Myasthenia Gravis,1b6e8db14154733cd64af827ac81a28d3879207bf4efcbdc2897ae1e0ac3c4d6,1,1,1,exact_occurrence_match
+lr_0542,543,Myasthenia Gravis,17,Myasthenia Gravis,8dbc0acb545941edee258c14697dad09799ae354dd6e13766c0055ba98259efd,1,1,1,exact_occurrence_match
+lr_0543,544,Spinal Stenosis in the Elderly,3,Spinal Stenosis in the Elderly,b425ecc2389b657297bef74a53dc1a50c4b09be548832cfbbe7a766497f559d6,1,1,1,exact_occurrence_match
+lr_0544,545,Spinal Stenosis in the Elderly,4,Spinal Stenosis in the Elderly,99e63b8e5807ea9e16dd1cd7295de71c1d738bda485a7719b3a9fc0d6689195e,1,1,1,exact_occurrence_match
+lr_0545,546,Spinal Stenosis in the Elderly,5,Spinal Stenosis in the Elderly,bedf30efb4204743521550f4656159a60059e7c2d4772a7dbd6e45fefa37644b,1,1,1,exact_occurrence_match
+lr_0546,547,Spinal Stenosis in the Elderly,6,Spinal Stenosis in the Elderly,3366997e4ab61fe6a362d5338f3ec7cb1f186e3014fe45d672aea4b91a3fb7e9,1,1,1,exact_occurrence_match
+lr_0547,548,Spinal Stenosis in the Elderly,7,Spinal Stenosis in the Elderly,2d2fdfb153d0f6b7055fff973431b9faccdd44c14fcf5e1f999d1eef846d2790,1,1,1,exact_occurrence_match
+lr_0548,549,Spinal Stenosis in the Elderly,8,Spinal Stenosis in the Elderly,aa333743d7841964b894b4ea3a47642a7e38c24335cd30a1c55ff272c7e26317,1,1,1,exact_occurrence_match
+lr_0549,550,Spinal Stenosis in the Elderly,9,Spinal Stenosis in the Elderly,eb74e15c7d9addce96a999e88d600b75684035cfe3eb95fa79c9dcb13e449818,1,1,1,exact_occurrence_match
+lr_0550,551,Spinal Stenosis in the Elderly,10,Spinal Stenosis in the Elderly,79dcfaa922e0dccee615e800d6c7f0613e99d26d55893073d43c86d490122ab1,1,1,1,exact_occurrence_match
+lr_0551,552,Spinal Stenosis in the Elderly,11,Spinal Stenosis in the Elderly,dd34bef6ffd1ba13f6cbea1461eb8586b7db809038d475a241930d1babfeb137,1,1,1,exact_occurrence_match
+lr_0552,553,Spinal Stenosis in the Elderly,12,Spinal Stenosis in the Elderly,5e4c8a76e0afc0ceb74417e1607805b98da00f417eb76122d2e79146c91ff08c,1,1,1,exact_occurrence_match
+lr_0553,554,Spinal Stenosis in the Elderly,13,Spinal Stenosis in the Elderly,c8bb8c4d6e6a4c94b612a386c3f9480b2a9448affc08f6496077f24a57e08418,1,1,1,exact_occurrence_match
+lr_0554,555,Spinal Stenosis in the Elderly,14,Spinal Stenosis in the Elderly,dac67c66752d7f060e22ea597f375ff051454aa84a1c0517c011b000ecfe781c,1,1,1,exact_occurrence_match
+lr_0555,556,Spinal Stenosis in the Elderly,15,Spinal Stenosis in the Elderly,1722d08300def1b4a7299661f44f3e8bf3188cefbfb9b819c6583b529a6f8549,1,1,1,exact_occurrence_match
+lr_0556,557,Spinal Stenosis in the Elderly,16,Spinal Stenosis in the Elderly,2f1d3e6f5a33eb4be55c02f32833a7548f2d8fce608d6d2bc7a5671786392919,1,1,1,exact_occurrence_match
+lr_0557,558,Spinal Stenosis in the Elderly,17,Spinal Stenosis in the Elderly,f75c065eb18f1111b232beec8acbd99b8081e88b066e74e3900ebb61dc6a2c4b,1,1,1,exact_occurrence_match
+lr_0558,559,Spinal Stenosis in the Elderly,18,Spinal Stenosis in the Elderly,b30dcbe4349472297c103f627cfa372d8930c228a7b4278e9e16418144b116f0,1,1,1,exact_occurrence_match
+lr_0559,560,Spinal Stenosis in the Elderly,19,Spinal Stenosis in the Elderly,484ba01f3890c900eb478a98c6d95551f323579705fcbde11a0d9dfc7e011c80,1,1,1,exact_occurrence_match
+lr_0560,561,Spinal Stenosis in the Elderly,20,Spinal Stenosis in the Elderly,32b72a09d915d240dfcd503336f533d8325660107db86d837e0e48ec567a0029,1,1,1,exact_occurrence_match
+lr_0561,562,Spinal Stenosis in the Elderly,21,Spinal Stenosis in the Elderly,df7361ad19c64499fc33e7f486534e8327f33c312d3b100f58fafafb648c7f0a,1,1,1,exact_occurrence_match
+lr_0562,563,Spinal Stenosis in the Elderly,22,Spinal Stenosis in the Elderly,e86fed4bd50f385a9108208286f23581ecd8f0ec73b31e41be3380bee5d930b6,1,1,1,exact_occurrence_match
+lr_0563,564,Spinal Stenosis in the Elderly,23,Spinal Stenosis in the Elderly,5eeb5b9a4051605d1c32be93ea15435d7ed85262046dc05da78e85c2649f0a8a,1,1,1,exact_occurrence_match
+lr_0564,565,Spinal Stenosis in the Elderly,24,Spinal Stenosis in the Elderly,82bff47eaf82a16fdd7e61a9ea4d03b691bd306cba399c1c813e3c6486280544,1,1,1,exact_occurrence_match
+lr_0565,566,Spinal Stenosis in the Elderly,25,Spinal Stenosis in the Elderly,197ff19675a7fdfb3dbb1f73520f9aabc8c65bce0935ff671088224a9d32b6de,1,1,1,exact_occurrence_match
+lr_0566,567,Spinal Stenosis in the Elderly,26,Spinal Stenosis in the Elderly,c7ffce1910fe9307b95f474ae6033e6364c951bd549869ae38d234966ce10711,1,1,1,exact_occurrence_match
+lr_0567,568,Spinal Stenosis in the Elderly,27,Spinal Stenosis in the Elderly,98faacfadc035ff3812126601772efd44855879b41a167c4f114182f3b19aced,1,1,1,exact_occurrence_match
+lr_0568,569,Spinal Stenosis in the Elderly,28,Spinal Stenosis in the Elderly,b7ae2ee019b6727d11459914785cf2dd0a80bb26141f28faa116871378973d8a,1,1,1,exact_occurrence_match
+lr_0569,570,Spinal Stenosis in the Elderly,29,Spinal Stenosis in the Elderly,408088230ae8a145bd9d133f6ca9ebef728f5cbfc9c1ec224ac51daf27f70e0b,1,1,1,exact_occurrence_match
+lr_0570,571,Spinal Stenosis in the Elderly,30,Spinal Stenosis in the Elderly,983936d6d3c3c14f30277e2e377194c7ff7d182a80617f5a31d12069fce3396f,1,1,1,exact_occurrence_match
+lr_0571,572,Spinal Stenosis in the Elderly,31,Spinal Stenosis in the Elderly,63c031fde5de5b2f8b2543cfb85fd65f398ee481132f35438cf8edd6b2cfc46f,1,1,1,exact_occurrence_match
+lr_0572,573,Spinal Stenosis in the Elderly,32,Spinal Stenosis in the Elderly,4ed7994f4563d22fb28bde1a77962fac4c4d4d03464907fa37a1b276b90cdebe,1,1,1,exact_occurrence_match
+lr_0573,574,Spinal Stenosis in the Elderly,33,Spinal Stenosis in the Elderly,ff64630f5433b2c0d663526d69fb3baf8e00cf947a43fec69a45417e7d39ac5b,1,1,1,exact_occurrence_match
+lr_0574,575,Spinal Stenosis in the Elderly,34,Spinal Stenosis in the Elderly,92c9f15da455e7eb4302fd0c0ab974d677e1e32982ad324fc31a5c981149e396,1,2,2,exact_occurrence_match
+lr_0575,576,Spinal Stenosis in the Elderly,35,Spinal Stenosis in the Elderly,3b86b785b8674f50bbf84aac6b760cdebcc1ee65dfaa895f905f4495c00efe67,1,1,1,exact_occurrence_match
+lr_0576,577,Spinal Stenosis in the Elderly,36,Spinal Stenosis in the Elderly,2d7620efdce5a6709ac02309fd8a41039786687e9014392a72bfef291a8145b2,1,1,1,exact_occurrence_match
+lr_0577,578,Spinal Stenosis in the Elderly,37,Spinal Stenosis in the Elderly,00857066d0f2cd740d68295b41058e3b97d863a8e4c795d38ce39c8fe31addba,1,1,1,exact_occurrence_match
+lr_0578,579,Spinal Stenosis in the Elderly,38,Spinal Stenosis in the Elderly,457228c76cff36ceb66326a472e00e838ad9ffedca35393514447164bff9de62,1,1,1,exact_occurrence_match
+lr_0579,580,Spinal Stenosis in the Elderly,39,Spinal Stenosis in the Elderly,7397cee2729689a19cdd38d65cce79bbd0b9f92bc42d133938dd5f75476c2ce6,1,1,1,exact_occurrence_match
+lr_0580,581,Spinal Stenosis in the Elderly,40,Spinal Stenosis in the Elderly,2ec1deb5d4753668d2763294fbe34206261263903b05d52401355a85485fe7f7,1,1,1,exact_occurrence_match
+lr_0581,582,Spinal Stenosis in the Elderly,41,Spinal Stenosis in the Elderly,a230c324f8e4f50122db462dc3f3ff023e7c4863ca48a4cf982226f9bc1af5b4,1,1,1,exact_occurrence_match
+lr_0582,583,Spinal Stenosis in the Elderly,42,Spinal Stenosis in the Elderly,09a9823f4f4359a0252b5a786d623698fc0a01847e4ae33a8dadedbf50520383,1,1,1,exact_occurrence_match
+lr_0583,584,Spinal Stenosis in the Elderly,43,Spinal Stenosis in the Elderly,7e9136ae4942d387e9141396284004caf46a23f8ec2f036a5591381cd0773984,1,1,1,exact_occurrence_match
+lr_0584,585,Spinal Stenosis in the Elderly,44,Spinal Stenosis in the Elderly,2f7243ca7c44a4947f820d8646a671d12fb5da0f84f7a8a14ea4149b215ccebe,1,1,1,exact_occurrence_match
+lr_0585,586,Spinal Stenosis in the Elderly,45,Spinal Stenosis in the Elderly,bd7a80433184e86258f619c3702a3bf241b99d082f01c038ebd0536190476bc7,1,1,1,exact_occurrence_match
+lr_0586,587,Spinal Stenosis in the Elderly,46,Spinal Stenosis in the Elderly,5b9b4e3d02bf96d41fb9f00e96fba3b126f02662a7b50ca8de5b5ae97ca97fb7,1,1,1,exact_occurrence_match
+lr_0587,588,Spinal Stenosis in the Elderly,47,Spinal Stenosis in the Elderly,d6099c68a4cc3ed42aaefe77a72abcac7de4fff2d1cb198858118ffc4e4d0776,1,1,1,exact_occurrence_match
+lr_0588,589,Spinal Stenosis in the Elderly,48,Spinal Stenosis in the Elderly,c36116757d969bcfa3c9e77930b6a7bbc5c6f733e65207c00093fc269296edb2,1,1,1,exact_occurrence_match
+lr_0589,590,Spinal Stenosis in the Elderly,49,Spinal Stenosis in the Elderly,9b8a5d17f696cb4594ea20d0c35724bf0e386292a0a07623d1bf42eef3e4164e,1,1,1,exact_occurrence_match
+lr_0590,591,Spinal Stenosis in the Elderly,50,Spinal Stenosis in the Elderly,32e42e1396ea92a07ef1d9b1d1b3dc2de60ab7e0292c9f39fa47d471be352cca,1,1,1,exact_occurrence_match
+lr_0591,592,Spinal Stenosis in the Elderly,51,Spinal Stenosis in the Elderly,b068dcfc15559ac1f4b33ec297458557f1b770a967071334e43767e9032d4a91,1,1,1,exact_occurrence_match
+lr_0592,593,Spinal Stenosis in the Elderly,52,Spinal Stenosis in the Elderly,92c9f15da455e7eb4302fd0c0ab974d677e1e32982ad324fc31a5c981149e396,2,2,2,exact_occurrence_match
+lr_0593,594,Spinal Stenosis in the Elderly,53,Spinal Stenosis in the Elderly,99e83d611252fd763253c737d6b6e743db09780c7035fbfa70d3a1e727ea9a85,1,1,1,exact_occurrence_match
+lr_0594,595,Spinal Stenosis in the Elderly,54,Spinal Stenosis in the Elderly,ae9c9d3f2d51232cdcf4830972f7aa2a1a308653e280cba493cfbe6c829be059,1,1,1,exact_occurrence_match
+lr_0595,596,Spinal Stenosis in the Elderly,55,Spinal Stenosis in the Elderly,ebc025933f9b2ce52d80cb731942af95bfa7731371a83f8f02f28d4ba7c14af0,1,1,1,exact_occurrence_match
+lr_0596,597,Spinal Stenosis in the Elderly,56,Spinal Stenosis in the Elderly,c672cc8ba58492aa2d42c19346d1f43d25594b34785420071596dbe267b31b61,1,1,1,exact_occurrence_match
+lr_0597,598,Spinal Stenosis in the Elderly,57,Spinal Stenosis in the Elderly,271fd3b0fcf2bcce2a14c68f8b82c13bef57c16d54229d322454ecb6832d3d45,1,1,1,exact_occurrence_match
+lr_0598,599,Spinal Stenosis in the Elderly,58,Spinal Stenosis in the Elderly,eb0df18ef2e5e0ef5d864b4b45bd7792b743a9d921e2460445603950e18af42a,1,1,1,exact_occurrence_match
+lr_0599,600,Spinal Stenosis in the Elderly,59,Spinal Stenosis in the Elderly,807b5173a0a9ebc4c682f4e03d4d3bebcc4ec94f5a49ad4ad7d9d634c796827a,1,1,1,exact_occurrence_match
+lr_0600,601,Spinal Stenosis in the Elderly,60,Spinal Stenosis in the Elderly,f070b3009d546eb4bb7e8510855c9286825ef5ce91c9827cf93a516568832ab2,1,1,1,exact_occurrence_match
+lr_0601,602,Spinal Stenosis in the Elderly,61,Spinal Stenosis in the Elderly,cca800f78bde7785e15c65ebedf618f76e952a8802a675b89daae4295851f53c,1,1,1,exact_occurrence_match
+lr_0602,603,Spinal Stenosis in the Elderly,62,Spinal Stenosis in the Elderly,4c18e2e3f9f356091dca6e6bec91264e73acb513d2b4fc01d1543d6dfb6fcfaa,1,1,1,exact_occurrence_match
+lr_0603,604,Spinal Stenosis in the Elderly,63,Spinal Stenosis in the Elderly,dbd239bec5a7810601421f71676e5e7298c26d4c25bf2cdf0e8aa8a07b0619d4,1,1,1,exact_occurrence_match
+lr_0604,605,Spinal Stenosis in the Elderly,64,Spinal Stenosis in the Elderly,f6ca59d35d18f40d56f64a7a8757998c5e30e3438db449bf06768f9abc487413,1,1,1,exact_occurrence_match
+lr_0605,606,Spinal Stenosis in the Elderly,65,Spinal Stenosis in the Elderly,f49558cc788a7c0b240ff1215ef81de346c70b6072455ccdf1e1d432d24f3743,1,1,1,exact_occurrence_match
+lr_0606,607,Spinal Stenosis in the Elderly,66,Spinal Stenosis in the Elderly,f0c95903f1cbed5c43b026822fa94323787b534394bb69b3bfe6a94bf8702b25,1,1,1,exact_occurrence_match
+lr_0607,608,Spinal Stenosis in the Elderly,67,Spinal Stenosis in the Elderly,a3887fbf5ce1325ee02a8c34fe6ca720d0768ad2c397619173dd4675718cdf26,1,1,1,exact_occurrence_match
+lr_0608,609,Spinal Stenosis in the Elderly,68,Spinal Stenosis in the Elderly,b76c7e044a14ae2a95a0fc8e19050f2c7d931800130bf952835053d7edd68ea6,1,1,1,exact_occurrence_match
+lr_0609,610,Spinal Stenosis in the Elderly,69,Spinal Stenosis in the Elderly,10052f209309e288a1baf342f649fa60104c2544305f6af48513aa12fe9d3a76,1,1,1,exact_occurrence_match
+lr_0610,611,Spinal Stenosis in the Elderly,70,Spinal Stenosis in the Elderly,cf98389a165a9e8879ffce2fa01b35d3959dde90f39f92d0cfc7922d333a0876,1,1,1,exact_occurrence_match
+lr_0611,612,Temporal Arteritis,3,Temporal Arteritis,2104807b61c2d98b17165dd75c990726d365b9cb23cf2a8a6ecf146f07f461d6,1,1,1,exact_occurrence_match
+lr_0612,613,Temporal Arteritis,4,Temporal Arteritis,ad6ecc5b889cd13e60a0082c84fed4462137f1060544a029ba93742422ea9a69,1,1,1,exact_occurrence_match
+lr_0613,614,Temporal Arteritis,5,Temporal Arteritis,a75253fabdd10cccf068cf8eb4fa1334f3ea96114b8fcc22e773416572bad7b7,1,1,1,exact_occurrence_match
+lr_0614,615,Temporal Arteritis,6,Temporal Arteritis,10434210c6b77e849aab11a172f7a23c5e4ce220bbf6ea3d7a0cdbe020fbf878,1,1,1,exact_occurrence_match
+lr_0615,616,Temporal Arteritis,7,Temporal Arteritis,391796732f6bcf5a3234232afdbbfd6755d153ff79390e065c920021cf6c86c4,1,1,1,exact_occurrence_match
+lr_0616,617,Temporal Arteritis,8,Temporal Arteritis,583a4e8f2693c7ef3ba96d83bac6fa49f5447c7213ca3599bf411da597f35807,1,1,1,exact_occurrence_match
+lr_0617,618,Temporal Arteritis,9,Temporal Arteritis,809c80388d59502eb1e881d525f8e1046941ed9cae51f031f899cb704099d6a7,1,1,1,exact_occurrence_match
+lr_0618,619,Temporal Arteritis,10,Temporal Arteritis,43adaf40ed81b9f08f86e973735966de9a46b2e16bfda76f04237f30de6394d7,1,1,1,exact_occurrence_match
+lr_0619,620,Temporal Arteritis,11,Temporal Arteritis,aaf6b512dc3714941646ed1f85455f6231534b25c44fbae00461061c1fad6001,1,1,1,exact_occurrence_match
+lr_0620,621,Temporal Arteritis,12,Temporal Arteritis,9e682f60f0a77079afa46c98777af556f93fe56450315a4daa53c5ca3ba07e49,1,1,1,exact_occurrence_match
+lr_0621,622,Temporal Arteritis,13,Temporal Arteritis,e932a39d8f625c80081444ef6d0da815d31caef7f483c7eb29597ce8331ccf68,1,1,1,exact_occurrence_match
+lr_0622,623,Temporal Arteritis,14,Temporal Arteritis,72ca3c35e39a047b91893d11dd63d1ceb853c97b286c3fae9e92236afe129c81,1,1,1,exact_occurrence_match
+lr_0623,624,Temporal Arteritis,15,Temporal Arteritis,741ec0f0667ff25d1ba7b6aa31f027ca792e7e5550a4d1eb4f9c25a466d947fa,1,1,1,exact_occurrence_match
+lr_0624,625,Temporal Arteritis,16,Temporal Arteritis,f527cbb1a8a3abfcd2430178afbe5d5db36d9598a60fc447ef503201a989f273,1,1,1,exact_occurrence_match
+lr_0625,626,Temporal Arteritis,17,Temporal Arteritis,0e99da3033ab41835bbfb8e0054fc8ee77da6120948d4c9d0b3864f9071e69ec,1,1,1,exact_occurrence_match
+lr_0626,627,Temporal Arteritis,18,Temporal Arteritis,ee747512df39a9a2b6b59dc4eae221bf994f37b254026c7ad943ea1ae644858f,1,1,1,exact_occurrence_match
+lr_0627,628,Temporal Arteritis,19,Temporal Arteritis,cb24668fd0d04d3938a2ae4ceee5318a309aa4e452cc196c2d8a686579612f1c,1,1,1,exact_occurrence_match
+lr_0628,629,Temporal Arteritis,20,Temporal Arteritis,6b07b163aa007abfbbe63f95aa927709c2a2bc2b6e7813c65f5dfba260e8e994,1,1,1,exact_occurrence_match
+lr_0629,630,Temporal Arteritis,21,Temporal Arteritis,21943bbb0fc8252705c6dbca4f2c5bc0f3e8e04df78e3d5695129331a2e9e960,1,1,1,exact_occurrence_match
+lr_0630,631,Temporal Arteritis,22,Temporal Arteritis,4c3083b25e11f2b1dea42bb4b1751e442dc18f962ef79f72551d65bdb3f7c21c,1,1,1,exact_occurrence_match
+lr_0631,632,Temporal Arteritis,23,Temporal Arteritis,344e927c912249b136e8428d10f387e7d56d19cf3ce12900c5bbcbec3e5ee9b1,1,1,1,exact_occurrence_match
+lr_0632,633,Temporal Arteritis,24,Temporal Arteritis,2f1cd53ed4cf1bacd469051be85f3bc425c2e655351cd971b0f7788b22a22468,1,1,1,exact_occurrence_match
+lr_0633,634,Temporal Arteritis,25,Temporal Arteritis,03f39c07f21fe4355b8c1985a3c538d9e5b2cb20b916aed255d634672d403378,1,1,1,exact_occurrence_match
+lr_0634,635,Temporal Arteritis,26,Temporal Arteritis,4224f0b3dd250361ad86c92e03082334dbe8d509d5733dc768576ac2bcf15088,1,1,1,exact_occurrence_match
+lr_0635,636,Temporal Arteritis,27,Temporal Arteritis,b4c5da35e704d60f950e36eae731440472f6563db410f9f4fd0b138885375e6f,1,1,1,exact_occurrence_match
+lr_0636,637,Temporal Arteritis,28,Temporal Arteritis,6dfcde0f470a667d0d106cd887ab98152ddab778aeba4dceaaa24c12da3befef,1,1,1,exact_occurrence_match
+lr_0637,638,Temporal Arteritis,29,Temporal Arteritis,db7e2dc4272e1ed254802e099ecac4e064057d4019d5222979cffffce8ae530e,1,1,1,exact_occurrence_match
+lr_0638,639,Temporal Arteritis,30,Temporal Arteritis,6485c29d7b58ee7c86a1de0a308707afa08ec7e8260903fefa14eaf92db21479,1,1,1,exact_occurrence_match
+lr_0639,640,Temporal Arteritis,31,Temporal Arteritis,c13e281a54defcdad44a3fa56ae240ff475c3ede9406e33967d30f9b65e300bb,1,1,1,exact_occurrence_match
+lr_0640,641,Temporal Arteritis,32,Temporal Arteritis,90cb1d291a850fdf82ed3035271489b554bbf84a78debde3996528afb55116bf,1,1,1,exact_occurrence_match
+lr_0641,642,Temporal Arteritis,33,Temporal Arteritis,309bbd82e4e0be41c6a191f19ca3d0b04b203fbd634c28c1a4b91ded08bc8fc1,1,1,1,exact_occurrence_match
+lr_0642,643,Temporal Arteritis,34,Temporal Arteritis,a9eb9cad5a5c8e4c1dea33ce5e1de30546e8207a1ee6c5a37aebae0fada38acc,1,1,1,exact_occurrence_match
+lr_0643,644,Temporal Arteritis,35,Temporal Arteritis,806aa051c8cd814a3300dfbb7388759dba4f5cb96f3934eb71dbaa7ab03fd70d,1,1,1,exact_occurrence_match
+lr_0644,645,Temporal Arteritis,36,Temporal Arteritis,daa628e12cc3d2d6aea6b26c975e861277714eb5ccf01b1dac2f9d336d876922,1,1,1,exact_occurrence_match
+lr_0645,646,Temporal Arteritis,37,Temporal Arteritis,269aea2143d288b049212c8f1188aad7f6bfcb0b6b9a998d15546246bfa245a2,1,1,1,exact_occurrence_match
+lr_0646,647,Temporal Arteritis,38,Temporal Arteritis,39ea65876e703048266fe2c1ca0618dd036045614846eb6150e814d5e0fb5b56,1,1,1,exact_occurrence_match
+lr_0647,648,Temporal Arteritis,39,Temporal Arteritis,9e4d096b36eda56f6490b97d0f338f0784ebb9b647272a46e7a0204d89131208,1,1,1,exact_occurrence_match
+lr_0648,649,Temporal Arteritis,40,Temporal Arteritis,40ed20d71902a479c846aa8a84851a2c9858430eccf53945de570c17cfb56ec7,1,1,1,exact_occurrence_match
+lr_0649,650,Temporal Arteritis,41,Temporal Arteritis,8fe0dccdca781ed4a3fd9361cd53aadeaa9dd85c6b1c52f65f25137f07258163,1,1,1,exact_occurrence_match
+lr_0650,651,Temporal Arteritis,42,Temporal Arteritis,d9b99c3a6d3a2a2e2818a8b44261b76d06b8afca0d4f08119a33c8ea00131b97,1,1,1,exact_occurrence_match
+lr_0651,652,Temporal Arteritis,43,Temporal Arteritis,ab8e5d9818a495c6c388af716174de940d13fc2fc6204cc7657bf25ad2acbcf4,1,1,1,exact_occurrence_match
+lr_0652,653,Temporal Arteritis,44,Temporal Arteritis,6223f0b1dc313d19675c6b3d1643f06ec6d030c4b1cc41d66b0db5b993f18575,1,1,1,exact_occurrence_match
+lr_0653,654,Temporal Arteritis,45,Temporal Arteritis,7b24b277c40d99fa1d6c1598eb547f0681dc905fc5311ea6c96e4fafb903b470,1,1,1,exact_occurrence_match
+lr_0654,655,Temporal Arteritis,46,Temporal Arteritis,19e8d404e32d297329183b05e13171e96855908cfbd730b338e5a883b3071b8d,1,1,1,exact_occurrence_match
+lr_0655,656,Temporal Arteritis,47,Temporal Arteritis,065bb41c8d53507a40bb4cf4254851dc0b124201a537a1f549cca088adf9c418,1,1,1,exact_occurrence_match
+lr_0656,657,Temporal Arteritis,48,Temporal Arteritis,84e5551660e03ff12cce2095f61f830697527a53fec26ddad6eddad1e5880c07,1,1,1,exact_occurrence_match
+lr_0657,658,Temporal Arteritis,49,Temporal Arteritis,4b83f7daac2c77c506919f326aa19f5f9126d392640c6724d287221407be70f9,1,1,1,exact_occurrence_match
+lr_0658,659,Temporal Arteritis,50,Temporal Arteritis,6284965e8cb1630017917e419db5b62f0232b5263093c676e8a89ffefd9cbb11,1,1,1,exact_occurrence_match
+lr_0659,660,Temporal Arteritis,51,Temporal Arteritis,33f3b28eb7b51b5806a7209dbbe43da219dbe05c2cfab7f30c3f4e87d00ab320,1,1,1,exact_occurrence_match
+lr_0660,661,Temporal Arteritis,52,Temporal Arteritis,12ef158805fc925279346e653b657d0960a52f180e77ef48b38660d061c8b0b9,1,1,1,exact_occurrence_match
+lr_0661,662,Temporal Arteritis,53,Temporal Arteritis,1476a90df36836f73400b6397119efd1e9b995a6e44fdff44f9a8468f924adaf,1,1,1,exact_occurrence_match
+lr_0662,663,Temporal Arteritis,54,Temporal Arteritis,50839679dcb24f4f4ec8be20dec4affff29ab0b4bbf83088c51fd28aedf06914,1,1,1,exact_occurrence_match
+lr_0663,664,Temporal Arteritis,55,Temporal Arteritis,7aba77083c2b8a64cc86c9ec49e1ed20fea9d81d03edcf1f211390624f63b397,1,1,1,exact_occurrence_match
+lr_0664,665,Temporal Arteritis,56,Temporal Arteritis,bc00e31baae592b4e5df0ee1b29a19201ea2e75a97b723635c142bd8a59f34e4,1,1,1,exact_occurrence_match
+lr_0665,666,Temporal Arteritis,57,Temporal Arteritis,50fc7b70597dc8b3e7ddafcb55ef57e07926c177efed211f536791856087800f,1,1,1,exact_occurrence_match
+lr_0666,667,Temporal Arteritis,58,Temporal Arteritis,fcc2f81d851bf054952104df22ed24a791599b47cf244a38a2fa6899c5be995e,1,1,1,exact_occurrence_match
+lr_0667,668,Carpal Tunnel Syndrome,3,Carpal Tunnel Syndrome,b1aed9d8c91cac2b0a418598684781875ce39d23a82bd1b182ef0fb94bdf0019,1,1,1,exact_occurrence_match
+lr_0668,669,Carpal Tunnel Syndrome,4,Carpal Tunnel Syndrome,af03a083c6abeb56ebbc3b187117fb20f325916c0f6fd1a4bd34138f096b5fea,1,1,1,exact_occurrence_match
+lr_0669,670,Carpal Tunnel Syndrome,5,Carpal Tunnel Syndrome,8fd9cc6718cb60bdd2efd23d0cca869a4d70fae2729a50a38165807bcdeca0e0,1,1,1,exact_occurrence_match
+lr_0670,671,Carpal Tunnel Syndrome,6,Carpal Tunnel Syndrome,db9918e3210496290102f657e19a747f42b9820d816df55caddf971d6c105d1e,1,1,1,exact_occurrence_match
+lr_0671,672,Carpal Tunnel Syndrome,7,Carpal Tunnel Syndrome,e6f265d876e8105c3e680ac73f130d16b09a8c768576d7a7302b6ab38b911ef0,1,1,1,exact_occurrence_match
+lr_0672,673,Carpal Tunnel Syndrome,8,Carpal Tunnel Syndrome,f1bf29e182d652f84f1501190723d22fffeada6e83261a7d9ef28398492d4482,1,1,1,exact_occurrence_match
+lr_0673,674,Carpal Tunnel Syndrome,9,Carpal Tunnel Syndrome,334dbdcf98ed2eac36e4b8ac326e266fdc070dbcba4d750e67f8f5766ceefcbf,1,1,1,exact_occurrence_match
+lr_0674,675,Carpal Tunnel Syndrome,10,Carpal Tunnel Syndrome,507f5ceb82f0d2e0b431e710979d5f5711bf16f03cbd0f8af821c2128fc630ec,1,1,1,exact_occurrence_match
+lr_0675,676,Carpal Tunnel Syndrome,11,Carpal Tunnel Syndrome,ee9298dae93f1933ab3041255bb96b994816d566532e20db31c571e8f9f32929,1,1,1,exact_occurrence_match
+lr_0676,677,Carpal Tunnel Syndrome,12,Carpal Tunnel Syndrome,20a1a0f82dca234c2f62c31bfe6cf7c32346ecae6290cc35ff8f4c76604f73cc,1,1,1,exact_occurrence_match
+lr_0677,678,Carpal Tunnel Syndrome,13,Carpal Tunnel Syndrome,03e4dde970201f287f6ac5e772325a51933ba4eba05def80c5930c56d77ad2f7,1,1,1,exact_occurrence_match
+lr_0678,679,Carpal Tunnel Syndrome,14,Carpal Tunnel Syndrome,6c284596443eea64decf29fd006823f714d968fe62bd8915717846b3cb7c86fe,1,1,1,exact_occurrence_match
+lr_0679,680,Carpal Tunnel Syndrome,15,Carpal Tunnel Syndrome,9e257e065a151f94a4d69eda71e37b5b9af1b1fa2794ff3c9c148a79ed5a9108,1,1,1,exact_occurrence_match
+lr_0680,681,Carpal Tunnel Syndrome,16,Carpal Tunnel Syndrome,6b060b15712735afdd62f2d1a0a6e3a0be102e624da2992668ae3b07dcf4548f,1,1,1,exact_occurrence_match
+lr_0681,682,Carpal Tunnel Syndrome,17,Carpal Tunnel Syndrome,7f1dc542334805c5c2d99d35eb8f197782761fc651f5677541a55eac6a6ecf9f,1,1,1,exact_occurrence_match
+lr_0682,683,Carpal Tunnel Syndrome,18,Carpal Tunnel Syndrome,c59746433810474fee67003d23aae294ef1f45b0ae61ad3657f48900f36d0a4a,1,1,1,exact_occurrence_match
+lr_0683,684,Carpal Tunnel Syndrome,19,Carpal Tunnel Syndrome,f8d44b15b25f7e2800e9f586bf5a178ce2adc25d9a7d7d4904c81287e80961f5,1,1,1,exact_occurrence_match
+lr_0684,685,Carpal Tunnel Syndrome,20,Carpal Tunnel Syndrome,089ddcefdf1f9496032b1a91df5209698ca6dd96c74e800aab3ed595d31a61a7,1,1,1,exact_occurrence_match
+lr_0685,686,Carpal Tunnel Syndrome,21,Carpal Tunnel Syndrome,999a52a38322e8091b01718b7ba53a3a753a5d3ccc3a7fbe177e9cf32adea743,1,1,1,exact_occurrence_match
+lr_0686,687,Carpal Tunnel Syndrome,22,Carpal Tunnel Syndrome,1310786a51d6dd6d7bd82b60931198828aac4bd39c92afa8d5f74930005ac269,1,1,1,exact_occurrence_match
+lr_0687,688,Carpal Tunnel Syndrome,23,Carpal Tunnel Syndrome,21b0af733a455041e28d4f639ab84f062355505636bb5950499574389e4f25c8,1,1,1,exact_occurrence_match
+lr_0688,689,Carpal Tunnel Syndrome,24,Carpal Tunnel Syndrome,024c360acd330a0993f3811d4fc46485dd29da7eda924eef939db0b0309347d9,1,1,1,exact_occurrence_match
+lr_0689,690,Carpal Tunnel Syndrome,25,Carpal Tunnel Syndrome,29705847e5ec48fbf47af309409458e771248556de6356053117caacb7b2e5de,1,1,1,exact_occurrence_match
+lr_0690,691,Carpal Tunnel Syndrome,26,Carpal Tunnel Syndrome,990704391b391d7a463574db6a64ef9dfc645aa560c050413285c3d3ca3d53c5,1,1,1,exact_occurrence_match
+lr_0691,692,Carpal Tunnel Syndrome,27,Carpal Tunnel Syndrome,56b06f9d9cde3a92aecfa6aef29d9105ddbfa376eae0f49fc2a94eae5161d14f,1,1,1,exact_occurrence_match
+lr_0692,693,Carpal Tunnel Syndrome,28,Carpal Tunnel Syndrome,9c0c96893362c6569a5f1cec24c96bab1aaf5bb515d0edeb6d58b66ad33ffe4f,1,1,1,exact_occurrence_match
+lr_0693,694,Carpal Tunnel Syndrome,29,Carpal Tunnel Syndrome,d71af97220c2465d9931bf822650e552301b35aaf21fce1673d7a99711ac0239,1,1,1,exact_occurrence_match
+lr_0694,695,Carpal Tunnel Syndrome,30,Carpal Tunnel Syndrome,d73609eabf5129264d03c76ca3b9cc0129d1c16d0d42516ee69623a05cc7b6d8,1,1,1,exact_occurrence_match
+lr_0695,696,Carpal Tunnel Syndrome,31,Carpal Tunnel Syndrome,9d8494e3b54215125a6485b29b96e5e0e4880811f1388dcd5a7a4ac9cb8a2be9,1,1,1,exact_occurrence_match
+lr_0696,697,Carpal Tunnel Syndrome,32,Carpal Tunnel Syndrome,269c5d4ae1fe63101bd47021f721c4afd1c3bd5f448fbedc50e061d874a7bbc8,1,1,1,exact_occurrence_match
+lr_0697,698,Carpal Tunnel Syndrome,33,Carpal Tunnel Syndrome,78de83e3702a2c4a770517bcadb89855cef16617289a1be558390ade41ddc692,1,1,1,exact_occurrence_match
+lr_0698,699,Carpal Tunnel Syndrome,34,Carpal Tunnel Syndrome,1bb8981be77c3125deb79453dc2fa85c0d130a67f5631e679a5da8ea5114dfc9,1,1,1,exact_occurrence_match
+lr_0699,700,Carpal Tunnel Syndrome,35,Carpal Tunnel Syndrome,1b94759a519c97a26addd5f692c86828eee8d9fafe395390a73cf5254643ca93,1,1,1,exact_occurrence_match
+lr_0700,701,Carpal Tunnel Syndrome,36,Carpal Tunnel Syndrome,0b5cb5aeb3786a6b3fa8e276904bb2e5a85482646c79787537a45fd317c5b0e2,1,1,1,exact_occurrence_match

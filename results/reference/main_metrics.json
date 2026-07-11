@@ -1,0 +1,17 @@
+{
+  "dataset": {
+    "conditions": 30,
+    "reported_lr": {
+      "geometric_mean": 1.2058004154886994,
+      "maximum": 145.8937969894539,
+      "median": 1.0,
+      "minimum": 0.01,
+      "percentile_25": 0.7,
+      "percentile_75": 2.2
+    },
+    "rows": 700
+  },
+  "floating_point_tolerance": 0.001,
+  "schema_version": 1,
+  "source": "data/curated/diagnostic_lrs_manuscript_v1.csv"
+}

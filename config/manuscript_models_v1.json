@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "query_date": "2025-08-25",
+  "manuscript_models": [
+    {
+      "display_name": "GPT-4o",
+      "api_model": "gpt-4o-2024-11-20",
+      "reasoning_model": false,
+      "temperature": 0.2,
+      "few_shot_set": "rich_8"
+    },
+    {
+      "display_name": "o3",
+      "api_model": "o3-2025-04-16",
+      "reasoning_model": true,
+      "reasoning_effort": "medium",
+      "few_shot_set": "minimal_2"
+    },
+    {
+      "display_name": "GPT-5",
+      "api_model": "gpt-5",
+      "reasoning_model": true,
+      "reasoning_effort": "medium",
+      "text_verbosity": "low",
+      "few_shot_set": "minimal_2",
+      "reproducibility_note": "Alias used in the accepted run; a future live rerun may not reproduce the frozen values."
+    }
+  ]
+}

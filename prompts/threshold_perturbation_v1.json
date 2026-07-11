@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "prompt_id": "threshold-perturbation-v1",
+  "status": "immutable_historical_research_artifact",
+  "source_notebook": "threshold_perturbation_sensitivity_analysis.ipynb",
+  "system_messages": [
+    "You are a Bayesian diagnostic assistant.\nEstimate a numeric likelihood ratio (LR) for a finding with respect to a diagnosis.\nReturn only a JSON object matching the schema: {\"value\": <float>}, where value > 0.",
+    "Definition:\nLR = P(finding | diagnosis) / P(finding | not-diagnosis)",
+    "LR evidence bands (reference):\n>10 strong for; 5-10 moderate for; 2-5 weak for;\n0.5-2 negligible;\n0.2-0.5 weak against; 0.1-0.2 moderate against; <=0.1 strong against"
+  ],
+  "few_shot_set": [
+    {
+      "condition": "deep vein thrombosis",
+      "finding": "femoral vein noncompressible on ultrasound",
+      "value": 16.0
+    },
+    {
+      "condition": "myocardial infarction",
+      "finding": "enjoys playing chess",
+      "value": 1.0
+    }
+  ],
+  "user_message_template": "Condition: {diagnosis}\nFinding: {finding}",
+  "assistant_example_template": "{\"value\": {float_value}}",
+  "structured_output": {
+    "class_name": "LRResponse",
+    "fields": {
+      "value": "float"
+    },
+    "postcondition": "finite and strictly positive"
+  },
+  "model": "gpt-5",
+  "model_parameters": {
+    "reasoning_effort": "medium",
+    "text_verbosity": "low"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/reblocke/llm_estimate_lrs/blob/v1.0.0/manifests/manifest.schema.json",
+  "title": "Accepted-paper reproducibility manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "release_version",
+    "release_ref",
+    "repository",
+    "article",
+    "dates",
+    "models_config",
+    "category_config",
+    "configurations",
+    "prompts",
+    "inputs",
+    "outputs",
+    "code",
+    "environment",
+    "reproduction_command",
+    "validation_command",
+    "known_provenance_gaps",
+    "release_attestation"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "manifest_id": {"const": "llm-estimate-lrs-manuscript-v1"},
+    "release_version": {"const": "1.0.0"},
+    "release_ref": {"const": "v1.0.0"},
+    "repository": {"type": "string", "format": "uri"},
+    "article": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "journal",
+        "doi",
+        "accepted_date",
+        "published_date",
+        "publication_status",
+        "publisher_url"
+      ],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "journal": {"const": "Scientific Reports"},
+        "doi": {"const": "10.1038/s41598-026-61766-2"},
+        "accepted_date": {"type": "string", "format": "date"},
+        "published_date": {"const": "2026-07-11"},
+        "publication_status": {"const": "published_unedited_early_access"},
+        "publisher_url": {"const": "https://doi.org/10.1038/s41598-026-61766-2"}
+      }
+    },
+    "dates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_collection", "model_query"],
+      "properties": {
+        "source_collection": {"type": "string", "format": "date"},
+        "model_query": {"type": "string", "format": "date"}
+      }
+    },
+    "models_config": {"const": "config/manuscript_models_v1.json"},
+    "category_config": {"const": "config/analysis_categories_v1.json"},
+    "configurations": {"$ref": "#/$defs/artifactArray"},
+    "prompts": {"$ref": "#/$defs/artifactArray"},
+    "inputs": {"$ref": "#/$defs/artifactArray"},
+    "outputs": {"$ref": "#/$defs/artifactArray"},
+    "code": {"$ref": "#/$defs/artifactArray"},
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["python_requirement", "lockfile", "lockfile_sha256"],
+      "properties": {
+        "python_requirement": {"const": ">=3.11"},
+        "lockfile": {"const": "uv.lock"},
+        "lockfile_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "reproduction_command": {"const": "make reproduce"},
+    "validation_command": {"const": "make release-check"},
+    "known_provenance_gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "gap_id",
+          "artifact_or_field",
+          "status",
+          "blocking_for_reproduction",
+          "description"
+        ],
+        "properties": {
+          "gap_id": {"type": "string", "pattern": "^PG-[0-9]{3}$"},
+          "artifact_or_field": {"type": "string", "minLength": 1},
+          "status": {"enum": ["not_recovered", "partially_recovered"]},
+          "blocking_for_reproduction": {"type": "boolean"},
+          "description": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "release_attestation": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "artifactArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "byte_size", "role"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "byte_size": {"type": "integer", "minimum": 0},
+        "role": {"type": "string", "minLength": 1},
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        }
+      }
+    }
+  }
+}

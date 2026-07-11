@@ -1,0 +1,26 @@
+name: Published release hygiene
+
+on:
+  release:
+    types:
+      - published
+      - edited
+
+permissions:
+  contents: read
+
+jobs:
+  release-text:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.release.tag_name }}
+      - name: Check exact release title, body, tree, and commit
+        run: >-
+          python3 scripts/check_release_hygiene.py
+          --repository .
+          --head-commit HEAD
+          --github-event "$GITHUB_EVENT_PATH"
+          --release-json "$GITHUB_EVENT_PATH"
