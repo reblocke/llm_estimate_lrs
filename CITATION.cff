@@ -1,0 +1,65 @@
+cff-version: 1.2.0
+message: >-
+  Please cite both the accompanying article and the exact repository release
+  or commit used. The v1.0.0 GitHub release is the versioned reproducibility
+  record for this repository.
+title: LLM-Estimated Diagnostic Likelihood Ratios
+version: 1.0.0
+date-released: 2026-07-11
+type: software
+license: MIT
+repository-code: https://github.com/reblocke/llm_estimate_lrs
+url: https://github.com/reblocke/llm_estimate_lrs
+abstract: >-
+  Frozen data, prompts, model outputs, analysis code, and reference results
+  supporting the Scientific Reports article on LLM-generated diagnostic
+  likelihood ratios.
+keywords:
+  - diagnostic likelihood ratios
+  - large language models
+  - diagnostic reasoning
+  - calibration
+  - reproducible research
+authors:
+  - family-names: Chong
+    given-names: Paul
+  - family-names: He
+    given-names: Shuhan
+  - family-names: Samadian
+    given-names: Kian
+  - family-names: Mohamed
+    given-names: Amal
+  - family-names: Peng
+    given-names: Boyu
+  - family-names: Chua
+    given-names: Emma
+  - family-names: Rohlfsen
+    given-names: Cory
+  - family-names: Locke
+    given-names: Brian W.
+preferred-citation:
+  type: article
+  title: >-
+    Large language models generate diagnostic likelihood ratios with low mean
+    bias but wide dispersion
+  authors:
+    - family-names: Chong
+      given-names: Paul
+    - family-names: He
+      given-names: Shuhan
+    - family-names: Samadian
+      given-names: Kian
+    - family-names: Mohamed
+      given-names: Amal
+    - family-names: Peng
+      given-names: Boyu
+    - family-names: Chua
+      given-names: Emma
+    - family-names: Rohlfsen
+      given-names: Cory
+    - family-names: Locke
+      given-names: Brian W.
+  journal: Scientific Reports
+  year: 2026
+  date-published: 2026-07-11
+  doi: 10.1038/s41598-026-61766-2

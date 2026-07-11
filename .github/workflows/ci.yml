@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - ready_for_review
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  UV_VERSION: "0.11.11"
+
+jobs:
+  lint-and-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: make setup
+      - name: Check repository, event text, and commit messages
+        env:
+          BASE_COMMIT: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          args=(--github-event "$GITHUB_EVENT_PATH" --head-commit "$HEAD_COMMIT")
+          if [[ -n "$BASE_COMMIT" ]]; then
+            args+=(--base-commit "$BASE_COMMIT")
+          fi
+          make hygiene HYGIENE_ARGS="${args[*]}"
+      - run: make cff-validate
+      - run: make lint
+
+  unit-and-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: make setup
+      - run: make verify-checksums
+      - run: make validate-data
+      - run: make test
+
+  offline-reproduction:
+    needs:
+      - unit-and-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: make setup
+      - run: make reproduce
+        env:
+          OPENAI_API_KEY: ""
+      - run: git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: offline-reproduction
+          path: results/runs/reproduction/
+          if-no-files-found: error

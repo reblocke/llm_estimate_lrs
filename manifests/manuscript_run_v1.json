@@ -1,0 +1,528 @@
+{
+  "article": {
+    "accepted_date": "2026-07-07",
+    "doi": "10.1038/s41598-026-61766-2",
+    "journal": "Scientific Reports",
+    "publication_status": "published_unedited_early_access",
+    "published_date": "2026-07-11",
+    "publisher_url": "https://doi.org/10.1038/s41598-026-61766-2",
+    "title": "Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion"
+  },
+  "category_config": "config/analysis_categories_v1.json",
+  "code": [
+    {
+      "byte_size": 133437,
+      "dimensions": {
+        "cells": 37
+      },
+      "path": "data_analysis.ipynb",
+      "role": "accepted_primary_analysis_notebook",
+      "sha256": "750344edaa2bb228247976c389ab658e697123c790b55ed58fdb36d62907fed3"
+    },
+    {
+      "byte_size": 88692,
+      "dimensions": {
+        "cells": 23
+      },
+      "path": "supplementary_analyses.ipynb",
+      "role": "accepted_supplementary_analysis_notebook",
+      "sha256": "feaf3fae25e493357670b6d6cede5385ec37a2cb20f8c799aec7e6a27264d10d"
+    },
+    {
+      "byte_size": 51996,
+      "dimensions": {
+        "cells": 11
+      },
+      "path": "lr_scraper_estimator.ipynb",
+      "role": "guarded_historical_collection_and_query_notebook",
+      "sha256": "79f966f05c518bd65ff49e11963eed78458485616661e6ce329f8d955ab034ef"
+    },
+    {
+      "byte_size": 34938,
+      "dimensions": {
+        "cells": 15
+      },
+      "path": "threshold_perturbation_sensitivity_analysis.ipynb",
+      "role": "guarded_threshold_perturbation_notebook",
+      "sha256": "f853a3ca46330c489325343a9babf7a8fcf17cad53d1a7a0ba76fb5e0ef60fbe"
+    },
+    {
+      "byte_size": 22248,
+      "path": "scripts/build_release_dataset.py",
+      "role": "canonical_data_builder",
+      "sha256": "fce2209468e339a04f6e98429408af809a5e9f2ea98ea5f9c343f502cdb1de7f"
+    },
+    {
+      "byte_size": 29015,
+      "path": "scripts/compute_reference_results.py",
+      "role": "reference_result_builder",
+      "sha256": "0e62e339424c02064e4d8d6206e5bfcda092129db45ee6a796fafc350a30bf0d"
+    },
+    {
+      "byte_size": 13537,
+      "path": "scripts/reproduce_paper.py",
+      "role": "offline_reproduction_entrypoint",
+      "sha256": "d68ed3d09053b6917470010ecefb09cd2b6a6323afca10a7eeebc54bf54241a8"
+    },
+    {
+      "byte_size": 10751,
+      "path": "scripts/build_manifest.py",
+      "role": "manifest_builder",
+      "sha256": "532d65d36bb8e78869e906e7eddecb59dd26a6e04affb116c486426e0ffb8823"
+    },
+    {
+      "byte_size": 2164,
+      "path": "scripts/build_checksums.py",
+      "role": "repository_checksum_builder",
+      "sha256": "c45718971daafaae38c9e28daad81848b8059bcd4b24286cda416cabd0519d94"
+    },
+    {
+      "byte_size": 5156,
+      "path": "scripts/verify_checksums.py",
+      "role": "repository_checksum_verifier",
+      "sha256": "7966afe502f03c30136dc9830c79f69e94c5e0f3c808f2b294814d7050d9efc7"
+    },
+    {
+      "byte_size": 22803,
+      "path": "scripts/validate_release.py",
+      "role": "release_contract_validator",
+      "sha256": "1587c2e298067937109735e2a84c23189ede315f05dd11e8206abb9ba715af60"
+    },
+    {
+      "byte_size": 18491,
+      "path": "scripts/check_release_hygiene.py",
+      "role": "public_release_hygiene_gate",
+      "sha256": "db447c481a1b32ea706c4a95c827a52bde6827cf9e7b743d3b4b1a78961a9dae"
+    },
+    {
+      "byte_size": 28849,
+      "path": "scripts/run_replication.py",
+      "role": "guarded_live_replication_entrypoint",
+      "sha256": "47b47bcf0e221a457af72f73a423ec38d1ed5c78a52866e31a14fd3f2aad951e"
+    },
+    {
+      "byte_size": 9386,
+      "path": "scripts/extract_manuscript_text.py",
+      "role": "author_manuscript_text_extractor",
+      "sha256": "8d7386f16f448bb406453da74e9f906d0de113de5c1a78ef00a593edd5da0b75"
+    },
+    {
+      "byte_size": 9489,
+      "path": "scripts/build_release_archive.py",
+      "role": "deterministic_source_archive_builder",
+      "sha256": "d0bdd416fd02b329dd8867592276b0c1daa64f2e023c176244e3831fd8d134c0"
+    },
+    {
+      "byte_size": 21721,
+      "path": "scripts/build_release_assets.py",
+      "role": "github_release_asset_builder",
+      "sha256": "8409b8c743fcaa5ea83aacf1dd2023be9104f7d2e6093bf68d1950cbad1bed77"
+    },
+    {
+      "byte_size": 6638,
+      "path": "scripts/generate_release_attestation.py",
+      "role": "release_attestation_builder",
+      "sha256": "be58b0b6a5c01162a1e6ee137dbf281802942f98864d13f95881ba8a1c427641"
+    }
+  ],
+  "configurations": [
+    {
+      "byte_size": 5,
+      "path": ".python-version",
+      "role": "python_version_pin",
+      "sha256": "49a506dd32096b010d75205acf3430c9ae6c40351888129499e5a5e487126c93"
+    },
+    {
+      "byte_size": 1373,
+      "path": "pyproject.toml",
+      "role": "primary_python_environment",
+      "sha256": "44c6d3d2e0806bfa09eb39bd365de7b0a0a9cc07ed78375a3d621c9a6ed5a144"
+    },
+    {
+      "byte_size": 1162,
+      "path": "config/analysis_categories_v1.json",
+      "role": "qualitative_lr_category_definition",
+      "sha256": "746db3d3a9d3834d0983b45ea1cf10b12aa3950ff7e2bb5c690717793275882c"
+    },
+    {
+      "byte_size": 763,
+      "path": "config/manuscript_models_v1.json",
+      "role": "accepted_manuscript_model_scope",
+      "sha256": "3ea80601002c835909a66c2b70ba325f9120c70ac724c8562d0ed1a3428ece94"
+    },
+    {
+      "byte_size": 4327,
+      "path": "manifests/manifest.schema.json",
+      "role": "manifest_validation_schema",
+      "sha256": "31907fce0c031d7616961c6c7fb24f97156997490ccea95c8a8b455d6b1b3d6b"
+    },
+    {
+      "byte_size": 5,
+      "path": "tools/cff/.python-version",
+      "role": "cff_validator_python_pin",
+      "sha256": "49a506dd32096b010d75205acf3430c9ae6c40351888129499e5a5e487126c93"
+    },
+    {
+      "byte_size": 166,
+      "path": "tools/cff/pyproject.toml",
+      "role": "cff_validator_environment",
+      "sha256": "3847eaeedba9139bb406067ca9e771aa4452e83d4afe3927b95367d9b0db9829"
+    },
+    {
+      "byte_size": 18891,
+      "path": "tools/cff/uv.lock",
+      "role": "cff_validator_lockfile",
+      "sha256": "052b7d0a3f72394e4d1d7224036dfc50f077850654ef441170d9532fa574dc21"
+    }
+  ],
+  "dates": {
+    "model_query": "2025-08-25",
+    "source_collection": "2025-04-01"
+  },
+  "environment": {
+    "lockfile": "uv.lock",
+    "lockfile_sha256": "23a4dd69bc0dd14b8d54905564d9d08395b654139a73f157f7801b21a0bcd08f",
+    "python_requirement": ">=3.11"
+  },
+  "inputs": [
+    {
+      "byte_size": 52336,
+      "dimensions": {
+        "columns": 9,
+        "rows": 700,
+        "sheets": 1
+      },
+      "path": "NNT_LRs_08-26-2025.xlsx",
+      "role": "accepted_analysis_workbook",
+      "sha256": "644f0558328a8f04f460a5ebfa2fc04e6d3571f655d084ea076488c7ba17da89"
+    },
+    {
+      "byte_size": 56263,
+      "dimensions": {
+        "columns": 7,
+        "rows": 700,
+        "sheets": 30
+      },
+      "path": "nnt_lrs_with_estimated.xlsx",
+      "role": "per_condition_labels_and_historical_outputs",
+      "sha256": "c375229a27f0854957f6b8963ece145e94d00e4fa75e7e2756e5d130f6f7110d"
+    },
+    {
+      "byte_size": 219503,
+      "dimensions": {
+        "columns": 26,
+        "rows": 700
+      },
+      "path": "data/curated/diagnostic_lrs_manuscript_v1.csv",
+      "role": "canonical_accepted_analysis_data",
+      "sha256": "aff708af1140b1cae05e1eb5abe457036d43f35ba868d706576206f120ccce02"
+    },
+    {
+      "byte_size": 14530,
+      "dimensions": {
+        "columns": 4,
+        "rows": 700
+      },
+      "path": "data/model_outputs/manuscript_model_outputs_v1.csv",
+      "role": "accepted_three_model_outputs",
+      "sha256": "15d0772890da4dcc08e9d5eeb497a6da33e86414d2d728cae72bfea5c2780895"
+    },
+    {
+      "byte_size": 32350,
+      "dimensions": {
+        "columns": 3,
+        "rows": 700
+      },
+      "path": "data/model_outputs/auxiliary_gpt-4.1_outputs_v1.csv",
+      "role": "auxiliary_historical_not_analyzed",
+      "sha256": "920669700a5cd497a91fb8b1d1eb5c1c372fdaf87c2c2943e62ed669d96f5e75"
+    },
+    {
+      "byte_size": 121730,
+      "dimensions": {
+        "columns": 10,
+        "rows": 700
+      },
+      "path": "data/provenance/source_crosswalk_v1.csv",
+      "role": "strict_workbook_crosswalk",
+      "sha256": "cb7aa99813f39ffa96ab2f42517088cfb015266c4bdd687737ee3dcdc3ba9e38"
+    }
+  ],
+  "known_provenance_gaps": [
+    {
+      "artifact_or_field": "source_url",
+      "blocking_for_reproduction": false,
+      "description": "Row-level TheNNT source URLs were not stored in the frozen workbooks.",
+      "gap_id": "PG-001",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "source_retrieved_date",
+      "blocking_for_reproduction": false,
+      "description": "The study-level source collection date is 2025-04-01; row-level retrieval timestamps were not recorded.",
+      "gap_id": "PG-002",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "curation_log",
+      "blocking_for_reproduction": false,
+      "description": "Row-level curation rationales and reviewer identities were not recovered.",
+      "gap_id": "PG-003",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "response_ids",
+      "blocking_for_reproduction": false,
+      "description": "Original OpenAI response IDs were not recovered.",
+      "gap_id": "PG-004",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "retry_audit",
+      "blocking_for_reproduction": false,
+      "description": "No original row-level retry audit was found in the worktree, local ignored files, or Git history.",
+      "gap_id": "PG-005",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "sdk_version",
+      "blocking_for_reproduction": false,
+      "description": "The exact OpenAI SDK version used for the accepted run was not recorded.",
+      "gap_id": "PG-006",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "raw_api_responses",
+      "blocking_for_reproduction": false,
+      "description": "Raw API response JSON was not recovered; the accepted numeric outputs are frozen in the workbooks.",
+      "gap_id": "PG-007",
+      "status": "not_recovered"
+    },
+    {
+      "artifact_or_field": "query_timestamps",
+      "blocking_for_reproduction": false,
+      "description": "The study-level query date is 2025-08-25; row-level query timestamps were not recorded.",
+      "gap_id": "PG-008",
+      "status": "partially_recovered"
+    }
+  ],
+  "manifest_id": "llm-estimate-lrs-manuscript-v1",
+  "models_config": "config/manuscript_models_v1.json",
+  "outputs": [
+    {
+      "byte_size": 728,
+      "dimensions": {
+        "columns": 14,
+        "rows": 3
+      },
+      "path": "data/model_outputs/manuscript_query_run_v1.csv",
+      "role": "recoverable_main_query_configuration",
+      "sha256": "608247bbcf32e7af7248617c1fae30d51a64dd04323e903c8fa277392423c2ee"
+    },
+    {
+      "byte_size": 100,
+      "dimensions": {
+        "columns": 9,
+        "rows": 0
+      },
+      "path": "data/provenance/curation_log_v1.csv",
+      "role": "recoverable_row_level_curation_log",
+      "sha256": "c9df6e0d0edc228b2f98d8bb42249215f32f48068231584427f92e3f45170892"
+    },
+    {
+      "byte_size": 1198,
+      "dimensions": {
+        "columns": 6,
+        "rows": 8
+      },
+      "path": "data/provenance/provenance_gaps_v1.csv",
+      "role": "known_provenance_gaps",
+      "sha256": "7803d183dee3492f301bd73b807760a34d82679d6f1aa27c34c9441196f09cbc"
+    },
+    {
+      "byte_size": 5154,
+      "dimensions": {
+        "columns": 12,
+        "rows": 15
+      },
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_cases.csv",
+      "role": "threshold_perturbation_cases",
+      "sha256": "0ecd978e3308f39a154ba709de28ac0bb5e7440f6160817d95de5d060d388c5b"
+    },
+    {
+      "byte_size": 5919,
+      "dimensions": {
+        "columns": 17,
+        "rows": 15
+      },
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_raw.csv",
+      "role": "accepted_threshold_raw_outputs",
+      "sha256": "0f83fdc22140f75e86404a943ad90b039bd139eeb103db468522d49f825f70f6"
+    },
+    {
+      "byte_size": 1481,
+      "dimensions": {
+        "columns": 16,
+        "rows": 5
+      },
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_summary.csv",
+      "role": "threshold_perturbation_summary",
+      "sha256": "f0ab68b0ff51292aa0cc4a6f6191087ba3ed6827f06a5489ddd554b4c0ac6128"
+    },
+    {
+      "byte_size": 1197,
+      "dimensions": {
+        "columns": 11,
+        "rows": 5
+      },
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_reviewer_table.csv",
+      "role": "threshold_perturbation_response_table",
+      "sha256": "fda7aa0217587609e72f507f82a39f6657f9a02ac930d8c56b77af57ec96e7ba"
+    },
+    {
+      "byte_size": 1907,
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_summary.md",
+      "role": "threshold_perturbation_narrative_summary",
+      "sha256": "99fa0296700e30d5dbad3fe38e7b2d02f708dd5bf08c5fb49905c60a2b455c36"
+    },
+    {
+      "byte_size": 389,
+      "path": "results/reference/main_metrics.json",
+      "role": "dataset_reference_contract",
+      "sha256": "2354ea58438a038518ce56088155f20ce4f466cd298bcf5df2a44d9a24412728"
+    },
+    {
+      "byte_size": 299,
+      "dimensions": {
+        "columns": 3,
+        "rows": 7
+      },
+      "path": "results/reference/category_counts.csv",
+      "role": "reported_lr_category_counts",
+      "sha256": "8c53f40f2d36f79ff145b8826f1ab78b8fdcfe94f2b3734d2346a9a09ad43dfd"
+    },
+    {
+      "byte_size": 315,
+      "dimensions": {
+        "columns": 4,
+        "rows": 5
+      },
+      "path": "results/reference/feature_type_counts.csv",
+      "role": "overlapping_feature_memberships",
+      "sha256": "aa32d0a842ddd4a629f321de18857f5c4208394e2b8e37485efee77695f77ff9"
+    },
+    {
+      "byte_size": 954,
+      "dimensions": {
+        "columns": 15,
+        "rows": 3
+      },
+      "path": "results/reference/agreement_metrics.csv",
+      "role": "bland_altman_and_log_error_metrics",
+      "sha256": "205cea674a0dc0a4c75c112ac43d8f5bfce7f6a184ee250d5fbc101b3ea09d8e"
+    },
+    {
+      "byte_size": 1238,
+      "dimensions": {
+        "columns": 20,
+        "rows": 3
+      },
+      "path": "results/reference/pairwise_model_comparisons.csv",
+      "role": "paired_bias_and_dispersion_comparisons",
+      "sha256": "ca037f685e4781281a2824234fddeceb5b04ef8a391e5b4e41f86995747f487b"
+    },
+    {
+      "byte_size": 2185,
+      "dimensions": {
+        "columns": 10,
+        "rows": 15
+      },
+      "path": "results/reference/coverage_intervals.csv",
+      "role": "multiplicative_coverage_intervals",
+      "sha256": "9ace497016bfc2c86358e730816f73ca2fcc3851a118ff4a05a5148d2f3e045a"
+    },
+    {
+      "byte_size": 584,
+      "dimensions": {
+        "columns": 10,
+        "rows": 3
+      },
+      "path": "results/reference/evidence_direction_tests.csv",
+      "role": "negative_vs_positive_evidence_tests",
+      "sha256": "4f50768d6129382702e1d5435c69c3d0e5fab8464b2a98c9f2123f2e7a54f2fb"
+    },
+    {
+      "byte_size": 1025,
+      "dimensions": {
+        "columns": 17,
+        "rows": 3
+      },
+      "path": "results/reference/calibration_metrics.csv",
+      "role": "primary_calibration_metrics",
+      "sha256": "3be402161f21d69e40d2b342c76e69746b0b4727c1df8d5f9c0ca434dd3cfae2"
+    },
+    {
+      "byte_size": 669,
+      "dimensions": {
+        "columns": 10,
+        "rows": 3
+      },
+      "path": "results/reference/reliability_metrics.csv",
+      "role": "inverse_reliability_calibration_metrics",
+      "sha256": "c70c9dbff596c8e26e8684173484a5a25d29ca81f00ff136543002a2c54b1819"
+    },
+    {
+      "byte_size": 464,
+      "dimensions": {
+        "columns": 8,
+        "rows": 3
+      },
+      "path": "results/reference/kappa_metrics.csv",
+      "role": "qualitative_agreement_metrics",
+      "sha256": "d25d25df2f2175fd01d1b52d9243c586c0d94c5e3af0e41f68a6f8d1bcd0c265"
+    },
+    {
+      "byte_size": 4086,
+      "dimensions": {
+        "columns": 30,
+        "rows": 6
+      },
+      "path": "results/reference/reliability_zone_metrics.csv",
+      "role": "central_and_extreme_zone_metrics",
+      "sha256": "f2a0b35eb7d2f07ab04d013cb6fe73a0228f28757b715bf8da58be95e4ac3fc5"
+    },
+    {
+      "byte_size": 394,
+      "path": "results/reference/laboratory_discrepancy_flags.json",
+      "role": "gpt5_laboratory_discrepancy_flag_counts",
+      "sha256": "9044234a698d970e8b8fe8d4efbf2cb30e344df7946b57286beda2cf00bc5402"
+    },
+    {
+      "byte_size": 39178,
+      "path": "llms-full.txt",
+      "role": "licensed_preproduction_author_manuscript_text",
+      "sha256": "b36e4ebed0ad6ca0aea28b0fa91a7575479cd12d7283a8321842528e176ba502"
+    }
+  ],
+  "prompts": [
+    {
+      "byte_size": 2864,
+      "path": "prompts/main_estimator_v1.json",
+      "role": "accepted_main_estimator_prompt",
+      "sha256": "63aedb15fbe73a64c91ae5c29fd85c5377c6df71a9fbe005bcd1db4f3c106075"
+    },
+    {
+      "byte_size": 1385,
+      "path": "prompts/threshold_perturbation_v1.json",
+      "role": "accepted_threshold_perturbation_prompt",
+      "sha256": "40c882919c6e31329b23af20b0e2ae81bd62a2b72dcbabb370f1482c41870438"
+    }
+  ],
+  "release_attestation": "Generated separately from the approved tag and release archive.",
+  "release_ref": "v1.0.0",
+  "release_version": "1.0.0",
+  "repository": "https://github.com/reblocke/llm_estimate_lrs",
+  "reproduction_command": "make reproduce",
+  "schema_version": 1,
+  "validation_command": "make release-check"
+}

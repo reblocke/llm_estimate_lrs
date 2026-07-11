@@ -1,0 +1,4 @@
+run_id,query_date,display_name,api_model,prompt_id,few_shot_set,temperature,reasoning_effort,text_verbosity,max_retries,sdk_version,response_ids_available,retry_audit_available,notes
+,2025-08-25,GPT-4o,gpt-4o-2024-11-20,main-estimator-v1,rich_8,0.2,,,8,,False,False,"Original run identifier, response IDs, retry audit, and SDK version were not recovered."
+,2025-08-25,o3,o3-2025-04-16,main-estimator-v1,minimal_2,,medium,,8,,False,False,"Original run identifier, response IDs, retry audit, and SDK version were not recovered."
+,2025-08-25,GPT-5,gpt-5,main-estimator-v1,minimal_2,,medium,low,8,,False,False,"Alias used in the accepted run; original run identifier, response IDs, retry audit, and SDK version were not recovered."

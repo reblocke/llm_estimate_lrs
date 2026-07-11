@@ -1,0 +1,46 @@
+# LLM-Estimated Diagnostic Likelihood Ratios
+
+Repository: https://github.com/reblocke/llm_estimate_lrs
+Article: Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion
+DOI: https://doi.org/10.1038/s41598-026-61766-2
+Status: Published online in Scientific Reports on 11 July 2026 as a citable, unedited early-access article; publisher production editing remains ongoing
+Release: v1.0.0 GitHub reproducibility release, published 11 July 2026
+
+## Reproduce the accepted analysis
+
+```bash
+pip install uv
+uv sync --frozen
+make reproduce
+make test
+```
+
+`make reproduce` uses frozen local artifacts only. It makes no OpenAI API calls and no live TheNNT requests.
+
+## Accepted manuscript models
+
+- GPT-4o: `gpt-4o-2024-11-20`
+- o3: `o3-2025-04-16`
+- GPT-5: `gpt-5`
+
+## Canonical artifacts
+
+- Dataset: `data/curated/diagnostic_lrs_manuscript_v1.csv`
+- Model outputs: `data/model_outputs/manuscript_model_outputs_v1.csv`
+- Threshold outputs: `data/model_outputs/threshold_perturbation_v1/`
+- Model configuration: `config/manuscript_models_v1.json`
+- Main prompt: `prompts/main_estimator_v1.json`
+- Threshold prompt: `prompts/threshold_perturbation_v1.json`
+- Manifest: `manifests/manuscript_run_v1.json`
+- Reference results: `results/reference/`
+- Main analysis: `data_analysis.ipynb`
+- Supplementary analysis: `supplementary_analyses.ipynb`
+- Pre-production author-manuscript text: `llms-full.txt`
+
+## Replication boundary
+
+A live rerun is a new replication, not reproduction of the accepted paper. It requires an API key, explicit models, a call ceiling, typed confirmation, and a new immutable directory under `runs/`. It must never overwrite the frozen workbooks, prompts, model outputs, or reference results. See `docs/REPLICATION.md`.
+
+## Safety and reuse
+
+Do not add API keys, restricted data, private correspondence, publisher proofs, local execution artifacts, or unreviewed drafts. MIT covers original repository software only. TheNNT-derived values and model outputs retain their distinct provenance and reuse boundaries. `llms-full.txt` is shared separately under CC BY-NC-ND 4.0 and is not the Version of Record.

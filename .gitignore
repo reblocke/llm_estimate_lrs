@@ -1,0 +1,39 @@
+# Historical/private working artifacts
+/Past Runs/
+/Paper/
+/tmp/
+
+# Generated analysis and replication outputs. The compact reference contract is tracked.
+/results/*
+!/results/reference/
+!/results/reference/**
+/runs/
+/dist/
+/release-staging/
+
+# Virtual environments and local editor state
+.venv/
+.vscode/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+
+# Environment/secrets
+.env
+
+# Jupyter/cache artifacts
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Generated archives and office binaries
+*.zip
+*.pptx
+*.docx
+
+# OS
+.DS_Store
+
+# Locks (we DO commit uv.lock, so do NOT ignore it)
+# uv.lock

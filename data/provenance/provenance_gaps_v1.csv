@@ -1,0 +1,9 @@
+gap_id,artifact_or_field,scope,status,blocking_for_reproduction,description
+PG-001,source_url,row_level,not_recovered,False,Row-level TheNNT source URLs were not stored in the frozen workbooks.
+PG-002,source_retrieved_date,row_level,not_recovered,False,The study-level source collection date is 2025-04-01; row-level retrieval timestamps were not recorded.
+PG-003,curation_log,row_level,not_recovered,False,Row-level curation rationales and reviewer identities were not recovered.
+PG-004,response_ids,main_model_queries,not_recovered,False,Original OpenAI response IDs were not recovered.
+PG-005,retry_audit,main_model_queries,not_recovered,False,"No original row-level retry audit was found in the worktree, local ignored files, or Git history."
+PG-006,sdk_version,main_model_queries,not_recovered,False,The exact OpenAI SDK version used for the accepted run was not recorded.
+PG-007,raw_api_responses,main_model_queries,not_recovered,False,Raw API response JSON was not recovered; the accepted numeric outputs are frozen in the workbooks.
+PG-008,query_timestamps,main_model_queries,partially_recovered,False,The study-level query date is 2025-08-25; row-level query timestamps were not recorded.

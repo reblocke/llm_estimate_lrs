@@ -1,0 +1,6 @@
+family,condition,model,case_source,thresholds_tested,threshold_units,lr_estimates,monotonic_class,endpoint_fold_change,anchored_flag,interpretation
+DVT D-dimer,Deep Venous Thrombosis (DVT),gpt-5,constructed_reviewer_exemplar,500.0; 550.0; 1000.0,ng/mL,2.2; 1.6; 2.5,nonmonotonic,1.136,False,Estimate did not change monotonically with the threshold.
+Heart failure BNP,Dyspnea due to heart failure (in a patient without chronic respiratory disease),gpt-5,workbook_grounded_variant,50.0; 100.0; 250.0,pg/mL,2.6; 4; 6,strictly_increasing,2.308,False,Estimate increased as the threshold rose.
+Temporal arteritis ESR,Temporal Arteritis,gpt-5,workbook_grounded_variant,50.0; 70.0; 100.0,mm/h,1.5; 2.4; 4,strictly_increasing,2.667,False,Estimate increased as the threshold rose.
+Cardiac syncope hs-troponin T,Cardiac Syncope,gpt-5,workbook_grounded_variant,30.0; 42.0; 60.0,pg/mL,2.5; 2.5; 10.0,nondecreasing_with_ties,4.0,False,Estimate changed in the expected direction with at least one tie.
+Elevated ICP CT midline shift,Elevated Intracranial Pressure,gpt-5,workbook_grounded_variant,5; 10.0; 15.0,mm,12.0; 11.0; 20.0,nonmonotonic,1.667,False,Estimate did not change monotonically with the threshold.
