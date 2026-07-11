@@ -1,48 +1,46 @@
-# Large Language Models and Diagnostic Likelihood Ratios
+# LLM-Estimated Diagnostic Likelihood Ratios
 
 Repository: https://github.com/reblocke/llm_estimate_lrs
-Purpose: LLM-generated likelihood-ratio outputs for diagnostic evidence and agreement with literature-reported values
-Status: No publication DOI is assigned in this repository; use repository README and commit SHA for reuse. Repository code and notebook text only; do not add publisher text.
+Article: Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion
+DOI: https://doi.org/10.1038/s41598-026-61766-2
+Status: Published online in Scientific Reports on 11 July 2026 as a citable, unedited early-access article; publisher production editing remains ongoing
+Prepared release identifier: v1.0.0; cite a full commit SHA until the tag is published
 
-## Human-Readable Entry Points
-- `README.md` is the primary human-facing overview.
-- `llms.txt` is a compact machine-readable index and should not replace the README.
-
-## Repository Layout
-- `.env.example`
-- `LICENSE`
-- `NNT_LRs_08-26-2025.xlsx`
-- `README.md`
-- `additional_requested_analyses.ipynb`
-- `data_analysis.ipynb`
-- `lr_scraper_estimator.ipynb`
-- `nnt_lrs_with_estimated.xlsx`
-- `pyproject.toml`
-- `threshold_perturbation_sensitivity_analysis.ipynb`
-- `uv.lock`
-
-## Data and Reuse Boundaries
-Generated LLM outputs and literature-derived comparison data; avoid adding API keys, private prompts, manuscript drafts, reviewer-response letters, local execution outputs, or historical working folders.
-
-## Workflow
-Install dependencies with `uv`, then open notebooks or run the README-defined commands:
+## Reproduce the accepted analysis
 
 ```bash
 pip install uv
-uv sync
-uv run jupyter lab
+uv sync --frozen
+make reproduce
+make test
 ```
 
-## Dependencies
-Pinned Python environment in `pyproject.toml` and `uv.lock`; see `README.md` for runnable notebook commands.
+`make reproduce` uses frozen local artifacts only. It makes no OpenAI API calls and no live TheNNT requests.
 
-## Citation
-No publication DOI is assigned to this repository. Cite the GitHub repository URL and the commit or release used.
+## Accepted manuscript models
 
-## License
-MIT License for repository code; see `LICENSE`. Third-party and publisher materials remain under their original terms.
+- GPT-4o: `gpt-4o-2024-11-20`
+- o3: `o3-2025-04-16`
+- GPT-5: `gpt-5`
 
-## Public Reuse Notes
-- Use `README.md` as the human-facing overview.
-- Keep restricted clinical data, private drafts, publisher PDFs, local paths, and generated outputs out of public documentation unless explicitly reviewed.
-- Prefer concise summaries plus links to citable records over copied manuscript or publisher text.
+## Canonical artifacts
+
+- Dataset: `data/curated/diagnostic_lrs_manuscript_v1.csv`
+- Model outputs: `data/model_outputs/manuscript_model_outputs_v1.csv`
+- Threshold outputs: `data/model_outputs/threshold_perturbation_v1/`
+- Model configuration: `config/manuscript_models_v1.json`
+- Main prompt: `prompts/main_estimator_v1.json`
+- Threshold prompt: `prompts/threshold_perturbation_v1.json`
+- Manifest: `manifests/manuscript_run_v1.json`
+- Reference results: `results/reference/`
+- Main analysis: `data_analysis.ipynb`
+- Supplementary analysis: `supplementary_analyses.ipynb`
+- Pre-production author-manuscript text: `llms-full.txt`
+
+## Replication boundary
+
+A live rerun is a new replication, not reproduction of the accepted paper. It requires an API key, explicit models, a call ceiling, typed confirmation, and a new immutable directory under `runs/`. It must never overwrite the frozen workbooks, prompts, model outputs, or reference results. See `docs/REPLICATION.md`.
+
+## Safety and reuse
+
+Do not add API keys, restricted data, private correspondence, publisher proofs, local execution artifacts, or unreviewed drafts. MIT covers original repository software only. TheNNT-derived values and model outputs retain their distinct provenance and reuse boundaries. `llms-full.txt` is shared separately under CC BY-NC-ND 4.0 and is not the Version of Record.

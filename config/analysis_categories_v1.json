@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "scale": "likelihood_ratio",
+  "positive_values_only": true,
+  "categories_in_order": [
+    {
+      "label": "Strong Negative",
+      "lower": 0.0,
+      "lower_inclusive": false,
+      "upper": 0.1,
+      "upper_inclusive": true
+    },
+    {
+      "label": "Moderate Negative",
+      "lower": 0.1,
+      "lower_inclusive": false,
+      "upper": 0.2,
+      "upper_inclusive": true
+    },
+    {
+      "label": "Weak Negative",
+      "lower": 0.2,
+      "lower_inclusive": false,
+      "upper": 0.5,
+      "upper_inclusive": false
+    },
+    {
+      "label": "Negligible",
+      "lower": 0.5,
+      "lower_inclusive": true,
+      "upper": 2.0,
+      "upper_inclusive": false
+    },
+    {
+      "label": "Weak Positive",
+      "lower": 2.0,
+      "lower_inclusive": true,
+      "upper": 5.0,
+      "upper_inclusive": false
+    },
+    {
+      "label": "Moderate Positive",
+      "lower": 5.0,
+      "lower_inclusive": true,
+      "upper": 10.0,
+      "upper_inclusive": false
+    },
+    {
+      "label": "Strong Positive",
+      "lower": 10.0,
+      "lower_inclusive": true,
+      "upper": null,
+      "upper_inclusive": false
+    }
+  ]
+}

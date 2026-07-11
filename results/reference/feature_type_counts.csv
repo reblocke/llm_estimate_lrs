@@ -1,0 +1,6 @@
+feature_type,indicator_column,count,percent
+Signs/Symptoms,is_sign_or_symptom,416,59.42857142857143
+History,is_history,134,19.142857142857142
+Test results,is_test_result,110,15.714285714285714
+Imaging,is_imaging,57,8.142857142857144
+Diagnosis/diagnostic adjudication,is_diagnostic_adjudication,8,1.1428571428571428

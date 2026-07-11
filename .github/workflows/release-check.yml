@@ -1,0 +1,52 @@
+name: Release check
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+env:
+  UV_VERSION: "0.11.11"
+
+jobs:
+  release-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+      - run: make setup
+      - run: make hygiene HYGIENE_ARGS="--github-event $GITHUB_EVENT_PATH --head-commit $GITHUB_SHA"
+      - name: Validate release candidate
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        run: make release-check
+      - name: Validate final tagged release
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: make release-check-final
+      - name: Upload prepare-mode verification artifacts
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: release-candidate-${{ github.sha }}
+          path: |
+            dist/
+            results/runs/reproduction/
+          if-no-files-found: error
+      - name: Upload final-tag reproduction evidence
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: final-tag-reproduction-${{ github.sha }}
+          path: results/runs/reproduction/
+          if-no-files-found: error

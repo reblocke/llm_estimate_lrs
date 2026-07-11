@@ -1,0 +1,21 @@
+{
+  "extreme_reported_lr": 6,
+  "model": "gpt-5",
+  "n": 10,
+  "schema_version": 1,
+  "selection": "ten largest absolute log errors among lab-like test-result findings",
+  "threshold_present": 5,
+  "top_10_row_ids": [
+    "lr_0310",
+    "lr_0302",
+    "lr_0309",
+    "lr_0332",
+    "lr_0129",
+    "lr_0336",
+    "lr_0286",
+    "lr_0288",
+    "lr_0640",
+    "lr_0239"
+  ],
+  "unit_present": 3
+}
