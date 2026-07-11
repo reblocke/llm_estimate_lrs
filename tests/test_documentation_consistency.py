@@ -10,9 +10,13 @@ ARTICLE_TITLE = "Large language models generate diagnostic likelihood ratios wit
 ARTICLE_DOI = "10.1038/s41598-026-61766-2"
 ARTICLE_URL = f"https://doi.org/{ARTICLE_DOI}"
 ARTICLE_PUBLISHED_DATE = "2026-07-11"
+REPOSITORY_RELEASE_DATE = "2026-07-11"
 PUBLICATION_STATUS = (
     "Published online in *Scientific Reports* on 11 July 2026 as a citable, unedited early-access article; "
     "publisher production editing remains ongoing"
+)
+README_PUBLICATION_STATUS = (
+    "Published online in *Scientific Reports* on 11 July 2026 as an early-access article."
 )
 REPOSITORY_URL = "https://github.com/reblocke/llm_estimate_lrs"
 VERSION = "1.0.0"
@@ -55,6 +59,7 @@ def test_citation_metadata_is_complete_and_article_specific() -> None:
     assert citation["preferred-citation"]["doi"] == ARTICLE_DOI
     assert citation["preferred-citation"]["journal"] == "Scientific Reports"
     assert str(citation["preferred-citation"]["date-published"]) == ARTICLE_PUBLISHED_DATE
+    assert str(citation["date-released"]) == REPOSITORY_RELEASE_DATE
     assert [author["family-names"] for author in citation["authors"]] == [
         "Chong",
         "He",
@@ -75,21 +80,22 @@ def test_citation_metadata_is_complete_and_article_specific() -> None:
         assert "## [1.0.0] - Unreleased" in changelog
 
 
-def test_status_is_published_early_access_and_does_not_claim_repository_release_publication() -> None:
+def test_article_and_repository_release_statuses_are_final() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     machine_index = (ROOT / "llms.txt").read_text(encoding="utf-8")
     release_notes = (ROOT / "RELEASE_NOTES_v1.0.0.md").read_text(encoding="utf-8")
     reproducibility = (ROOT / "docs/REPRODUCIBILITY.md").read_text(encoding="utf-8")
 
-    assert PUBLICATION_STATUS in readme
+    assert README_PUBLICATION_STATUS in readme
     assert PUBLICATION_STATUS in release_notes
     assert PUBLICATION_STATUS in reproducibility
     assert PUBLICATION_STATUS.replace("*", "") in machine_index
     project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     assert project["project"]["urls"]["Homepage"] == ARTICLE_URL
     citation = yaml.safe_load((ROOT / "CITATION.cff").read_text(encoding="utf-8"))
-    if "date-released" not in citation:
-        assert "do not assert that the `v1.0.0` tag or GitHub release has been published" in release_notes
+    assert str(citation["date-released"]) == REPOSITORY_RELEASE_DATE
+    assert "`v1.0.0` GitHub release" in release_notes
+    assert "prepared repository release" not in release_notes
     assert "under revision" not in readme
 
 

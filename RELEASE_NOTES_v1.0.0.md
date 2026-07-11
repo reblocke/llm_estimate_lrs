@@ -8,7 +8,7 @@
 
 [https://doi.org/10.1038/s41598-026-61766-2](https://doi.org/10.1038/s41598-026-61766-2)
 
-Published online in *Scientific Reports* on 11 July 2026 as a citable, unedited early-access article; publisher production editing remains ongoing. These notes describe a prepared repository release; they do not assert that the `v1.0.0` tag or GitHub release has been published.
+Published online in *Scientific Reports* on 11 July 2026 as a citable, unedited early-access article; publisher production editing remains ongoing. This `v1.0.0` GitHub release is the versioned reproducibility record supporting the published early-access article.
 
 ## Identifiers
 
@@ -61,8 +61,8 @@ These gaps are recorded in `data/provenance/provenance_gaps_v1.csv` and `manifes
 
 Repository-file hashes are listed in `checksums/SHA256SUMS`. The GitHub release attestation records the tag commit and pre-attestation asset hashes after the tag is created; the release-asset `SHA256SUMS` covers the complete downloadable asset set, including the attestation.
 
-Please cite both the article and the exact repository release or commit used. `CITATION.cff` contains the eight-author article citation. Until the tag is published, cite the full commit SHA rather than `v1.0.0`.
+Please cite both the article and the `v1.0.0` GitHub release. `CITATION.cff` contains the eight-author article citation and repository-release metadata.
 
-## Release authorization
+## Release status
 
-The tag and GitHub release remain maintainer-controlled. Preparation of these notes does not authorize merging, tagging, publishing, changing repository visibility, replacing default-branch history, or deleting an earlier release.
+This is the publication release of the frozen reproducibility record. It does not alter any accepted-paper input, prompt, model output, statistic, figure, wording, or conclusion.

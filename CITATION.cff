@@ -1,9 +1,11 @@
 cff-version: 1.2.0
 message: >-
   Please cite both the accompanying article and the exact repository release
-  or commit used. The v1.0.0 tag is cited only after it is published.
+  or commit used. The v1.0.0 GitHub release is the versioned reproducibility
+  record for this repository.
 title: LLM-Estimated Diagnostic Likelihood Ratios
 version: 1.0.0
+date-released: 2026-07-11
 type: software
 license: MIT
 repository-code: https://github.com/reblocke/llm_estimate_lrs
