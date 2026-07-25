@@ -1,0 +1,46 @@
+schema_version: 1
+
+project:
+  id: llm-estimate-lrs
+  title: LLM-Estimated Diagnostic Likelihood Ratios
+  tier: T2
+  high_risk: true
+  status: maintenance-hardening
+
+roles:
+  scientific_owner: Brian W. Locke
+  analysis_owner: Brian W. Locke
+  code_owner: Brian W. Locke
+  data_steward: PENDING_HUMAN_ASSIGNMENT
+  statistical_reviewer: PENDING_HUMAN_ASSIGNMENT
+  reproducibility_reviewer: PENDING_HUMAN_ASSIGNMENT
+  high_risk_reviewer: PENDING_HUMAN_ASSIGNMENT
+
+execution:
+  full_entrypoint: make audit
+  smoke_entrypoint: make smoke
+  working_directory: project-root
+  certified_python: "3.11.*"
+  certified_operating_system: PENDING_MEASUREMENT
+  expected_runtime_full: PENDING_MEASUREMENT
+  expected_runtime_smoke: PENDING_MEASUREMENT
+  expected_peak_memory: PENDING_MEASUREMENT
+  expected_disk_space: PENDING_MEASUREMENT
+
+data:
+  highest_classification: public-research-artifacts-with-mixed-rights
+  contains_phi: false
+  public_data_included: true
+  rights_registry: PENDING_HUMAN_ASSIGNMENT
+
+release:
+  frozen_release: v1.0.0
+  code_license: MIT
+  maintenance_status: maintenance-only
+  archive_identifier: PENDING_DEPOSIT
+
+verification:
+  last_verified_date: PENDING_INDEPENDENT_RUN
+  last_verified_commit: PENDING_INDEPENDENT_RUN
+  reviewer: PENDING_HUMAN_ASSIGNMENT
+  verdict: pending

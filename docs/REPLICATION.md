@@ -8,7 +8,7 @@ Hosted aliases, inference infrastructure, safety behavior, and sampling can chan
 
 ## Prerequisites
 
-1. Install the locked environment with `uv sync --frozen`.
+1. Provision the locked environments with `make setup`.
 2. Set `OPENAI_API_KEY` in the shell or an untracked `.env` file copied from `.env.example`.
 3. Select an experiment, explicit model list, and maximum number of calls.
 4. Choose a unique run ID matching `YYYY-MM-DD_<short-description>_<git-short-sha>`.

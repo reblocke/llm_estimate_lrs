@@ -32,7 +32,7 @@ Use Python 3.11 and the locked `uv` environment:
 
 ```bash
 pip install uv
-uv sync --frozen
+make setup
 make kernel
 make verify-checksums
 make validate-data
@@ -41,6 +41,12 @@ make test
 ```
 
 The optional project kernel is installed inside the locked environment as `Python (llm-estimate-lrs v1)`. It prevents notebook execution under an unrelated system or Conda interpreter.
+
+`make setup` is the explicit provisioning boundary and may download missing
+locked packages. The integrity and reproduction targets use the provisioned
+root and CFF environments with offline, no-sync execution; if either
+environment is absent, they fail with setup instructions instead of creating
+it.
 
 `make reproduce` invokes the offline reproduction entry point and writes only to `results/runs/reproduction/`. That directory is generated and ignored. A new reproduction may replace that dedicated output directory, but it cannot modify the tracked inputs or `results/reference/`.
 
@@ -83,8 +89,9 @@ An absent or mismatched frozen artifact is an integrity failure. The remedy is t
 1. Run `uv lock --check` to confirm the lockfile matches project metadata.
 2. Run `make verify-checksums` to identify changed or missing frozen files.
 3. Run `make validate-data` for row-level, model-scope, and crosswalk diagnostics.
-4. Run `uv run pytest -q` to see the first failed contract.
+4. Run `uv run --offline --no-sync pytest -q` to see the first failed contract.
 5. Remove only the ignored `results/runs/reproduction/` directory and rerun reproduction if the failure is confined to generated output.
-6. Confirm `python --version` through `uv run python --version`; it should use Python 3.11.
+6. Confirm `python --version` through
+   `uv run --offline --no-sync python --version`; it should use Python 3.11.
 
 Do not edit a frozen input to make a test pass. Unexpected differences should be reported with the failing command, file hash, environment details, and full error message.

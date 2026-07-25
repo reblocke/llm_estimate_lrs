@@ -55,10 +55,6 @@ FORBIDDEN_PATH_PARTS = {
     "tmp",
 }
 
-FORBIDDEN_FILENAMES = {
-    "agents.md",
-}
-
 SCRATCH_WORD = "scr" + "atch"
 
 FORBIDDEN_PATH_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -172,8 +168,8 @@ def _path_findings(relative_path: str) -> list[Finding]:
     pure = PurePosixPath(relative_path)
     findings: list[Finding] = []
 
-    if pure.name.lower() in FORBIDDEN_FILENAMES:
-        findings.append(Finding(relative_path, "forbidden release-process file"))
+    if pure.name.lower() == "agents.md" and relative_path != "AGENTS.md":
+        findings.append(Finding(relative_path, "only the reviewed root AGENTS.md is allowed"))
 
     if relative_path not in ALLOWED_PROCESS_PATHS:
         for reason, pattern in FORBIDDEN_PATH_PATTERNS:

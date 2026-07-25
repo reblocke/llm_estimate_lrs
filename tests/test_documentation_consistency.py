@@ -3,7 +3,11 @@ from __future__ import annotations
 import tomllib
 from pathlib import Path
 
+import pytest
 import yaml
+
+from scripts.validate_contracts import load_contract
+from scripts.validate_release import ReleaseValidationError, validate_documentation
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLE_TITLE = "Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion"
@@ -21,7 +25,7 @@ README_PUBLICATION_STATUS = (
 REPOSITORY_URL = "https://github.com/reblocke/llm_estimate_lrs"
 VERSION = "1.0.0"
 MODEL_IDS = ("gpt-4o-2024-11-20", "o3-2025-04-16", "gpt-5")
-REPRODUCTION_COMMANDS = ("uv sync --frozen", "make reproduce", "make test")
+REPRODUCTION_COMMANDS = ("make reproduce", "make test")
 
 CORE_DOCS = (
     ROOT / "README.md",
@@ -38,6 +42,15 @@ def test_article_metadata_and_reproduction_commands_agree() -> None:
         assert ARTICLE_DOI in text, path
         for command in REPRODUCTION_COMMANDS:
             assert command in text, (path, command)
+
+
+def test_setup_commands_preserve_historical_release_records() -> None:
+    assert "make setup" in (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "make setup" in (ROOT / "docs/REPRODUCIBILITY.md").read_text(encoding="utf-8")
+    assert "uv sync --frozen" in (ROOT / "llms.txt").read_text(encoding="utf-8")
+    assert "uv sync --frozen" in (ROOT / "RELEASE_NOTES_v1.0.0.md").read_text(
+        encoding="utf-8"
+    )
 
 
 def test_model_identifiers_agree() -> None:
@@ -75,7 +88,7 @@ def test_citation_metadata_is_complete_and_article_specific() -> None:
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
     if "date-released" in citation:
         assert f"## [1.0.0] - {citation['date-released']}" in changelog
-        assert "Unreleased" not in changelog
+        assert "## [1.0.0] - Unreleased" not in changelog
     else:
         assert "## [1.0.0] - Unreleased" in changelog
 
@@ -97,6 +110,17 @@ def test_article_and_repository_release_statuses_are_final() -> None:
     assert "`v1.0.0` GitHub release" in release_notes
     assert "prepared repository release" not in release_notes
     assert "under revision" not in readme
+
+
+def test_release_documentation_uses_selected_contract() -> None:
+    contract = load_contract("release/contracts/v1.0.0.json", ROOT)
+    validate_documentation("final", contract)
+
+    mismatched = dict(contract)
+    mismatched["release_version"] = "9.9.9"
+    mismatched["release_ref"] = "v9.9.9"
+    with pytest.raises(ReleaseValidationError, match="release contract"):
+        validate_documentation("final", mismatched)
 
 
 def test_public_documentation_uses_the_stable_supplementary_notebook_name() -> None:

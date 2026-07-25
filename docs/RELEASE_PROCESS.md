@@ -1,6 +1,127 @@
 # Release process
 
-This process prepares the GitHub-only `v1.0.0` accepted-paper reproducibility release. Merging, replacing default-branch history, changing repository visibility, deleting an earlier release, tagging, and publishing each require explicit maintainer approval.
+This document preserves the reviewed `v1.0.0` release runbook and defines how
+the advancing default branch validates that immutable historical release.
+`release/contracts/v1.0.0.json` is a post-release governance record anchored to
+the tag; it did not exist inside the historical tag. The tag and
+`manifests/manuscript_run_v1.json` remain immutable.
+See the current [project metadata](../PROJECT.yml),
+[architecture](../ARCHITECTURE.md), and
+[repository instructions](../AGENTS.md) before maintenance or
+release-candidate work.
+
+The history-replacement and publication steps below are retained as historical
+process evidence, not as instructions to replay against the published tag.
+Merging, replacing default-branch history, changing repository visibility,
+deleting a release, tagging, and publishing each require explicit maintainer
+approval.
+
+## Routine maintenance validation
+
+From the current reviewed tree, run:
+
+```bash
+uv lock --check
+make setup
+make smoke
+make audit
+git status --short
+```
+
+`make smoke` and `make audit` are offline engineering-integrity checks. They do
+not publish, certify, invoke `make release-check`, or call the live replication
+runner. `make validate-contracts`, which is included in both gates, checks v1
+facts from Git objects and continues to apply after the default branch
+advances.
+
+`make setup` is the separate provisioning boundary and may download locked
+dependencies. The validation gates use pre-provisioned environments with
+offline, no-sync execution.
+
+The v1 manuscript manifest is a tag-scoped accepted record. Never regenerate
+or edit it for current maintenance tooling; validate it against materialized
+`v1.0.0` Git blobs. Regenerate the current-tree checksum inventory only after
+the complete reviewed maintenance file set is tracked, and review that
+infrastructure diff separately from unchanged protected-v1 hashes.
+
+Release-candidate validation is a separate operation performed from a clean
+governance checkout. Supply both the reviewed versioned contract and the full
+candidate commit. The validator reads the candidate tree and exact blob bytes
+directly from the local Git object database into a temporary non-Git directory,
+preserving executable modes without invoking checkout hooks or configured
+smudge/process filters. It checks the candidate content there, re-resolves the
+supplied ref to detect movement, and removes the directory on success or
+failure. After all candidate filesystem checks, the validator repeats the
+contracted history policy so late branch, tag, prior-tag, or namespace changes
+fail.
+
+The release-specific preflight validates all other contracts historically but
+defers the selected candidate contract's prepare/final history rules to the
+explicit release validator. Candidate required paths come only from that
+contract, and its checksum inventory is verified inside the materialized
+candidate tree.
+
+The current archive names, release attestation, and publication checklist
+remain specific to `v1.0.0`. Contract-aware validation does not by itself make
+those assets suitable for a successor release; successor packaging is deferred
+to the preservation and release stage.
+
+## Contracted candidate lifecycle
+
+Use this sequence for a future contracted release. It deliberately keeps the
+contract and validator outside the candidate commit so that the contract can
+bind that commit without self-reference.
+
+1. Create and approve candidate commit `C`. Record its full commit and tree
+   IDs, and ensure the designated default-branch ref configured by the contract
+   resolves to `C`.
+2. In a separate clean governance checkout, add the reviewed contract that
+   binds `C` and its tree. The contract and current validator exist in this
+   governance checkout; they are not added to `C`.
+3. Before the intended release tag exists, run prepare validation from the
+   governance checkout:
+
+   ```bash
+   uv run --offline --no-sync python scripts/validate_release.py \
+     --release \
+     --mode prepare \
+     --contract release/contracts/vNEXT.json \
+     --ref "$C"
+   ```
+
+   Prepare requires candidate/default-branch parity and the contracted history
+   and namespace policy, but requires the intended release tag to be absent.
+4. After explicit approval, create the configured annotated release tag at
+   exactly `C` with the configured tag message. Do not move the candidate or
+   default-branch ref.
+5. From the same clean governance checkout and with the same contract, run
+   final validation:
+
+   ```bash
+   uv run --offline --no-sync python scripts/validate_release.py \
+     --release \
+     --mode final \
+     --contract release/contracts/vNEXT.json \
+     --ref "$C"
+   ```
+
+   Final requires exact candidate/default-branch/tag identity, tag type, and
+   tag message in addition to the prepare checks.
+6. Only after final validation succeeds, merge the contract as the
+   post-release governance record.
+
+Release-asset validation follows the same boundary: invoke
+`scripts/build_release_assets.py` from the clean governance checkout with
+`--ref "$C"` and the reviewed contract. The builder pins `C` before reading
+candidate blobs and invokes the governance checkout's current
+`scripts/validate_release.py` with that full commit. It never executes
+candidate-local legacy validation tooling. Full contract validation and an
+immediate candidate-ref recheck complete before either candidate notebook is
+executed. Validation is repeated after notebook execution and before
+attestation to catch namespace movement during the build.
+
+A future contract may permit normal multi-commit history; the exceptional
+single-root policy remains specific to v1.
 
 ## 1. Security and repository preflight
 
@@ -30,7 +151,7 @@ From a fresh clone of the reviewed branch:
 ```bash
 pip install uv
 uv lock --check
-uv sync --frozen
+make setup
 make verify-checksums
 make validate-data
 make reproduce
@@ -49,13 +170,17 @@ Release-blocking failures include changed workbook or prompt hashes, an incomple
 Regenerate checksums only through the deterministic checksum tool, then review the diff:
 
 ```bash
-uv run python scripts/build_manifest.py
-uv run python scripts/build_checksums.py --root . --output checksums/SHA256SUMS
-uv run python scripts/verify_checksums.py checksums/SHA256SUMS
+uv run --offline --no-sync python scripts/build_manifest.py
+uv run --offline --no-sync python scripts/build_checksums.py --root . --output checksums/SHA256SUMS
+uv run --offline --no-sync python scripts/verify_checksums.py checksums/SHA256SUMS
 make release-archive
 ```
 
 `make release-archive` builds the source archive, a deterministic reference-table archive, executed copies of the two offline analysis notebooks, a validation report, a release attestation, and an asset-level `dist/SHA256SUMS`. Notebook execution occurs from temporary workbook/notebook copies; generated figures and office files remain in the temporary workspace and are not release assets.
+
+Historical manifest reconstruction requires a complete local v1 Git object
+closure. Historical `git show` and `git archive` reads disable lazy fetching
+and fail rather than contacting a promisor remote.
 
 The source archive must exclude credentials, local environments, caches, generated reproduction runs, private correspondence, publisher proofs, stale office artifacts, and unreviewed drafts. Run the hygiene checker against both the repository and archive.
 
@@ -65,7 +190,7 @@ The tracked manifest records `release_ref: v1.0.0`. The generated release attest
 
 ```bash
 make cff-validate
-uv run pytest -q tests/test_documentation_consistency.py tests/test_manuscript_text.py
+uv run --offline --no-sync pytest -q tests/test_documentation_consistency.py tests/test_manuscript_text.py
 test -f "$AUTHOR_MANUSCRIPT_DOCX"
 make manuscript-parity AUTHOR_MANUSCRIPT_DOCX="$AUTHOR_MANUSCRIPT_DOCX"
 ```
@@ -196,7 +321,7 @@ gh release create v1.0.0 --draft \
   --notes-file RELEASE_NOTES_v1.0.0.md
 release_json=$(mktemp)
 gh release view v1.0.0 --json name,body > "$release_json"
-uv run python scripts/check_release_hygiene.py \
+uv run --offline --no-sync python scripts/check_release_hygiene.py \
   --repository . --head-commit HEAD --release-json "$release_json"
 rm "$release_json"
 ```

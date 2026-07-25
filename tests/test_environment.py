@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import subprocess
 import tomllib
 from pathlib import Path
 
@@ -28,5 +29,41 @@ def test_cff_validator_uses_a_separately_locked_python_311_environment() -> None
     assert (tool_root / "uv.lock").is_file()
 
     makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
-    assert "uv run --project tools/cff --frozen cffconvert --validate" in makefile
+    assert (
+        "uv run --project tools/cff --frozen --offline --no-sync "
+        "cffconvert --validate"
+    ) in makefile
     assert "uvx" not in makefile
+
+
+def test_setup_is_the_only_environment_sync_boundary() -> None:
+    makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
+
+    assert makefile.count("uv sync") == 2
+    assert "\nsetup:\n\tuv sync --frozen\n\tuv sync --project tools/cff --frozen\n" in makefile
+    assert "UV_RUN_OFFLINE := uv run --offline --no-sync" in makefile
+    assert "uv lock --check --offline" in makefile
+
+
+def test_missing_validation_environments_fail_with_setup_instruction(tmp_path: Path) -> None:
+    missing_root = tmp_path / "missing-root-python"
+    root_check = subprocess.run(
+        ["make", "environment-check", f"ROOT_PYTHON={missing_root}"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert root_check.returncode != 0
+    assert "run make setup" in root_check.stdout
+
+    missing_cff = tmp_path / "missing-cffconvert"
+    cff_check = subprocess.run(
+        ["make", "cff-env-check", f"CFF_CONVERT={missing_cff}"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert cff_check.returncode != 0
+    assert "run make setup" in cff_check.stdout

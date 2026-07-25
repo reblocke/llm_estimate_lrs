@@ -8,7 +8,13 @@ import hashlib
 import re
 import stat
 import subprocess
+from collections.abc import Iterable
 from pathlib import Path
+
+if __package__:
+    from scripts.git_safety import no_lazy_fetch_environment
+else:
+    from git_safety import no_lazy_fetch_environment
 
 CHECKSUM_LINE = re.compile(r"^([0-9a-f]{64}) [ *](.+)$")
 
@@ -32,6 +38,7 @@ def tracked_regular_files(root: Path, checksum_file: Path) -> list[str]:
         cwd=root,
         check=False,
         capture_output=True,
+        env=no_lazy_fetch_environment(),
     )
     if result.returncode != 0:
         raise ValueError(f"Could not inspect tracked release files: {result.stderr.decode(errors='replace').strip()}")
@@ -63,7 +70,51 @@ def tracked_regular_files(root: Path, checksum_file: Path) -> list[str]:
     return sorted(tracked)
 
 
-def verify_checksums(checksum_file: Path, root: Path) -> int:
+def _provided_regular_files(
+    root: Path,
+    checksum_file: Path,
+    tracked_files: Iterable[str],
+) -> list[str]:
+    try:
+        checksum_relative = checksum_file.relative_to(root).as_posix()
+    except ValueError as exc:
+        raise ValueError("Checksum manifest must be inside the repository root") from exc
+
+    provided = list(tracked_files)
+    if len(provided) != len(set(provided)):
+        raise ValueError("Provided tracked-file inventory contains duplicate paths")
+    tracked: list[str] = []
+    for relative_text in provided:
+        relative = Path(relative_text)
+        if (
+            not relative_text
+            or "\\" in relative_text
+            or relative.is_absolute()
+            or ".." in relative.parts
+            or relative.as_posix() != relative_text
+        ):
+            raise ValueError(f"Unsafe tracked-file inventory path: {relative_text!r}")
+        if relative_text == checksum_relative:
+            continue
+        path = root / relative
+        try:
+            observed_mode = path.lstat().st_mode
+        except FileNotFoundError as exc:
+            raise ValueError(f"Tracked release file is missing: {relative_text}") from exc
+        if path.is_symlink() or not stat.S_ISREG(observed_mode):
+            raise ValueError(
+                f"Tracked release entry is not a regular materialized file: {relative_text}"
+            )
+        tracked.append(relative_text)
+    return sorted(tracked)
+
+
+def verify_checksums(
+    checksum_file: Path,
+    root: Path,
+    *,
+    tracked_files: Iterable[str] | None = None,
+) -> int:
     """Verify all checksum entries and return the number checked."""
     checksum_file = checksum_file.resolve()
     root = root.resolve()
@@ -91,7 +142,10 @@ def verify_checksums(checksum_file: Path, root: Path) -> int:
     if not entries:
         raise ValueError("Checksum manifest contains no entries")
 
-    tracked = tracked_regular_files(root, checksum_file)
+    if tracked_files is None:
+        tracked = tracked_regular_files(root, checksum_file)
+    else:
+        tracked = _provided_regular_files(root, checksum_file, tracked_files)
     if paths != tracked:
         missing = sorted(set(tracked) - set(paths))
         extra = sorted(set(paths) - set(tracked))

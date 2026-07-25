@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/reblocke/llm_estimate_lrs/raw/main/release/schemas/release-contract.schema.json",
+  "title": "Versioned release contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_schema_version",
+    "release_version",
+    "release_ref",
+    "audited_commit",
+    "audited_tree",
+    "maintenance_status",
+    "post_release_governance_record",
+    "article",
+    "required_paths",
+    "protected_artifacts",
+    "history_policy",
+    "immutable_prior_tags"
+  ],
+  "properties": {
+    "contract_schema_version": {
+      "const": "1.0.0"
+    },
+    "release_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "release_ref": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+    },
+    "audited_commit": {
+      "$ref": "#/$defs/gitObjectId"
+    },
+    "audited_tree": {
+      "$ref": "#/$defs/gitObjectId"
+    },
+    "maintenance_status": {
+      "enum": [
+        "active-development",
+        "maintenance-only",
+        "archived"
+      ]
+    },
+    "post_release_governance_record": {
+      "type": "boolean"
+    },
+    "article": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "doi",
+        "journal",
+        "published_date",
+        "publisher_url"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "doi": {
+          "type": "string",
+          "pattern": "^10\\.[0-9]{4,9}/\\S+$"
+        },
+        "journal": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "publisher_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        }
+      }
+    },
+    "required_paths": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/safeRelativePath"
+      }
+    },
+    "protected_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/protectedArtifact"
+      }
+    },
+    "history_policy": {
+      "$ref": "#/$defs/historyPolicy"
+    },
+    "immutable_prior_tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/priorTagBinding"
+      }
+    }
+  },
+  "$defs": {
+    "gitObjectId": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "safeRelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)(?!.*//).+$"
+    },
+    "gitRef": {
+      "type": "string",
+      "pattern": "^refs/(?:heads|remotes|tags)/[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^(?!-)(?!.*\\.\\.)(?!.*@\\{)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "protectedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "origin_ref"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/safeRelativePath"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "origin_ref": {
+          "$ref": "#/$defs/revision"
+        }
+      }
+    },
+    "allowedRefs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "namespace",
+        "values"
+      ],
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "pattern": "^refs/(?:heads|remotes|tags)(?:/[A-Za-z0-9][A-Za-z0-9._/-]*)?$"
+        },
+        "values": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/gitRef"
+          }
+        }
+      }
+    },
+    "historyPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "complete_history_required",
+        "annotated_tag_required",
+        "tag_message",
+        "parentless_release_commit_required",
+        "single_root_required",
+        "candidate_default_branch_tag_parity_required",
+        "default_branch_ref",
+        "forbidden_refs",
+        "forbidden_ancestors",
+        "allowed_refs",
+        "allowed_tags"
+      ],
+      "properties": {
+        "complete_history_required": {
+          "type": "boolean"
+        },
+        "annotated_tag_required": {
+          "type": "boolean"
+        },
+        "tag_message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parentless_release_commit_required": {
+          "type": "boolean"
+        },
+        "single_root_required": {
+          "type": "boolean"
+        },
+        "candidate_default_branch_tag_parity_required": {
+          "type": "boolean"
+        },
+        "default_branch_ref": {
+          "$ref": "#/$defs/gitRef"
+        },
+        "forbidden_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/gitRef"
+          }
+        },
+        "forbidden_ancestors": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/gitObjectId"
+          }
+        },
+        "allowed_refs": {
+          "$ref": "#/$defs/allowedRefs"
+        },
+        "allowed_tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^refs/tags/[A-Za-z0-9][A-Za-z0-9._/-]*$"
+          }
+        }
+      }
+    },
+    "priorTagBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "commit",
+        "tree"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        },
+        "commit": {
+          "$ref": "#/$defs/gitObjectId"
+        },
+        "tree": {
+          "$ref": "#/$defs/gitObjectId"
+        }
+      }
+    }
+  }
+}

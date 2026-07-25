@@ -60,8 +60,7 @@ jobs:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
       - run: make setup
-      - run: make verify-checksums
-      - run: make validate-data
+      - run: make smoke
       - run: make test
 
   offline-reproduction:

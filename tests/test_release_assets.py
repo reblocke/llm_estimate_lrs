@@ -22,6 +22,7 @@ from scripts.build_release_assets import (
     _validation_report,
     execute_verification_notebooks,
     materialize_reviewed_inputs,
+    require_clean_ref,
     verify_release_asset_determinism,
     write_asset_checksums,
 )
@@ -150,7 +151,7 @@ def test_verification_notebook_output_directory_symlink_cannot_delete_outside_fi
     assert sentinel.read_bytes() == b"outside notebook bytes\n"
 
 
-def test_validation_report_executes_pinned_detached_worktree_not_working_tree_symlink(tmp_path: Path) -> None:
+def test_validation_report_uses_governance_validator_not_candidate_tooling(tmp_path: Path) -> None:
     repository = tmp_path / "repository"
     repository.mkdir()
     subprocess.run(["git", "init", "-q"], cwd=repository, check=True)
@@ -158,9 +159,16 @@ def test_validation_report_executes_pinned_detached_worktree_not_working_tree_sy
     subprocess.run(["git", "config", "user.email", "release@example.invalid"], cwd=repository, check=True)
     validator = repository / "scripts" / "validate_release.py"
     validator.parent.mkdir()
-    validator.write_text('import json\nprint(json.dumps({"source": "pinned"}))\n', encoding="utf-8")
+    candidate_marker = tmp_path / "candidate-validator-ran"
+    validator.write_text(
+        "import json\n"
+        "from pathlib import Path\n"
+        f"Path({str(candidate_marker)!r}).write_text('ran')\n"
+        "print(json.dumps({'source': 'candidate'}))\n",
+        encoding="utf-8",
+    )
     subprocess.run(["git", "add", "."], cwd=repository, check=True)
-    subprocess.run(["git", "commit", "-qm", "Add release validator"], cwd=repository, check=True)
+    subprocess.run(["git", "commit", "-qm", "Add candidate validator"], cwd=repository, check=True)
     pinned_commit = subprocess.run(
         ["git", "rev-parse", "HEAD"],
         cwd=repository,
@@ -169,26 +177,53 @@ def test_validation_report_executes_pinned_detached_worktree_not_working_tree_sy
         text=True,
     ).stdout.strip()
 
-    marker = tmp_path / "working-tree-validator-ran"
-    outside_validator = tmp_path / "outside-validator.py"
-    outside_validator.write_text(
-        f'import json\nfrom pathlib import Path\nPath({str(marker)!r}).write_text("ran")\n'
-        'print(json.dumps({"source": "working-tree"}))\n',
+    validator.write_text(
+        "import json\n"
+        "import sys\n"
+        "print(json.dumps({'source': 'governance', 'arguments': sys.argv[1:]}))\n",
         encoding="utf-8",
     )
-    validator.unlink()
-    validator.symlink_to(outside_validator)
+    contract = repository / "release" / "contracts" / "future.json"
+    contract.parent.mkdir(parents=True)
+    contract.write_text("{}\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=repository, check=True)
+    subprocess.run(["git", "commit", "-qm", "Add governance validator and contract"], cwd=repository, check=True)
+    governance_head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
 
     outside_report = tmp_path / "outside-validation-report.json"
     outside_report.write_text("keep\n", encoding="utf-8")
     requested_output = tmp_path / "validation-report.json"
     requested_output.symlink_to(outside_report)
-    output = _validation_report(repository, pinned_commit, "prepare", requested_output)
+    output = _validation_report(
+        repository,
+        pinned_commit,
+        "prepare",
+        requested_output,
+        contract=Path("release/contracts/future.json"),
+    )
 
-    assert json.loads(output.read_text(encoding="utf-8")) == {"source": "pinned"}
+    report = json.loads(output.read_text(encoding="utf-8"))
+    assert report["source"] == "governance"
+    assert report["arguments"][-2:] == ["--ref", pinned_commit]
     assert output.is_file() and not output.is_symlink()
     assert outside_report.read_text(encoding="utf-8") == "keep\n"
-    assert not marker.exists()
+    assert not candidate_marker.exists()
+    assert (
+        subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=repository,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        == governance_head
+    )
     worktrees = subprocess.run(
         ["git", "worktree", "list", "--porcelain"],
         cwd=repository,
@@ -199,10 +234,256 @@ def test_validation_report_executes_pinned_detached_worktree_not_working_tree_sy
     assert worktrees.count("worktree ") == 1
 
 
+def test_clean_governance_checkout_may_validate_an_earlier_candidate(tmp_path: Path) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    subprocess.run(["git", "init", "-q"], cwd=repository, check=True)
+    subprocess.run(["git", "config", "user.name", "Release Test"], cwd=repository, check=True)
+    subprocess.run(["git", "config", "user.email", "release@example.invalid"], cwd=repository, check=True)
+    (repository / "candidate.txt").write_text("candidate\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=repository, check=True)
+    subprocess.run(["git", "commit", "-qm", "Candidate"], cwd=repository, check=True)
+    candidate = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    (repository / "governance.txt").write_text("contract and validator\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=repository, check=True)
+    subprocess.run(["git", "commit", "-qm", "Governance record"], cwd=repository, check=True)
+
+    assert require_clean_ref(repository, candidate) == candidate
+
+
+def test_asset_build_requires_complete_local_candidate_objects(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    pinned_commit = "a" * 40
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_clean_ref",
+        lambda _repository, _ref: pinned_commit,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_full_local_clone",
+        lambda _repository: None,
+    )
+
+    def reject_partial_clone(candidate_repository: Path, revision: str) -> None:
+        assert candidate_repository == repository.resolve()
+        assert revision == pinned_commit
+        raise ValueError("partial clones are not supported")
+
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_complete_local_objects",
+        reject_partial_clone,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "build_archive",
+        lambda *_args, **_kwargs: pytest.fail("asset construction must not start"),
+    )
+
+    with pytest.raises(ValueError, match="partial clones are not supported"):
+        build_release_assets.build_release_assets(
+            repository,
+            repository / "dist",
+            "HEAD",
+            "prepare",
+        )
+
+    assert not (repository / "dist").exists()
+
+
+def test_failed_candidate_validation_prevents_notebook_execution(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    marker = tmp_path / "notebook-executed"
+    pinned_commit = "a" * 40
+    monkeypatch.setattr(build_release_assets, "require_full_local_clone", lambda _root: None)
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_clean_ref",
+        lambda _root, _ref: pinned_commit,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_complete_local_objects",
+        lambda _root, _revision: None,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "build_archive",
+        lambda _root, output, _ref: output,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "build_reference_archive",
+        lambda _root, output, _ref: output,
+    )
+
+    def execute_candidate(*_args: object, **_kwargs: object) -> list[Path]:
+        marker.write_text("executed\n", encoding="utf-8")
+        return []
+
+    monkeypatch.setattr(
+        build_release_assets,
+        "execute_verification_notebooks",
+        execute_candidate,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "_validation_report",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            ReleaseAssetError("candidate contract validation failed")
+        ),
+    )
+
+    with pytest.raises(ReleaseAssetError, match="contract validation failed"):
+        build_release_assets.build_release_assets(
+            repository,
+            repository / "dist",
+            "candidate",
+            "prepare",
+            contract=Path("release/contracts/future.json"),
+        )
+
+    assert not marker.exists()
+
+
+def test_ref_movement_after_validation_prevents_notebook_execution(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    marker = tmp_path / "notebook-executed"
+    pinned_commit = "a" * 40
+    moved_commit = "b" * 40
+    resolved = iter((pinned_commit, moved_commit))
+    monkeypatch.setattr(build_release_assets, "require_full_local_clone", lambda _root: None)
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_clean_ref",
+        lambda _root, _ref: next(resolved),
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "require_complete_local_objects",
+        lambda _root, _revision: None,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "build_archive",
+        lambda _root, output, _ref: output,
+    )
+    monkeypatch.setattr(
+        build_release_assets,
+        "build_reference_archive",
+        lambda _root, output, _ref: output,
+    )
+
+    def write_report(
+        _root: Path,
+        _commit: str,
+        _mode: str,
+        output: Path,
+        *,
+        contract: Path | None = None,
+    ) -> Path:
+        assert contract is not None
+        output.write_text("{}\n", encoding="utf-8")
+        return output
+
+    def execute_candidate(*_args: object, **_kwargs: object) -> list[Path]:
+        marker.write_text("executed\n", encoding="utf-8")
+        return []
+
+    monkeypatch.setattr(build_release_assets, "_validation_report", write_report)
+    monkeypatch.setattr(
+        build_release_assets,
+        "execute_verification_notebooks",
+        execute_candidate,
+    )
+
+    with pytest.raises(ReleaseAssetError, match="changed during candidate validation"):
+        build_release_assets.build_release_assets(
+            repository,
+            repository / "dist",
+            "candidate",
+            "prepare",
+            contract=Path("release/contracts/future.json"),
+        )
+
+    assert not marker.exists()
+
+
+def test_validation_report_propagates_contract_and_pinned_candidate_commit(tmp_path: Path) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+    subprocess.run(["git", "init", "-q"], cwd=repository, check=True)
+    subprocess.run(["git", "config", "user.name", "Release Test"], cwd=repository, check=True)
+    subprocess.run(["git", "config", "user.email", "release@example.invalid"], cwd=repository, check=True)
+    validator = repository / "scripts" / "validate_release.py"
+    validator.parent.mkdir()
+    validator.write_text(
+        "import json\nimport sys\nprint(json.dumps({'arguments': sys.argv[1:]}))\n",
+        encoding="utf-8",
+    )
+    contract = repository / "release" / "contracts" / "future.json"
+    contract.parent.mkdir(parents=True)
+    contract.write_text("{}\n", encoding="utf-8")
+    subprocess.run(["git", "add", "."], cwd=repository, check=True)
+    subprocess.run(["git", "commit", "-qm", "Add release validator"], cwd=repository, check=True)
+    pinned_commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+
+    output = _validation_report(
+        repository,
+        pinned_commit,
+        "final",
+        tmp_path / "validation-report.json",
+        contract=Path("release/contracts/future.json"),
+    )
+
+    assert json.loads(output.read_text(encoding="utf-8"))["arguments"] == [
+        "--release",
+        "--mode",
+        "final",
+        "--contract",
+        "release/contracts/future.json",
+        "--ref",
+        pinned_commit,
+    ]
+
+
 def _fake_asset_builder(tmp_path: Path, *, divergence: str | None = None):
     calls: list[int] = []
 
-    def builder(_repository: Path, output_dir: Path, _ref: str, _mode: str) -> dict[str, Path]:
+    def builder(
+        _repository: Path,
+        output_dir: Path,
+        _ref: str,
+        _mode: str,
+        *,
+        contract: Path | None = None,
+    ) -> dict[str, Path]:
+        assert contract is None
         calls.append(len(calls) + 1)
         if output_dir.exists():
             shutil.rmtree(output_dir)
