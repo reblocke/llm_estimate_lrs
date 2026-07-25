@@ -8,10 +8,11 @@ from pathlib import Path
 
 
 def no_lazy_fetch_environment() -> dict[str, str]:
-    """Return the current environment with Git lazy fetching disabled."""
+    """Return an environment for exact, offline Git-object reads."""
 
     environment = os.environ.copy()
     environment["GIT_NO_LAZY_FETCH"] = "1"
+    environment["GIT_NO_REPLACE_OBJECTS"] = "1"
     return environment
 
 

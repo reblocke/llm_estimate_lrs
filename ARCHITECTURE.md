@@ -67,17 +67,18 @@ The integrity layer has complementary records:
 Historical contract validation and release-candidate validation are separate.
 The former checks fixed tag, tree, annotation, and artifact facts. The latter
 uses a clean governance checkout containing the current validator and reviewed
-contract. It resolves the candidate ref once, materializes that exact commit in
-a detached temporary worktree, and applies every candidate filesystem check to
-the materialized tree. The supplied ref is resolved again before cleanup so a
-ref that moves during validation fails closed. Candidate checksum validation
-also runs inside that worktree. Git subprocesses disable lazy fetching, reject
-partial/promisor clones, and require the candidate object closure to be
-available locally before materialization. Candidate checkout explicitly uses
-an empty hook directory so repository, global, or system `post-checkout` hooks
-cannot run. The complete history policy is evaluated again after candidate
-filesystem validation so late changes to contracted branch, tag, or namespace
-refs fail the run.
+contract. It resolves the candidate ref once, reads that exact tree and its
+blobs directly from the local Git object database, and writes their exact bytes
+and executable modes into a temporary non-Git directory. This filter-free
+materialization does not run Git checkout, repository or configured hooks, or
+smudge/process filters. Every candidate filesystem and checksum check uses that
+directory. The supplied ref is resolved again before cleanup so a ref that
+moves during validation fails closed. Git subprocesses disable lazy fetching
+and replacement objects, reject partial/promisor clones, and require the
+candidate object closure to be available locally before materialization. The
+complete history policy is evaluated again after candidate filesystem
+validation so late changes to contracted branch, tag, or namespace refs fail
+the run.
 
 Prepare and final validation use the same contract but have different namespace
 requirements. Prepare requires the contracted candidate commit and tree,

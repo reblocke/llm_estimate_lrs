@@ -372,12 +372,21 @@ def test_release_candidate_checks_materialized_ref_not_governance_head(
         assert_candidate_root(root)
         return {"manifest_id": "test-manifest"}
 
+    def fake_file_type_validation(
+        _repository: Path,
+        *,
+        tree: str,
+        files_root: Path,
+    ) -> None:
+        assert tree
+        assert_candidate_root(files_root)
+
     monkeypatch.setattr(release_validation, "validate_release_contract", fake_contract)
     monkeypatch.setattr(release_validation, "validate_data", fake_data)
     monkeypatch.setattr(
         release_validation,
         "validate_tracked_file_types",
-        lambda root: assert_candidate_root(root),
+        fake_file_type_validation,
     )
     monkeypatch.setattr(
         release_validation,
@@ -387,7 +396,7 @@ def test_release_candidate_checks_materialized_ref_not_governance_head(
     monkeypatch.setattr(
         release_validation,
         "validate_candidate_checksums",
-        lambda root: (assert_candidate_root(root), 1)[1],
+        lambda root, **_kwargs: (assert_candidate_root(root), 1)[1],
     )
     monkeypatch.setattr(release_validation, "validate_notebooks", assert_candidate_root)
     monkeypatch.setattr(release_validation, "validate_manifest", fake_manifest)
@@ -512,7 +521,11 @@ def test_release_candidate_rechecks_contracted_refs_after_filesystem_validation(
         "validate_release_contract",
         validate_initial_contract,
     )
-    monkeypatch.setattr(release_validation, "validate_tracked_file_types", lambda _root: None)
+    monkeypatch.setattr(
+        release_validation,
+        "validate_tracked_file_types",
+        lambda *_args, **_kwargs: None,
+    )
     monkeypatch.setattr(
         release_validation,
         "validate_required_paths",
@@ -521,7 +534,7 @@ def test_release_candidate_rechecks_contracted_refs_after_filesystem_validation(
     monkeypatch.setattr(
         release_validation,
         "validate_candidate_checksums",
-        lambda _root: 1,
+        lambda _root, **_kwargs: 1,
     )
     monkeypatch.setattr(
         release_validation,
@@ -580,32 +593,37 @@ def test_materialized_candidate_cleans_up_after_success_and_failure(
     assert str(candidate_root) not in worktrees
 
 
-def test_materialized_candidate_cleans_up_a_partially_failed_add(
+def test_materialized_candidate_cleans_up_a_partially_failed_materialization(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     candidate_a, _governance_b = _initialize_candidate_repository(tmp_path)
-    original_git = release_validation.git
     candidate_root: Path | None = None
 
-    def fail_after_add(repository: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    def fail_after_partial_write(
+        _repository: Path,
+        _tree: str,
+        destination: Path,
+    ) -> None:
         nonlocal candidate_root
-        result = original_git(repository, *args)
-        if "worktree" in args and "add" in args:
-            candidate_root = Path(args[-2])
-            return subprocess.CompletedProcess(result.args, 1, result.stdout, "synthetic add failure")
-        return result
+        candidate_root = destination
+        destination.mkdir()
+        (destination / "partial.txt").write_text("partial\n", encoding="utf-8")
+        raise ReleaseValidationError("synthetic materialization failure")
 
-    monkeypatch.setattr(release_validation, "git", fail_after_add)
+    monkeypatch.setattr(
+        release_validation,
+        "_materialize_candidate_tree",
+        fail_after_partial_write,
+    )
     with (
-        pytest.raises(ReleaseValidationError, match="Could not materialize candidate"),
+        pytest.raises(ReleaseValidationError, match="synthetic materialization failure"),
         materialized_candidate(tmp_path, candidate_a),
     ):
-        pytest.fail("failed candidate add must not yield a worktree")
+        pytest.fail("failed candidate materialization must not yield a snapshot")
 
     assert candidate_root is not None
     assert not candidate_root.exists()
-    assert str(candidate_root) not in original_git(tmp_path, "worktree", "list", "--porcelain").stdout
 
 
 def test_materialized_candidate_rejects_a_ref_that_moves_during_validation(tmp_path: Path) -> None:
@@ -666,6 +684,126 @@ def test_materialized_candidate_disables_post_checkout_hooks(
     assert not sentinel.exists()
 
 
+@pytest.mark.parametrize("configuration", ["local", "global"])
+def test_materialized_candidate_does_not_execute_checkout_filters(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    configuration: str,
+) -> None:
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "config", "user.name", "Release Test"], cwd=tmp_path, check=True)
+    subprocess.run(
+        ["git", "config", "user.email", "release@example.invalid"],
+        cwd=tmp_path,
+        check=True,
+    )
+    (tmp_path / "candidate.txt").write_text("candidate A\n", encoding="utf-8")
+    (tmp_path / ".gitattributes").write_text(
+        "candidate.txt filter=sentinel\n",
+        encoding="utf-8",
+    )
+    subprocess.run(["git", "add", "candidate.txt", ".gitattributes"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "commit", "-qm", "Candidate A with filter"], cwd=tmp_path, check=True)
+    candidate_a = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    (tmp_path / "candidate.txt").write_text("governance B\n", encoding="utf-8")
+    subprocess.run(["git", "commit", "-qam", "Governance B"], cwd=tmp_path, check=True)
+
+    sentinel = tmp_path / "checkout-filter-ran"
+    filter_script = tmp_path / "checkout-filter.sh"
+    filter_script.write_text(
+        "#!/bin/sh\n"
+        'printf "filter ran\\n" > "$RELEASE_FILTER_SENTINEL"\n'
+        "cat\n",
+        encoding="utf-8",
+    )
+    filter_script.chmod(0o755)
+    monkeypatch.setenv("RELEASE_FILTER_SENTINEL", str(sentinel))
+    monkeypatch.setenv("RELEASE_FILTER_SCRIPT", str(filter_script))
+    config_command = ["git", "config"]
+    if configuration == "global":
+        global_config = tmp_path / "global.gitconfig"
+        global_config.write_text("", encoding="utf-8")
+        monkeypatch.setenv("GIT_CONFIG_GLOBAL", str(global_config))
+        config_command.extend(["--file", str(global_config)])
+    subprocess.run(
+        [*config_command, "filter.sentinel.smudge", 'sh "$RELEASE_FILTER_SCRIPT"'],
+        cwd=tmp_path,
+        check=True,
+    )
+    subprocess.run(
+        [*config_command, "filter.sentinel.clean", "cat"],
+        cwd=tmp_path,
+        check=True,
+    )
+    subprocess.run(
+        [*config_command, "filter.sentinel.required", "true"],
+        cwd=tmp_path,
+        check=True,
+    )
+
+    with materialized_candidate(tmp_path, candidate_a) as snapshot:
+        assert (snapshot.root / "candidate.txt").read_bytes() == b"candidate A\n"
+
+    assert not sentinel.exists()
+
+
+def test_materialized_candidate_preserves_executable_mode(tmp_path: Path) -> None:
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "config", "user.name", "Release Test"], cwd=tmp_path, check=True)
+    subprocess.run(
+        ["git", "config", "user.email", "release@example.invalid"],
+        cwd=tmp_path,
+        check=True,
+    )
+    executable = tmp_path / "tool.sh"
+    executable.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+    executable.chmod(0o755)
+    subprocess.run(["git", "add", "tool.sh"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "commit", "-qm", "Executable candidate"], cwd=tmp_path, check=True)
+    candidate = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+
+    with materialized_candidate(tmp_path, candidate) as snapshot:
+        assert snapshot.root.joinpath("tool.sh").stat().st_mode & 0o777 == 0o755
+
+
+def test_materialized_candidate_ignores_git_replace_objects(tmp_path: Path) -> None:
+    candidate_a, _governance_b = _initialize_candidate_repository(tmp_path)
+    candidate_blob = subprocess.run(
+        ["git", "rev-parse", f"{candidate_a}:candidate.txt"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    replacement_blob = subprocess.run(
+        ["git", "hash-object", "-w", "--stdin"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+        input=b"replacement bytes\n",
+    ).stdout.decode("ascii").strip()
+    subprocess.run(
+        ["git", "replace", candidate_blob, replacement_blob],
+        cwd=tmp_path,
+        check=True,
+    )
+
+    with materialized_candidate(tmp_path, candidate_a) as snapshot:
+        assert (snapshot.root / "candidate.txt").read_bytes() == b"candidate A\n"
+
+
 @pytest.mark.parametrize("candidate_ref", ["", " HEAD", "--help", "HEAD\nrefs/heads/main"])
 def test_materialized_candidate_rejects_unsafe_ref_arguments(
     tmp_path: Path,
@@ -680,8 +818,11 @@ def test_materialized_candidate_rejects_unsafe_ref_arguments(
         pytest.fail("unsafe candidate ref must not be materialized")
 
 
-def test_git_object_access_disables_lazy_fetch() -> None:
-    assert no_lazy_fetch_environment()["GIT_NO_LAZY_FETCH"] == "1"
+def test_git_object_access_is_exact_and_disables_lazy_fetch() -> None:
+    environment = no_lazy_fetch_environment()
+
+    assert environment["GIT_NO_LAZY_FETCH"] == "1"
+    assert environment["GIT_NO_REPLACE_OBJECTS"] == "1"
 
 
 @pytest.mark.parametrize("truthy", ["true", "yes", "on", "1"])
@@ -732,7 +873,14 @@ def test_v1_candidate_uses_v1_contract_paths_and_checksum_inventory() -> None:
     with materialized_candidate(ROOT, "v1.0.0") as candidate:
         assert not (candidate.root / "AGENTS.md").exists()
         validate_required_paths(contract, candidate.root)
-        assert validate_candidate_checksums(candidate.root) > 0
+        assert (
+            validate_candidate_checksums(
+                candidate.root,
+                repository=ROOT,
+                tree=candidate.tree,
+            )
+            > 0
+        )
 
 
 def test_candidate_checksum_validation_reads_materialized_tree(tmp_path: Path) -> None:

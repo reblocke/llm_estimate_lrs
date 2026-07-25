@@ -20,9 +20,10 @@ All notable changes to this repository are documented here.
 - The accepted v1 manuscript manifest is validated against its historical tag
   snapshot rather than advancing maintenance code.
 - Release assets validate the contracted candidate before executing notebooks,
-  disable checkout hooks, and recheck contracted refs before success.
+  materialize candidate blobs without checkout hooks or filters, and recheck
+  contracted refs before success.
 - Historical Git reads reject partial/promisor clones and disable lazy
-  fetching.
+  fetching and replacement objects.
 
 ### Scientific results
 

@@ -46,12 +46,14 @@ infrastructure diff separately from unchanged protected-v1 hashes.
 
 Release-candidate validation is a separate operation performed from a clean
 governance checkout. Supply both the reviewed versioned contract and the full
-candidate commit. The validator materializes that commit in a detached
-temporary worktree, checks the candidate content there, re-resolves the
-supplied ref to detect movement, and removes the worktree on success or
-failure. Materialization overrides Git's hook path with an empty directory.
-After all candidate filesystem checks, the validator repeats the contracted
-history policy so late branch, tag, prior-tag, or namespace changes fail.
+candidate commit. The validator reads the candidate tree and exact blob bytes
+directly from the local Git object database into a temporary non-Git directory,
+preserving executable modes without invoking checkout hooks or configured
+smudge/process filters. It checks the candidate content there, re-resolves the
+supplied ref to detect movement, and removes the directory on success or
+failure. After all candidate filesystem checks, the validator repeats the
+contracted history policy so late branch, tag, prior-tag, or namespace changes
+fail.
 
 The release-specific preflight validates all other contracts historically but
 defers the selected candidate contract's prepare/final history rules to the

@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import shutil
 import stat
 import subprocess
 import sys
@@ -15,7 +14,7 @@ import tomllib
 from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any, Literal
 
 import jsonschema
@@ -130,14 +129,34 @@ def git(repository: Path, *args: str) -> subprocess.CompletedProcess[str]:
     )
 
 
+def git_bytes(repository: Path, *args: str) -> subprocess.CompletedProcess[bytes]:
+    return subprocess.run(
+        ["git", *args],
+        cwd=repository,
+        check=False,
+        capture_output=True,
+        env=no_lazy_fetch_environment(),
+    )
+
+
 @dataclass(frozen=True)
 class CandidateSnapshot:
-    """An immutable candidate commit materialized in a temporary worktree."""
+    """An immutable candidate commit materialized from raw Git objects."""
 
     requested_ref: str
     commit: str
     tree: str
     root: Path
+
+
+@dataclass(frozen=True)
+class GitTreeEntry:
+    """One path and blob recorded in a candidate Git tree."""
+
+    mode: str
+    object_type: str
+    object_id: str
+    relative_path: str
 
 
 def _resolve_candidate(repository: Path, candidate_ref: str) -> tuple[str, str]:
@@ -169,26 +188,101 @@ def _resolve_candidate(repository: Path, candidate_ref: str) -> tuple[str, str]:
     return resolved["commit"], resolved["tree"]
 
 
-def _worktree_is_registered(repository: Path, worktree: Path) -> bool:
-    result = git(repository, "worktree", "list", "--porcelain")
-    require(result.returncode == 0, f"Could not inspect temporary worktrees: {result.stderr.strip()}")
-    expected = str(worktree.resolve(strict=False))
-    return any(
-        line.startswith("worktree ") and str(Path(line.removeprefix("worktree ")).resolve(strict=False)) == expected
-        for line in result.stdout.splitlines()
+def _safe_tree_path(raw_path: bytes) -> str:
+    try:
+        relative_path = raw_path.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise ReleaseValidationError("Candidate tree contains a non-UTF-8 path") from exc
+    path = PurePosixPath(relative_path)
+    require(
+        bool(relative_path)
+        and "\\" not in relative_path
+        and not path.is_absolute()
+        and str(path) == relative_path
+        and all(part not in {"", ".", ".."} for part in path.parts),
+        f"Candidate tree contains an unsafe path: {relative_path!r}",
+    )
+    require(
+        all(part.casefold() != ".git" for part in path.parts),
+        f"Candidate tree contains a reserved Git path: {relative_path}",
+    )
+    return relative_path
+
+
+def _candidate_tree_entries(repository: Path, tree: str) -> list[GitTreeEntry]:
+    result = git_bytes(repository, "ls-tree", "-r", "-z", "--full-tree", tree)
+    stderr = result.stderr.decode("utf-8", errors="replace").strip()
+    require(result.returncode == 0, f"Could not inspect candidate tree {tree}: {stderr}")
+
+    entries: list[GitTreeEntry] = []
+    seen_paths: set[str] = set()
+    for raw_entry in result.stdout.split(b"\0"):
+        if not raw_entry:
+            continue
+        metadata, separator, raw_path = raw_entry.partition(b"\t")
+        require(bool(separator), "Unexpected Git tree output during candidate materialization")
+        fields = metadata.split()
+        require(len(fields) == 3, "Unexpected Git tree metadata during candidate materialization")
+        try:
+            mode, object_type, object_id = (
+                field.decode("ascii", errors="strict") for field in fields
+            )
+        except UnicodeDecodeError as exc:
+            raise ReleaseValidationError(
+                "Candidate tree contains non-ASCII Git metadata"
+            ) from exc
+        relative_path = _safe_tree_path(raw_path)
+        require(
+            relative_path not in seen_paths,
+            f"Candidate tree contains a duplicate path: {relative_path}",
+        )
+        require(
+            len(object_id) == 40
+            and all(character in "0123456789abcdef" for character in object_id),
+            f"Candidate tree contains an invalid object ID for {relative_path}",
+        )
+        entries.append(
+            GitTreeEntry(
+                mode=mode,
+                object_type=object_type,
+                object_id=object_id,
+                relative_path=relative_path,
+            )
+        )
+        seen_paths.add(relative_path)
+    return entries
+
+
+def _require_regular_tree_entry(entry: GitTreeEntry) -> None:
+    require(
+        entry.object_type == "blob" and entry.mode in {"100644", "100755"},
+        "Tracked release entry is not a regular file: "
+        f"{entry.relative_path} (mode={entry.mode}, type={entry.object_type})",
     )
 
 
-def _remove_candidate_worktree(repository: Path, worktree: Path) -> str | None:
-    result = git(repository, "worktree", "remove", "--force", str(worktree))
-    if _worktree_is_registered(repository, worktree):
-        if worktree.exists():
-            shutil.rmtree(worktree)
-        prune = git(repository, "worktree", "prune", "--expire=now")
-        if prune.returncode != 0 or _worktree_is_registered(repository, worktree):
-            detail = result.stderr.strip() or prune.stderr.strip() or "temporary worktree remains registered"
-            return f"Could not remove temporary candidate worktree: {detail}"
-    return None
+def _materialize_candidate_tree(repository: Path, tree: str, destination: Path) -> None:
+    """Write exact candidate blobs without invoking checkout hooks or filters."""
+
+    destination.mkdir()
+    for entry in _candidate_tree_entries(repository, tree):
+        _require_regular_tree_entry(entry)
+        output_path = destination / PurePosixPath(entry.relative_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        blob = git_bytes(repository, "cat-file", "blob", entry.object_id)
+        stderr = blob.stderr.decode("utf-8", errors="replace").strip()
+        require(
+            blob.returncode == 0,
+            f"Could not read candidate blob for {entry.relative_path}: {stderr}",
+        )
+        try:
+            with output_path.open("xb") as handle:
+                handle.write(blob.stdout)
+            output_path.chmod(0o755 if entry.mode == "100755" else 0o644)
+        except OSError as exc:
+            raise ReleaseValidationError(
+                f"Could not materialize candidate file: {entry.relative_path}"
+            ) from exc
 
 
 @contextmanager
@@ -209,38 +303,15 @@ def materialized_candidate(
         raise ReleaseValidationError(str(exc)) from exc
 
     with tempfile.TemporaryDirectory(prefix="release-candidate-") as temporary_parent:
-        worktree = Path(temporary_parent) / "candidate"
-        disabled_hooks = Path(temporary_parent) / "disabled-hooks"
-        disabled_hooks.mkdir()
-        add_succeeded = False
+        candidate_root = Path(temporary_parent) / "candidate"
         ref_error: ReleaseValidationError | None = None
-        cleanup_error: ReleaseValidationError | None = None
         try:
-            add_result = git(
-                repository,
-                "-c",
-                f"core.hooksPath={disabled_hooks}",
-                "worktree",
-                "add",
-                "--detach",
-                str(worktree),
-                initial_commit,
-            )
-            add_succeeded = add_result.returncode == 0
-            require(
-                add_succeeded,
-                f"Could not materialize candidate {candidate_ref}: {add_result.stderr.strip()}",
-            )
-            worktree_commit, worktree_tree = _resolve_candidate(worktree, "HEAD")
-            require(
-                (worktree_commit, worktree_tree) == (initial_commit, initial_tree),
-                "Temporary candidate worktree does not match the resolved candidate",
-            )
+            _materialize_candidate_tree(repository, initial_tree, candidate_root)
             yield CandidateSnapshot(
                 requested_ref=candidate_ref,
                 commit=initial_commit,
                 tree=initial_tree,
-                root=worktree,
+                root=candidate_root,
             )
         finally:
             try:
@@ -256,17 +327,8 @@ def materialized_candidate(
                 )
                 ref_error.add_note(str(exc))
 
-            if add_succeeded or _worktree_is_registered(repository, worktree):
-                cleanup_message = _remove_candidate_worktree(repository, worktree)
-                if cleanup_message is not None:
-                    cleanup_error = ReleaseValidationError(cleanup_message)
-            if worktree.exists():
-                shutil.rmtree(worktree)
-
             if ref_error is not None:
                 raise ref_error
-            if cleanup_error is not None:
-                raise cleanup_error
 
 
 def boolean_sum(series: pd.Series) -> int:
@@ -468,30 +530,59 @@ def validate_documentation(
         )
 
 
-def validate_tracked_file_types(repository: Path = ROOT) -> None:
+def _require_regular_materialized_path(root: Path, relative_path: str) -> None:
+    parts = PurePosixPath(relative_path).parts
+    current = root
+    for index, part in enumerate(parts):
+        current /= part
+        try:
+            observed_mode = current.lstat().st_mode
+        except FileNotFoundError as exc:
+            raise ReleaseValidationError(
+                f"Tracked release path is missing: {relative_path}"
+            ) from exc
+        if index < len(parts) - 1:
+            require(
+                not current.is_symlink() and stat.S_ISDIR(observed_mode),
+                f"Tracked release path has a non-directory ancestor: {current.relative_to(root)}",
+            )
+        else:
+            require(
+                not current.is_symlink() and stat.S_ISREG(observed_mode),
+                f"Tracked release entry is not a regular materialized file: {relative_path}",
+            )
+
+
+def validate_tracked_file_types(
+    repository: Path = ROOT,
+    *,
+    tree: str | None = None,
+    files_root: Path | None = None,
+) -> None:
+    if tree is not None:
+        require(files_root is not None, "Tree validation requires a materialized filesystem root")
+        for entry in _candidate_tree_entries(repository, tree):
+            _require_regular_tree_entry(entry)
+            _require_regular_materialized_path(files_root, entry.relative_path)
+        return
+
+    require(files_root is None, "files_root requires an explicit candidate tree")
     result = git(repository, "ls-files", "--stage", "-z")
     require(result.returncode == 0, f"Could not inspect tracked release files: {result.stderr.strip()}")
     for raw_entry in result.stdout.split("\0"):
         if not raw_entry:
             continue
-        metadata, separator, relative = raw_entry.partition("\t")
+        metadata, separator, relative_path = raw_entry.partition("\t")
         require(bool(separator), "Unexpected git index output during release validation")
         fields = metadata.split()
         require(len(fields) == 3, "Unexpected git index metadata during release validation")
         mode, _object_id, stage = fields
         require(
             stage == "0" and mode in {"100644", "100755"},
-            f"Tracked release entry is not a regular file: {relative} (mode={mode}, stage={stage})",
+            f"Tracked release entry is not a regular file: "
+            f"{relative_path} (mode={mode}, stage={stage})",
         )
-        path = repository / relative
-        try:
-            observed_mode = path.lstat().st_mode
-        except FileNotFoundError as exc:
-            raise ReleaseValidationError(f"Tracked release file is missing: {relative}") from exc
-        require(
-            not path.is_symlink() and stat.S_ISREG(observed_mode),
-            f"Tracked release entry is not a regular working-tree file: {relative}",
-        )
+        _require_regular_materialized_path(repository, relative_path)
 
 
 def validate_final_history(
@@ -590,12 +681,31 @@ def validate_required_paths(
     require(not (root / "additional_requested_analyses.ipynb").exists(), "Temporary notebook filename remains")
 
 
-def validate_candidate_checksums(root: Path) -> int:
+def validate_candidate_checksums(
+    root: Path,
+    *,
+    repository: Path | None = None,
+    tree: str | None = None,
+) -> int:
     """Verify the exact checksum inventory inside a materialized candidate."""
 
     checksum_file = root / "checksums/SHA256SUMS"
+    require(
+        (repository is None) == (tree is None),
+        "Candidate checksum tree validation requires both repository and tree",
+    )
+    tracked_files = None
+    if repository is not None and tree is not None:
+        entries = _candidate_tree_entries(repository, tree)
+        for entry in entries:
+            _require_regular_tree_entry(entry)
+        tracked_files = [entry.relative_path for entry in entries]
     try:
-        return verify_checksums(checksum_file, root)
+        return verify_checksums(
+            checksum_file,
+            root,
+            tracked_files=tracked_files,
+        )
     except (OSError, ValueError) as exc:
         raise ReleaseValidationError(f"Candidate checksum validation failed: {exc}") from exc
 
@@ -641,9 +751,17 @@ def validate_release_candidate(
             candidate_ref=candidate.commit,
             current_files_root=candidate.root,
         )
-        validate_tracked_file_types(candidate.root)
+        validate_tracked_file_types(
+            repository,
+            tree=candidate.tree,
+            files_root=candidate.root,
+        )
         validate_required_paths(contract, candidate.root)
-        checksum_count = validate_candidate_checksums(candidate.root)
+        checksum_count = validate_candidate_checksums(
+            candidate.root,
+            repository=repository,
+            tree=candidate.tree,
+        )
         summary = validate_data(candidate.root)
         validate_notebooks(candidate.root)
         summary["manifest"] = validate_manifest(candidate.root)["manifest_id"]
