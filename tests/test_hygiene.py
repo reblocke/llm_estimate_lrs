@@ -78,6 +78,13 @@ def test_hygiene_allows_frozen_threshold_filename() -> None:
     assert _path_findings(path) == []
 
 
+def test_hygiene_allows_only_exact_root_agents_file() -> None:
+    assert _path_findings("AGENTS.md") == []
+    for path in ("agents.md", "docs/AGENTS.md", "nested/agents.md"):
+        reasons = {finding.reason for finding in _path_findings(path)}
+        assert "only the reviewed root AGENTS.md is allowed" in reasons
+
+
 def test_hygiene_rejects_private_and_temporary_paths() -> None:
     paths = (
         "private-draft.md",
@@ -229,3 +236,17 @@ def test_pull_request_hygiene_reruns_when_editable_text_changes() -> None:
     )
     event_types = set(workflow["on"]["pull_request"]["types"])
     assert {"opened", "synchronize", "reopened", "edited", "ready_for_review"} <= event_types
+
+
+def test_ci_integrity_lane_runs_smoke_contract() -> None:
+    repository = Path(__file__).resolve().parents[1]
+    workflow = yaml.load(
+        (repository / ".github/workflows/ci.yml").read_text(encoding="utf-8"),
+        Loader=yaml.BaseLoader,
+    )
+    commands = {
+        step["run"]
+        for step in workflow["jobs"]["unit-and-integrity"]["steps"]
+        if isinstance(step, dict) and "run" in step
+    }
+    assert "make smoke" in commands

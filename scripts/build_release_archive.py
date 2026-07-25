@@ -13,6 +13,11 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
+if __package__:
+    from scripts.git_safety import no_lazy_fetch_environment
+else:
+    from git_safety import no_lazy_fetch_environment
+
 FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 
 
@@ -30,6 +35,7 @@ def repository_blobs(repository: Path, ref: str = "HEAD") -> list[GitBlob]:
         cwd=repository,
         check=True,
         capture_output=True,
+        env=no_lazy_fetch_environment(),
     )
     blobs: list[GitBlob] = []
     for raw_entry in result.stdout.split(b"\0"):
@@ -58,6 +64,7 @@ def read_git_blob(repository: Path, object_id: str) -> bytes:
         cwd=repository,
         check=True,
         capture_output=True,
+        env=no_lazy_fetch_environment(),
     )
     return result.stdout
 
@@ -234,6 +241,7 @@ def main() -> int:
         check=True,
         capture_output=True,
         text=True,
+        env=no_lazy_fetch_environment(),
     )
     if status.stdout:
         raise SystemExit("Refusing to archive a dirty working tree; commit and review the release tree first.")

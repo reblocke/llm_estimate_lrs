@@ -10,6 +10,11 @@ import stat
 import subprocess
 from pathlib import Path
 
+if __package__:
+    from scripts.git_safety import no_lazy_fetch_environment
+else:
+    from git_safety import no_lazy_fetch_environment
+
 CHECKSUM_LINE = re.compile(r"^([0-9a-f]{64}) [ *](.+)$")
 
 
@@ -32,6 +37,7 @@ def tracked_regular_files(root: Path, checksum_file: Path) -> list[str]:
         cwd=root,
         check=False,
         capture_output=True,
+        env=no_lazy_fetch_environment(),
     )
     if result.returncode != 0:
         raise ValueError(f"Could not inspect tracked release files: {result.stderr.decode(errors='replace').strip()}")

@@ -1,0 +1,287 @@
+{
+  "contract_schema_version": "1.0.0",
+  "release_version": "1.0.0",
+  "release_ref": "v1.0.0",
+  "audited_commit": "a6824fc712e6d5c7c58edde495c239629356ae35",
+  "audited_tree": "9679d031e4983d15db9f216a9ad7df4232d72b78",
+  "maintenance_status": "maintenance-only",
+  "post_release_governance_record": true,
+  "article": {
+    "title": "Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion",
+    "doi": "10.1038/s41598-026-61766-2",
+    "journal": "Scientific Reports",
+    "published_date": "2026-07-11",
+    "publisher_url": "https://doi.org/10.1038/s41598-026-61766-2"
+  },
+  "required_paths": [
+    ".python-version",
+    "CHANGELOG.md",
+    "CITATION.cff",
+    "CONTRIBUTING.md",
+    "Makefile",
+    "README.md",
+    "RELEASE_NOTES_v1.0.0.md",
+    "checksums/SHA256SUMS",
+    "config/analysis_categories_v1.json",
+    "config/manuscript_models_v1.json",
+    "data/README.md",
+    "data/curated/diagnostic_lrs_manuscript_v1.csv",
+    "data/model_outputs/manuscript_model_outputs_v1.csv",
+    "data/model_outputs/manuscript_query_run_v1.csv",
+    "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_cases.csv",
+    "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_raw.csv",
+    "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_reviewer_table.csv",
+    "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_summary.csv",
+    "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_summary.md",
+    "data/provenance/curation_log_v1.csv",
+    "data/provenance/provenance_gaps_v1.csv",
+    "data/provenance/source_crosswalk_v1.csv",
+    "docs/ACCEPTED_PAPER_CROSSWALK.md",
+    "docs/DATA_PROVENANCE.md",
+    "docs/REPLICATION.md",
+    "docs/REPRODUCIBILITY.md",
+    "docs/RELEASE_PROCESS.md",
+    "llms-full.txt",
+    "llms.txt",
+    "manifests/manifest.schema.json",
+    "manifests/manuscript_run_v1.json",
+    "prompts/main_estimator_v1.json",
+    "prompts/threshold_perturbation_v1.json",
+    "results/reference/main_metrics.json",
+    "results/reference/pairwise_model_comparisons.csv",
+    "results/reference/coverage_intervals.csv",
+    "results/reference/evidence_direction_tests.csv",
+    "scripts/build_checksums.py",
+    "scripts/build_release_assets.py",
+    "scripts/reproduce_paper.py",
+    "supplementary_analyses.ipynb",
+    "tools/cff/.python-version",
+    "tools/cff/pyproject.toml",
+    "tools/cff/uv.lock"
+  ],
+  "protected_artifacts": [
+    {
+      "path": "NNT_LRs_08-26-2025.xlsx",
+      "sha256": "644f0558328a8f04f460a5ebfa2fc04e6d3571f655d084ea076488c7ba17da89",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "nnt_lrs_with_estimated.xlsx",
+      "sha256": "c375229a27f0854957f6b8963ece145e94d00e4fa75e7e2756e5d130f6f7110d",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/curated/diagnostic_lrs_manuscript_v1.csv",
+      "sha256": "aff708af1140b1cae05e1eb5abe457036d43f35ba868d706576206f120ccce02",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/auxiliary_gpt-4.1_outputs_v1.csv",
+      "sha256": "920669700a5cd497a91fb8b1d1eb5c1c372fdaf87c2c2943e62ed669d96f5e75",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/manuscript_model_outputs_v1.csv",
+      "sha256": "15d0772890da4dcc08e9d5eeb497a6da33e86414d2d728cae72bfea5c2780895",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/manuscript_query_run_v1.csv",
+      "sha256": "608247bbcf32e7af7248617c1fae30d51a64dd04323e903c8fa277392423c2ee",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/threshold_perturbation_v1/README.md",
+      "sha256": "1abed3fc5dbc8a311963f8953252c2ea37fee5928d1fb8a1fd92cc039ef2195e",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_cases.csv",
+      "sha256": "0ecd978e3308f39a154ba709de28ac0bb5e7440f6160817d95de5d060d388c5b",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_raw.csv",
+      "sha256": "0f83fdc22140f75e86404a943ad90b039bd139eeb103db468522d49f825f70f6",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_reviewer_table.csv",
+      "sha256": "fda7aa0217587609e72f507f82a39f6657f9a02ac930d8c56b77af57ec96e7ba",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_summary.csv",
+      "sha256": "f0ab68b0ff51292aa0cc4a6f6191087ba3ed6827f06a5489ddd554b4c0ac6128",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/model_outputs/threshold_perturbation_v1/threshold_perturbation_summary.md",
+      "sha256": "99fa0296700e30d5dbad3fe38e7b2d02f708dd5bf08c5fb49905c60a2b455c36",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/provenance/curation_log_v1.csv",
+      "sha256": "c9df6e0d0edc228b2f98d8bb42249215f32f48068231584427f92e3f45170892",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/provenance/provenance_gaps_v1.csv",
+      "sha256": "7803d183dee3492f301bd73b807760a34d82679d6f1aa27c34c9441196f09cbc",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data/provenance/source_crosswalk_v1.csv",
+      "sha256": "cb7aa99813f39ffa96ab2f42517088cfb015266c4bdd687737ee3dcdc3ba9e38",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "config/analysis_categories_v1.json",
+      "sha256": "746db3d3a9d3834d0983b45ea1cf10b12aa3950ff7e2bb5c690717793275882c",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "config/manuscript_models_v1.json",
+      "sha256": "3ea80601002c835909a66c2b70ba325f9120c70ac724c8562d0ed1a3428ece94",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "prompts/main_estimator_v1.json",
+      "sha256": "63aedb15fbe73a64c91ae5c29fd85c5377c6df71a9fbe005bcd1db4f3c106075",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "prompts/threshold_perturbation_v1.json",
+      "sha256": "40c882919c6e31329b23af20b0e2ae81bd62a2b72dcbabb370f1482c41870438",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/README.md",
+      "sha256": "766c14b81ea9dadff283f9b2617ee5997b40b0909ab4ea33536733fa44c0f7ca",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/agreement_metrics.csv",
+      "sha256": "205cea674a0dc0a4c75c112ac43d8f5bfce7f6a184ee250d5fbc101b3ea09d8e",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/calibration_metrics.csv",
+      "sha256": "3be402161f21d69e40d2b342c76e69746b0b4727c1df8d5f9c0ca434dd3cfae2",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/category_counts.csv",
+      "sha256": "8c53f40f2d36f79ff145b8826f1ab78b8fdcfe94f2b3734d2346a9a09ad43dfd",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/coverage_intervals.csv",
+      "sha256": "9ace497016bfc2c86358e730816f73ca2fcc3851a118ff4a05a5148d2f3e045a",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/evidence_direction_tests.csv",
+      "sha256": "4f50768d6129382702e1d5435c69c3d0e5fab8464b2a98c9f2123f2e7a54f2fb",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/feature_type_counts.csv",
+      "sha256": "aa32d0a842ddd4a629f321de18857f5c4208394e2b8e37485efee77695f77ff9",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/kappa_metrics.csv",
+      "sha256": "d25d25df2f2175fd01d1b52d9243c586c0d94c5e3af0e41f68a6f8d1bcd0c265",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/laboratory_discrepancy_flags.json",
+      "sha256": "9044234a698d970e8b8fe8d4efbf2cb30e344df7946b57286beda2cf00bc5402",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/main_metrics.json",
+      "sha256": "2354ea58438a038518ce56088155f20ce4f466cd298bcf5df2a44d9a24412728",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/pairwise_model_comparisons.csv",
+      "sha256": "ca037f685e4781281a2824234fddeceb5b04ef8a391e5b4e41f86995747f487b",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/reliability_metrics.csv",
+      "sha256": "c70c9dbff596c8e26e8684173484a5a25d29ca81f00ff136543002a2c54b1819",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "results/reference/reliability_zone_metrics.csv",
+      "sha256": "f2a0b35eb7d2f07ab04d013cb6fe73a0228f28757b715bf8da58be95e4ac3fc5",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "data_analysis.ipynb",
+      "sha256": "750344edaa2bb228247976c389ab658e697123c790b55ed58fdb36d62907fed3",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "supplementary_analyses.ipynb",
+      "sha256": "feaf3fae25e493357670b6d6cede5385ec37a2cb20f8c799aec7e6a27264d10d",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "lr_scraper_estimator.ipynb",
+      "sha256": "79f966f05c518bd65ff49e11963eed78458485616661e6ce329f8d955ab034ef",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "threshold_perturbation_sensitivity_analysis.ipynb",
+      "sha256": "f853a3ca46330c489325343a9babf7a8fcf17cad53d1a7a0ba76fb5e0ef60fbe",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "llms-full.txt",
+      "sha256": "b36e4ebed0ad6ca0aea28b0fa91a7575479cd12d7283a8321842528e176ba502",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "manifests/manifest.schema.json",
+      "sha256": "31907fce0c031d7616961c6c7fb24f97156997490ccea95c8a8b455d6b1b3d6b",
+      "origin_ref": "v1.0.0"
+    },
+    {
+      "path": "manifests/manuscript_run_v1.json",
+      "sha256": "d08bb552b550d29eb7f68b040dadfab354886e2b515bb3055466b6dacbec7e0b",
+      "origin_ref": "v1.0.0"
+    }
+  ],
+  "history_policy": {
+    "complete_history_required": true,
+    "annotated_tag_required": true,
+    "tag_message": "Accepted-paper reproducibility release",
+    "parentless_release_commit_required": true,
+    "single_root_required": true,
+    "candidate_default_branch_tag_parity_required": true,
+    "default_branch_ref": "refs/remotes/origin/main",
+    "forbidden_refs": [
+      "refs/heads/release/accepted-paper-reproducibility-v1",
+      "refs/remotes/origin/release/accepted-paper-reproducibility-v1",
+      "refs/tags/v0.1.0"
+    ],
+    "forbidden_ancestors": [
+      "9ab48f0244daff1b7c9ed58f2f4fca2572284f65"
+    ],
+    "allowed_refs": {
+      "namespace": "refs/remotes/origin",
+      "values": [
+        "refs/remotes/origin/HEAD",
+        "refs/remotes/origin/main"
+      ]
+    },
+    "allowed_tags": [
+      "refs/tags/v1.0.0"
+    ]
+  },
+  "immutable_prior_tags": []
+}

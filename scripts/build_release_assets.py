@@ -29,6 +29,11 @@ if __package__:
         write_zip_atomically,
     )
     from scripts.generate_release_attestation import generate_attestation
+    from scripts.git_safety import (
+        no_lazy_fetch_environment,
+        require_complete_local_objects,
+        require_full_local_clone,
+    )
 else:
     from build_release_archive import (
         FIXED_ZIP_TIME,
@@ -40,6 +45,11 @@ else:
         write_zip_atomically,
     )
     from generate_release_attestation import generate_attestation
+    from git_safety import (
+        no_lazy_fetch_environment,
+        require_complete_local_objects,
+        require_full_local_clone,
+    )
 
 REFERENCE_MEMBERS = (
     "checksums/SHA256SUMS",
@@ -105,18 +115,16 @@ def _git(repository: Path, *args: str) -> str:
         check=True,
         capture_output=True,
         text=True,
+        env=no_lazy_fetch_environment(),
     ).stdout.strip()
 
 
 def require_clean_ref(repository: Path, ref: str) -> str:
+    """Require a clean governance checkout and resolve the candidate ref once."""
     status = _git(repository, "status", "--porcelain=v1", "--untracked-files=all")
     if status:
         raise ReleaseAssetError("Release assets require a clean tracked and untracked working tree.")
-    head = _git(repository, "rev-parse", "HEAD")
-    resolved_ref = _git(repository, "rev-parse", f"{ref}^{{commit}}")
-    if resolved_ref != head:
-        raise ReleaseAssetError(f"Release ref {ref} does not resolve to current HEAD.")
-    return resolved_ref
+    return _git(repository, "rev-parse", f"{ref}^{{commit}}")
 
 
 def _lexical_absolute(path: Path) -> Path:
@@ -399,43 +407,59 @@ def asset_inventory(output_dir: Path, *, require_expected_paths: bool = False) -
     return inventory
 
 
-def _validation_report(repository: Path, pinned_commit: str, mode: str, output: Path) -> Path:
-    with tempfile.TemporaryDirectory(prefix="llm-lr-release-validation-") as temporary:
-        worktree = Path(temporary) / "reviewed-tree"
-        added = False
-        try:
-            subprocess.run(
-                ["git", "worktree", "add", "--detach", str(worktree), pinned_commit],
-                cwd=repository,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-            added = True
-            result = subprocess.run(
-                [sys.executable, "scripts/validate_release.py", "--release", "--mode", mode],
-                cwd=worktree,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-        finally:
-            if added:
-                cleanup = subprocess.run(
-                    ["git", "worktree", "remove", "--force", str(worktree)],
-                    cwd=repository,
-                    check=False,
-                    capture_output=True,
-                    text=True,
-                )
-                if cleanup.returncode != 0:
-                    raise ReleaseAssetError(f"Could not remove validation worktree: {cleanup.stderr.strip()}")
+def _repository_relative_contract(repository: Path, contract: Path) -> Path:
+    candidate = contract if contract.is_absolute() else repository / contract
+    try:
+        return candidate.resolve().relative_to(repository.resolve())
+    except ValueError as exc:
+        raise ReleaseAssetError("Release contract must be inside the repository") from exc
+
+
+def _validation_report(
+    repository: Path,
+    pinned_commit: str,
+    mode: str,
+    output: Path,
+    *,
+    contract: Path | None = None,
+) -> Path:
+    if contract is None:
+        raise ReleaseAssetError("Release validation requires a versioned contract")
+    relative_contract = _repository_relative_contract(repository, contract)
+    validator = repository.resolve() / "scripts" / "validate_release.py"
+    if validator.is_symlink() or not validator.is_file():
+        raise ReleaseAssetError(f"Governance validator is not a regular file: {validator}")
+    command = [
+        sys.executable,
+        str(validator),
+        "--release",
+        "--mode",
+        mode,
+        "--contract",
+        relative_contract.as_posix(),
+        "--ref",
+        pinned_commit,
+    ]
+    result = subprocess.run(
+        command,
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     payload = json.loads(result.stdout)
     rendered = (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode("utf-8")
     return write_bytes_atomically(output, rendered)
 
 
-def build_release_assets(repository: Path, output_dir: Path, ref: str, mode: str) -> dict[str, Path]:
+def build_release_assets(
+    repository: Path,
+    output_dir: Path,
+    ref: str,
+    mode: str,
+    *,
+    contract: Path | None = None,
+) -> dict[str, Path]:
     repository = repository.resolve()
     unresolved_output = _lexical_absolute(output_dir)
     expected_unresolved = repository / "dist"
@@ -445,11 +469,23 @@ def build_release_assets(repository: Path, output_dir: Path, ref: str, mode: str
     expected_output = expected_unresolved.resolve()
     if output_dir != expected_output:
         raise ReleaseAssetError(f"Release assets are restricted to {expected_output}")
+    require_full_local_clone(repository)
     pinned_commit = require_clean_ref(repository, ref)
+    require_complete_local_objects(repository, pinned_commit)
     if output_dir.exists():
         _reject_symlink_components(unresolved_output)
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True)
+
+    validation_report = _validation_report(
+        repository,
+        pinned_commit,
+        mode,
+        output_dir / "validation-report.json",
+        contract=contract,
+    )
+    if require_clean_ref(repository, ref) != pinned_commit:
+        raise ReleaseAssetError("Release ref or working tree changed during candidate validation")
 
     source_archive = build_archive(repository, output_dir / "llm-estimate-lrs-v1.0.0.zip", pinned_commit)
     reference_archive = build_reference_archive(
@@ -458,11 +494,14 @@ def build_release_assets(repository: Path, output_dir: Path, ref: str, mode: str
         pinned_commit,
     )
     executed = execute_verification_notebooks(repository, output_dir / "notebooks", pinned_commit)
+    # Revalidate after executable candidate work so contracted namespace state
+    # cannot change unnoticed during asset construction.
     validation_report = _validation_report(
         repository,
         pinned_commit,
         mode,
         output_dir / "validation-report.json",
+        contract=contract,
     )
     if require_clean_ref(repository, ref) != pinned_commit:
         raise ReleaseAssetError("Release ref or working tree changed during asset construction")
@@ -494,11 +533,13 @@ def verify_release_asset_determinism(
     output_dir: Path,
     ref: str,
     mode: str,
+    *,
+    contract: Path | None = None,
 ) -> dict[str, Path]:
     """Build the complete asset set twice and require identical path/hash inventories."""
-    first_assets = build_release_assets(repository, output_dir, ref, mode)
+    first_assets = build_release_assets(repository, output_dir, ref, mode, contract=contract)
     first_inventory = asset_inventory(output_dir, require_expected_paths=True)
-    second_assets = build_release_assets(repository, output_dir, ref, mode)
+    second_assets = build_release_assets(repository, output_dir, ref, mode, contract=contract)
     second_inventory = asset_inventory(output_dir, require_expected_paths=True)
     if first_inventory != second_inventory:
         missing = sorted(first_inventory.keys() - second_inventory.keys())
@@ -523,6 +564,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=Path("dist"))
     parser.add_argument("--ref", default="HEAD")
     parser.add_argument("--mode", choices=("prepare", "final"), default="prepare")
+    parser.add_argument("--contract", required=True, type=Path)
     parser.add_argument(
         "--verify-determinism",
         action="store_true",
@@ -535,7 +577,13 @@ def main() -> int:
     args = parse_args()
     try:
         builder = verify_release_asset_determinism if args.verify_determinism else build_release_assets
-        assets = builder(args.repository, args.output_dir, args.ref, args.mode)
+        assets = builder(
+            args.repository,
+            args.output_dir,
+            args.ref,
+            args.mode,
+            contract=args.contract,
+        )
     except (OSError, ValueError, ReleaseAssetError, subprocess.CalledProcessError) as exc:
         print(f"Release-asset build failed: {exc}", file=sys.stderr)
         return 1

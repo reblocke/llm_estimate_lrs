@@ -1,0 +1,303 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LLM-Estimated Diagnostic Likelihood Ratios project metadata",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "roles",
+    "execution",
+    "data",
+    "release",
+    "verification"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "tier",
+        "high_risk",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tier": {
+          "enum": [
+            "T1",
+            "T2",
+            "T3"
+          ]
+        },
+        "high_risk": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "active",
+            "maintenance-hardening",
+            "archived"
+          ]
+        }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scientific_owner",
+        "analysis_owner",
+        "code_owner",
+        "data_steward",
+        "statistical_reviewer",
+        "reproducibility_reviewer",
+        "high_risk_reviewer"
+      ],
+      "properties": {
+        "scientific_owner": {
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "analysis_owner": {
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "code_owner": {
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "data_steward": {
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "statistical_reviewer": {
+          "description": "Independent statistical reviewer or an explicit pending assignment.",
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "reproducibility_reviewer": {
+          "description": "Independent reproducibility reviewer or an explicit pending assignment.",
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "high_risk_reviewer": {
+          "description": "Independent high-risk reviewer or an explicit pending assignment.",
+          "$ref": "#/$defs/person_or_pending"
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "full_entrypoint",
+        "smoke_entrypoint",
+        "working_directory",
+        "certified_python",
+        "certified_operating_system",
+        "expected_runtime_full",
+        "expected_runtime_smoke",
+        "expected_peak_memory",
+        "expected_disk_space"
+      ],
+      "properties": {
+        "full_entrypoint": {
+          "const": "make audit"
+        },
+        "smoke_entrypoint": {
+          "const": "make smoke"
+        },
+        "working_directory": {
+          "const": "project-root"
+        },
+        "certified_python": {
+          "type": "string",
+          "pattern": "^3\\.11\\.\\*$"
+        },
+        "certified_operating_system": {
+          "$ref": "#/$defs/measurement_or_value"
+        },
+        "expected_runtime_full": {
+          "$ref": "#/$defs/measurement_or_value"
+        },
+        "expected_runtime_smoke": {
+          "$ref": "#/$defs/measurement_or_value"
+        },
+        "expected_peak_memory": {
+          "$ref": "#/$defs/measurement_or_value"
+        },
+        "expected_disk_space": {
+          "$ref": "#/$defs/measurement_or_value"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "highest_classification",
+        "contains_phi",
+        "public_data_included",
+        "rights_registry"
+      ],
+      "properties": {
+        "highest_classification": {
+          "enum": [
+            "public-research-artifacts-with-mixed-rights",
+            "restricted",
+            "confidential"
+          ]
+        },
+        "contains_phi": {
+          "type": "boolean"
+        },
+        "public_data_included": {
+          "type": "boolean"
+        },
+        "rights_registry": {
+          "anyOf": [
+            {
+              "const": "PENDING_HUMAN_ASSIGNMENT"
+            },
+            {
+              "$ref": "#/$defs/safe_relative_path"
+            }
+          ]
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frozen_release",
+        "code_license",
+        "maintenance_status",
+        "archive_identifier"
+      ],
+      "properties": {
+        "frozen_release": {
+          "type": "string",
+          "pattern": "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "code_license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "maintenance_status": {
+          "enum": [
+            "active",
+            "maintenance-only",
+            "unsupported",
+            "archived"
+          ]
+        },
+        "archive_identifier": {
+          "type": "string",
+          "pattern": "^(?:PENDING_DEPOSIT|[A-Za-z0-9][A-Za-z0-9./:_-]+)$"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "last_verified_date",
+        "last_verified_commit",
+        "reviewer",
+        "verdict"
+      ],
+      "properties": {
+        "last_verified_date": {
+          "oneOf": [
+            {
+              "const": "PENDING_INDEPENDENT_RUN"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            }
+          ]
+        },
+        "last_verified_commit": {
+          "oneOf": [
+            {
+              "const": "PENDING_INDEPENDENT_RUN"
+            },
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          ]
+        },
+        "reviewer": {
+          "$ref": "#/$defs/person_or_pending"
+        },
+        "verdict": {
+          "enum": [
+            "pending",
+            "passed",
+            "failed"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "verdict": {
+                "enum": [
+                  "passed",
+                  "failed"
+                ]
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          "then": {
+            "properties": {
+              "last_verified_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "last_verified_commit": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "reviewer": {
+                "not": {
+                  "const": "PENDING_HUMAN_ASSIGNMENT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "person_or_pending": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?:PENDING_HUMAN_ASSIGNMENT|[^\\r\\n]+)$"
+    },
+    "measurement_or_value": {
+      "type": "string",
+      "minLength": 1
+    },
+    "safe_relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\\\)(?!.*//)[^\\u0000]+$"
+    }
+  }
+}

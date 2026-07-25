@@ -2,6 +2,33 @@
 
 All notable changes to this repository are documented here.
 
+## [Unreleased]
+
+### Added
+
+- Public-safe repository instructions, machine-readable project metadata, and
+  an initial architecture and execution-plan contract.
+- A schema-validated, Git-object-anchored `v1.0.0` release contract with
+  protected-artifact parity checks.
+- Truthful offline `smoke` and `audit` entry points and contract validation in
+  continuous integration.
+
+### Changed
+
+- Release validation now accepts an explicit versioned contract and candidate
+  ref while retaining the exceptional `v1.0.0` history policy.
+- The accepted v1 manuscript manifest is validated against its historical tag
+  snapshot rather than advancing maintenance code.
+- Release assets validate the contracted candidate before executing notebooks,
+  disable checkout hooks, and recheck contracted refs before success.
+- Historical Git reads reject partial/promisor clones and disable lazy
+  fetching.
+
+### Scientific results
+
+- No accepted-paper input, prompt, model output, analysis, statistic, figure,
+  or conclusion changed.
+
 ## [1.0.0] - 2026-07-11
 
 ### Added

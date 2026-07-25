@@ -12,14 +12,35 @@ Reproduction uses only the frozen release artifacts:
 
 ```bash
 pip install uv
-uv sync --frozen
+uv lock --check
+make setup
 make reproduce
 make test
 ```
 
 `make reproduce` uses only the frozen release data and makes no OpenAI API calls and no live TheNNT requests. Generated verification files go to `results/runs/reproduction/`; the accepted inputs and `results/reference/` are not overwritten.
 
+`make setup` provisions both locked Python environments and may download
+missing packages. Subsequent `smoke` and `audit` runs use those environments
+with offline, no-sync execution.
+
+Use `make smoke` for a fast offline integrity check and `make audit` for the
+complete offline engineering-integrity gate before handoff. `make audit` is not
+a publication or human-certification action and never invokes live
+replication.
+
 See [Reproducibility](docs/REPRODUCIBILITY.md) for the complete environment, validation, and troubleshooting contract.
+
+## Project governance
+
+[`PROJECT.yml`](PROJECT.yml) records the current classification, ownership,
+maintenance status, offline entry points, and visibly pending assignments. Its
+strict schema is [`schemas/project.schema.json`](schemas/project.schema.json).
+See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the current system and trust
+boundaries, [`AGENTS.md`](AGENTS.md) for durable repository rules, and
+[`PLANS.md`](PLANS.md) for the required format for long or high-risk changes.
+The versioned records under `release/contracts/` govern historical release
+facts and future release-candidate validation.
 
 ## Run a new replication
 
@@ -51,6 +72,7 @@ Replication is intentionally gated by a unique run ID, explicit model list, maxi
 | `config/` | Accepted model scope and LR category definitions |
 | `prompts/` | Immutable historical prompt specifications |
 | `manifests/manuscript_run_v1.json` | Machine-readable accepted-run inventory and provenance |
+| `release/contracts/` | Versioned post-release governance records and release-history policy |
 | `results/reference/` | Compact expected numerical results |
 | `data_analysis.ipynb` | Main accepted-paper analyses and figures |
 | `supplementary_analyses.ipynb` | Accepted supplementary analyses |
@@ -103,7 +125,10 @@ The release contract requires 700 rows across 30 conditions and 2,100 positive f
 | o3 | 0.987 | 0.227 | 4.281 |
 | GPT-5 | 0.988 | 0.264 | 3.703 |
 
-`make release-check` validates source hashes, the workbook crosswalk, reference metrics, documentation, repository hygiene, and offline execution. No accepted-paper analysis or result was changed in preparing `v1.0.0`.
+`make audit` is the routine offline engineering-integrity gate. Release
+candidates additionally use `make release-check` with an explicit versioned
+contract and candidate ref. No accepted-paper analysis or result was changed in
+preparing `v1.0.0`.
 
 ## Reproducibility limitations
 

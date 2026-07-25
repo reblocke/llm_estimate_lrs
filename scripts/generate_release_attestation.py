@@ -14,8 +14,10 @@ from pathlib import Path
 
 if __package__:
     from scripts.build_release_archive import write_bytes_atomically
+    from scripts.git_safety import no_lazy_fetch_environment
 else:
     from build_release_archive import write_bytes_atomically
+    from git_safety import no_lazy_fetch_environment
 
 REPOSITORY_URL = "https://github.com/reblocke/llm_estimate_lrs"
 ARTICLE_DOI = "10.1038/s41598-026-61766-2"
@@ -28,6 +30,7 @@ def git_blob_bytes(repository: Path, commit: str, relative_path: str) -> bytes:
         cwd=repository,
         check=True,
         capture_output=True,
+        env=no_lazy_fetch_environment(),
     ).stdout
 
 
@@ -39,6 +42,7 @@ def git_output(repository: Path, *args: str) -> str:
         check=True,
         capture_output=True,
         text=True,
+        env=no_lazy_fetch_environment(),
     ).stdout.strip()
 
 
