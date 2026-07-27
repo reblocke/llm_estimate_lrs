@@ -34,6 +34,13 @@ runner. `make validate-contracts`, which is included in both gates, checks v1
 facts from Git objects and continues to apply after the default branch
 advances.
 
+`make validate-metadata`, also included in both gates, checks the current
+scientific specification and source, variable, rights, and accepted-output
+registries. It does not confer human approval. Historical v1 validation does
+not require these post-release files. Every successor release contract must
+declare and validate the complete Stage 2 document, registry, and schema set
+inside the candidate tree.
+
 `make setup` is the separate provisioning boundary and may download locked
 dependencies. The validation gates use pre-provisioned environments with
 offline, no-sync execution.
@@ -153,6 +160,7 @@ pip install uv
 uv lock --check
 make setup
 make verify-checksums
+make validate-metadata
 make validate-data
 make reproduce
 make test

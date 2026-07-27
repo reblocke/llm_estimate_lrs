@@ -10,6 +10,8 @@ Describe the release, reproducibility, data, or documentation change.
 - [ ] Affected project metadata, schemas, release contracts, command
       interfaces, and frozen contracts are identified.
 - [ ] Any unresolved scientific or release decision remains explicitly pending.
+- [ ] `ANALYSIS_SPEC.md`, stable registers, and metadata registries agree with
+      executable behavior, or are explicitly unaffected.
 
 ## Scientific-output impact
 
@@ -22,6 +24,7 @@ Describe the release, reproducibility, data, or documentation change.
 - [ ] `uv lock --check`
 - [ ] `make setup`
 - [ ] `make smoke`
+- [ ] `make validate-metadata`
 - [ ] `make audit`
 - [ ] `git diff --check`
 - [ ] `git diff --cached --check`

@@ -171,7 +171,7 @@ def test_repository_contracts_validate_against_v1_git_objects() -> None:
 
     assert summary["project"] == "llm-estimate-lrs"
     assert summary["agents"]["required_headings"] == 9
-    assert summary["agents"]["required_commands"] == 7
+    assert summary["agents"]["required_commands"] == 8
     assert summary["releases"] == [
         {
             "release_ref": "v1.0.0",

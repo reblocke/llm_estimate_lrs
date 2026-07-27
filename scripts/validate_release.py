@@ -33,6 +33,11 @@ if __package__:
         validate_history_policy,
         validate_release_contract,
     )
+    from scripts.validate_metadata import (
+        STAGE2_REQUIRED_PATHS,
+        MetadataValidationError,
+        validate_metadata_contracts,
+    )
     from scripts.verify_checksums import verify_checksums
 else:
     from git_safety import (
@@ -45,6 +50,11 @@ else:
         validate_history_policy,
         validate_release_contract,
     )
+    from validate_metadata import (
+        STAGE2_REQUIRED_PATHS,
+        MetadataValidationError,
+        validate_metadata_contracts,
+    )
     from verify_checksums import verify_checksums
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,6 +62,7 @@ ARTICLE_TITLE = "Large language models generate diagnostic likelihood ratios wit
 ARTICLE_DOI = "10.1038/s41598-026-61766-2"
 RELEASE_VERSION = "1.0.0"
 RELEASE_REF = "v1.0.0"
+RELEASE_COMMIT = "a6824fc712e6d5c7c58edde495c239629356ae35"
 RELEASE_TAG_MESSAGE = "Accepted-paper reproducibility release"
 LEGACY_MERGE_BASE = "9ab48f0244daff1b7c9ed58f2f4fca2572284f65"
 RELEASE_BRANCH = "release/accepted-paper-reproducibility-v1"
@@ -681,6 +692,27 @@ def validate_required_paths(
     require(not (root / "additional_requested_analyses.ipynb").exists(), "Temporary notebook filename remains")
 
 
+def requires_stage2_metadata(contract: Mapping[str, Any]) -> bool:
+    """Require Stage 2 for successor releases while exempting immutable historical v1."""
+
+    declared_stage2_paths = set(contract.get("required_paths", ())) & STAGE2_REQUIRED_PATHS
+    if (
+        contract.get("release_ref") == RELEASE_REF
+        and contract.get("audited_commit") == RELEASE_COMMIT
+    ):
+        require(
+            not declared_stage2_paths,
+            "The immutable historical v1 contract must not declare post-release Stage 2 paths",
+        )
+        return False
+    require(
+        declared_stage2_paths == STAGE2_REQUIRED_PATHS,
+        "Every successor release contract must declare the complete Stage 2 "
+        "metadata contract set",
+    )
+    return True
+
+
 def validate_candidate_checksums(
     root: Path,
     *,
@@ -757,12 +789,18 @@ def validate_release_candidate(
             files_root=candidate.root,
         )
         validate_required_paths(contract, candidate.root)
+        stage2_metadata_required = requires_stage2_metadata(contract)
         checksum_count = validate_candidate_checksums(
             candidate.root,
             repository=repository,
             tree=candidate.tree,
         )
         summary = validate_data(candidate.root)
+        if stage2_metadata_required:
+            summary["metadata_contracts"] = validate_metadata_contracts(
+                candidate.root,
+                schema_root=repository,
+            )
         validate_notebooks(candidate.root)
         summary["manifest"] = validate_manifest(candidate.root)["manifest_id"]
         validate_documentation(mode, contract, candidate.root)
@@ -819,6 +857,7 @@ def main() -> int:
         json.JSONDecodeError,
         jsonschema.ValidationError,
         ContractValidationError,
+        MetadataValidationError,
         ReleaseValidationError,
     ) as exc:
         print(f"Release validation failed: {exc}", file=sys.stderr)

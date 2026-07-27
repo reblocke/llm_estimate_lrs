@@ -1,0 +1,145 @@
+schema_version: 1
+review_status: PENDING_HUMAN_RIGHTS_REVIEW
+artifacts:
+  - rights_id: RIGHTS-CODE
+    artifact: "scripts/**;tests/**"
+    content_class: original_software
+    owner_or_source: repository authors
+    access_class: open
+    license_or_terms: MIT
+    redistribution_decision: approved
+    permitted_use_summary: See LICENSE
+    attribution_requirement: See LICENSE
+    approval_authority: existing repository license
+    approval_date: "2026-07-11"
+    unresolved_risk: false
+
+  - rights_id: RIGHTS-WORKBOOKS
+    artifact: "NNT_LRs_08-26-2025.xlsx;nnt_lrs_with_estimated.xlsx"
+    content_class: mixed_source_workbooks
+    owner_or_source: TheNNT and repository authors
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: PENDING_HUMAN_RIGHTS_REVIEW
+    attribution_requirement: PENDING_HUMAN_RIGHTS_REVIEW
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-NOTEBOOKS
+    artifact: "data_analysis.ipynb;supplementary_analyses.ipynb;lr_scraper_estimator.ipynb;threshold_perturbation_sensitivity_analysis.ipynb"
+    content_class: accepted_scientific_notebooks
+    owner_or_source: repository authors and mixed upstream sources
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Historical scientific record distributed for research transparency
+    attribution_requirement: Cite the article and repository
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-CANONICAL-EXPORTS
+    artifact: "data/curated/**;data/provenance/**"
+    content_class: mixed_research_data
+    owner_or_source: TheNNT and repository authors
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Distributed for research transparency subject to source terms
+    attribution_requirement: Cite the article and original sources where available
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-LITERATURE-VALUES
+    artifact: "data/curated/diagnostic_lrs_manuscript_v1.csv::lr_raw;data/curated/diagnostic_lrs_manuscript_v1.csv::lr_reported"
+    content_class: literature_and_thennt_derived_values
+    owner_or_source: TheNNT and underlying literature sources
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Not relicensed under the repository MIT license
+    attribution_requirement: Attribute TheNNT and underlying sources where recoverable
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-AUTHOR-CURATION
+    artifact: "data/curated/diagnostic_lrs_manuscript_v1.csv::author_curated_fields;data/provenance/**"
+    content_class: author_generated_curation
+    owner_or_source: repository authors
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Distributed for research transparency
+    attribution_requirement: Cite the article and repository
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-PROVIDER-OUTPUTS
+    artifact: "data/model_outputs/**"
+    content_class: provider_outputs_and_author_tables
+    owner_or_source: OpenAI and repository authors
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Subject to applicable provider terms and author rights
+    attribution_requirement: Cite the article and identify the provider models
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-PROMPTS
+    artifact: "prompts/**"
+    content_class: historical_research_prompts
+    owner_or_source: repository authors
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Historical transparency artifact only
+    attribution_requirement: Cite the article and repository
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-ARTICLE-TEXT
+    artifact: "llms-full.txt"
+    content_class: format_only_author_manuscript_text
+    owner_or_source: article authors
+    access_class: public
+    license_or_terms: CC BY-NC-ND 4.0
+    redistribution_decision: approved
+    permitted_use_summary: Share with attribution for noncommercial use without distributing adaptations
+    attribution_requirement: Retain article attribution DOI status and license notice
+    approval_authority: license statement embedded in artifact
+    approval_date: "2026-07-11"
+    unresolved_risk: false
+
+  - rights_id: RIGHTS-REFERENCE-OUTPUTS
+    artifact: "results/reference/**"
+    content_class: author_generated_reference_outputs_with_mixed_inputs
+    owner_or_source: repository authors and mixed upstream sources
+    access_class: public
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Distributed for research transparency subject to upstream terms
+    attribution_requirement: Cite the article and repository
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true
+
+  - rights_id: RIGHTS-RELEASE-ASSETS
+    artifact: "generated:dist/**"
+    content_class: generated_release_assets_with_inherited_rights
+    owner_or_source: mixed
+    access_class: generated
+    license_or_terms: PENDING_HUMAN_RIGHTS_REVIEW
+    redistribution_decision: pending
+    permitted_use_summary: Inherits the most restrictive applicable source terms
+    attribution_requirement: Preserve all source notices and release metadata
+    approval_authority: PENDING_HUMAN_ASSIGNMENT
+    approval_date: null
+    unresolved_risk: true

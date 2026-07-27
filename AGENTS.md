@@ -36,6 +36,7 @@ Focused checks are available when diagnosing a failure:
 
 ```bash
 make validate-contracts
+make validate-metadata
 make test
 make reproduce
 ```

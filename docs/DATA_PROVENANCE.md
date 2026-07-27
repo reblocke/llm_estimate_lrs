@@ -66,3 +66,8 @@ The repository’s MIT License applies only to original software. It does not gr
 - **Publisher-formatted material:** publisher proofs, layout files, and the Version of Record are not included in the repository.
 
 Users are responsible for evaluating the source terms that apply to their intended reuse.
+The machine-readable [data-source registry](../metadata/data_sources.csv)
+records artifact paths and hashes, while the
+[rights registry](../metadata/rights_and_licenses.yml) records these
+class-level boundaries. Pending entries require human rights review and are not
+automated approvals.

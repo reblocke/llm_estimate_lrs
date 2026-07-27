@@ -69,6 +69,10 @@ Never write replication outputs over the accepted workbooks, `data/model_outputs
 - Keep [`PROJECT.yml`](PROJECT.yml), [`ARCHITECTURE.md`](ARCHITECTURE.md), and
   the affected versioned release contract consistent with implemented
   behavior.
+- Keep [`ANALYSIS_SPEC.md`](ANALYSIS_SPEC.md), the stable registers, and
+  [`metadata/`](metadata/) consistent with frozen executable behavior. Never
+  turn a pending scientific or rights field into an approval without the named
+  human authority.
 - Record user-visible changes in `CHANGELOG.md`. Do not revise the historical
   `v1.0.0` release notes to imply a new release.
 - Run `make audit` before requesting review. Run `make release-check` with an

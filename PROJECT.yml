@@ -31,7 +31,7 @@ data:
   highest_classification: public-research-artifacts-with-mixed-rights
   contains_phi: false
   public_data_included: true
-  rights_registry: PENDING_HUMAN_ASSIGNMENT
+  rights_registry: metadata/rights_and_licenses.yml
 
 release:
   frozen_release: v1.0.0

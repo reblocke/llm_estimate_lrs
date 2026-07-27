@@ -30,7 +30,8 @@ machine-readable outputs with `results/reference/`. Socket construction is
 blocked during the calculation.
 
 `make smoke` is the fast integrity path. It checks the lock, current-tree
-checksums, project and release contracts, and semantic data invariants.
+checksums, project and release contracts, scientific/data/rights/output
+metadata, and semantic data invariants.
 `make audit` extends that path with repository hygiene, citation validation,
 lint, tests, offline reproduction, and Git diff checks. Neither target invokes
 the live replication runner, a hosted API, or another network-dependent
@@ -101,6 +102,27 @@ attestation so namespace changes during asset construction also fail closed.
 Historical manifest tests require a complete local v1 object closure and
 disable Git lazy fetching for every historical blob or archive read.
 
+## Scientific, data, rights, and output contracts
+
+`ANALYSIS_SPEC.md` is a documentary rendering of the analysis that already
+exists. It records the population, transformations, comparison directions,
+formula families, random-number consumption order, tolerances, limitations,
+and known deviations. It remains draft pending independent statistical review
+and does not override the frozen executable artifacts.
+
+The registries under `metadata/` provide stable IDs for source artifacts,
+exact column-level semantics for every tracked public CSV, class-level rights
+status, and accepted-output traceability. `scripts/validate_metadata.py`
+enforces strict schemas, safe regular paths, artifact hashes, exact
+column/output/crosswalk coverage, categorical-value compatibility, rights
+classes, and resolvable input IDs. Pending rights and review states are valid
+only when they remain explicit.
+
+These are advancing-tree governance records. The v1 manifest, schema, release
+contract, and tag are not retroactively rewritten to include them. Every
+successor release contract must declare the complete Stage 2 metadata and
+schema set and validate it inside the materialized candidate tree.
+
 ## Trust boundaries
 
 Frozen local artifacts become trusted inputs only after checksum, contract, and
@@ -128,8 +150,9 @@ reinterpret the manifest as an inventory of the advancing default branch.
 
 ## Deliberately absent components
 
-There is not yet a shared analytical package or a set of successor notebooks.
-There is also no formal analysis specification, data/variable/rights/output
-registry set, independent statistical oracle suite, completed human review
-record, or independent certification. Those are later-stage work and must not
-be inferred from the Stage 1 contracts.
+There is not yet a shared analytical package, a set of successor notebooks, or
+an independent statistical oracle suite. The analysis specification and
+registries exist, but their independent statistical, rights, reproducibility,
+and high-risk reviews remain pending. There is no completed human
+certification. Those later-stage outcomes must not be inferred from automated
+contract validation.

@@ -7,7 +7,7 @@ RELEASE_REF ?= HEAD
 RELEASE_MODE ?= prepare
 RELEASE_CONTRACT ?= release/contracts/v1.0.0.json
 
-.PHONY: setup environment-check cff-env-check kernel lock-check validate-contracts validate-release-governance release-smoke smoke audit validate-data reproduce reference checksums verify-checksums test lint hygiene cff-validate manuscript-parity release-check release-check-final replicate release-archive release-assets-determinism archive-hygiene
+.PHONY: setup environment-check cff-env-check kernel lock-check validate-contracts validate-metadata validate-release-governance release-smoke smoke audit validate-data reproduce reference checksums verify-checksums test lint hygiene cff-validate manuscript-parity release-check release-check-final replicate release-archive release-assets-determinism archive-hygiene
 
 setup:
 	uv sync --frozen
@@ -25,12 +25,15 @@ lock-check: environment-check
 validate-contracts: environment-check
 	$(PYTHON) scripts/validate_contracts.py
 
+validate-metadata: environment-check
+	$(PYTHON) scripts/validate_metadata.py
+
 validate-release-governance: environment-check
 	$(PYTHON) scripts/validate_contracts.py --candidate-contract $(RELEASE_CONTRACT)
 
-smoke: lock-check verify-checksums validate-contracts validate-data
+smoke: lock-check verify-checksums validate-contracts validate-metadata validate-data
 
-release-smoke: lock-check verify-checksums validate-release-governance validate-data
+release-smoke: lock-check verify-checksums validate-release-governance validate-metadata validate-data
 
 audit: smoke hygiene cff-validate lint test reproduce
 	git diff --check

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Data source registry row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "title",
+    "provider",
+    "citation",
+    "version_or_access_date",
+    "persistent_identifier",
+    "access_class",
+    "license_or_terms",
+    "rights_holder",
+    "included_in_package",
+    "acquisition_method",
+    "requires_live_service",
+    "expected_path",
+    "file_format",
+    "checksum_algorithm",
+    "checksum",
+    "sensitivity",
+    "contains_identifiers",
+    "retention_rule",
+    "access_contact",
+    "notes"
+  ],
+  "properties": {
+    "source_id": {
+      "$ref": "#/$defs/id"
+    },
+    "title": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "provider": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "citation": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "version_or_access_date": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "persistent_identifier": {
+      "type": "string",
+      "pattern": "^(?:|https://[^\\s]+|10\\.[0-9]{4,9}/[^\\s]+)$"
+    },
+    "access_class": {
+      "enum": [
+        "public"
+      ]
+    },
+    "license_or_terms": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "rights_holder": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "included_in_package": {
+      "$ref": "#/$defs/boolean_string"
+    },
+    "acquisition_method": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "requires_live_service": {
+      "$ref": "#/$defs/boolean_string"
+    },
+    "expected_path": {
+      "$ref": "#/$defs/safe_relative_path"
+    },
+    "file_format": {
+      "enum": [
+        "csv",
+        "json",
+        "text",
+        "xlsx"
+      ]
+    },
+    "checksum_algorithm": {
+      "const": "SHA-256"
+    },
+    "checksum": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sensitivity": {
+      "enum": [
+        "public"
+      ]
+    },
+    "contains_identifiers": {
+      "$ref": "#/$defs/boolean_string"
+    },
+    "retention_rule": {
+      "const": "immutable_v1"
+    },
+    "access_contact": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$"
+    },
+    "nonempty": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "boolean_string": {
+      "enum": [
+        "true",
+        "false"
+      ]
+    },
+    "safe_relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)(?!.*//)[A-Za-z0-9._+@() -]+(?:/[A-Za-z0-9._+@() -]+)*$"
+    }
+  }
+}

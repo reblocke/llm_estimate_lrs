@@ -47,6 +47,7 @@ REQUIRED_AGENT_COMMANDS = (
     "make smoke",
     "make audit",
     "make validate-contracts",
+    "make validate-metadata",
     "make test",
     "make reproduce",
 )

@@ -25,6 +25,11 @@ A live model call is a new replication and follows [Replication](REPLICATION.md)
 | `results/reference/` | Frozen numerical contract |
 
 The canonical CSV is additive. It does not replace or modify either workbook.
+The advancing maintenance tree also carries a draft
+[`ANALYSIS_SPEC.md`](../ANALYSIS_SPEC.md) and machine-readable source,
+variable, rights, and output registries under [`metadata/`](../metadata/).
+These are post-release governance records and do not alter the tag-scoped v1
+manifest.
 
 ## Environment and commands
 
@@ -35,6 +40,7 @@ pip install uv
 make setup
 make kernel
 make verify-checksums
+make validate-metadata
 make validate-data
 make reproduce
 make test
@@ -76,7 +82,7 @@ The contract includes 700 rows, 30 conditions, 2,100 positive finite manuscript-
 - `NNT_LRs_08-26-2025.xlsx`: `644f0558328a8f04f460a5ebfa2fc04e6d3571f655d084ea076488c7ba17da89`
 - `nnt_lrs_with_estimated.xlsx`: `c375229a27f0854957f6b8963ece145e94d00e4fa75e7e2756e5d130f6f7110d`
 
-The release validator also checks row order, stable IDs, crosswalk completeness, model scope, finite positive values, prompt hashes, threshold artifact hashes, documentation metadata, and numerical tolerances.
+The release validator also checks row order, stable IDs, crosswalk completeness, model scope, finite positive values, prompt hashes, threshold artifact hashes, documentation metadata, and numerical tolerances. `make validate-metadata` separately checks artifact hashes, exact public-CSV column coverage, rights classes, and accepted-output/crosswalk traceability.
 
 ## Offline guarantee
 
@@ -88,10 +94,11 @@ An absent or mismatched frozen artifact is an integrity failure. The remedy is t
 
 1. Run `uv lock --check` to confirm the lockfile matches project metadata.
 2. Run `make verify-checksums` to identify changed or missing frozen files.
-3. Run `make validate-data` for row-level, model-scope, and crosswalk diagnostics.
-4. Run `uv run --offline --no-sync pytest -q` to see the first failed contract.
-5. Remove only the ignored `results/runs/reproduction/` directory and rerun reproduction if the failure is confined to generated output.
-6. Confirm `python --version` through
+3. Run `make validate-metadata` for scientific and registry-contract diagnostics.
+4. Run `make validate-data` for row-level, model-scope, and crosswalk diagnostics.
+5. Run `uv run --offline --no-sync pytest -q` to see the first failed contract.
+6. Remove only the ignored `results/runs/reproduction/` directory and rerun reproduction if the failure is confined to generated output.
+7. Confirm `python --version` through
    `uv run --offline --no-sync python --version`; it should use Python 3.11.
 
 Do not edit a frozen input to make a test pass. Unexpected differences should be reported with the failing command, file hash, environment details, and full error message.

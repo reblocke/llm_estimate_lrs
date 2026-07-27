@@ -2,6 +2,10 @@
 
 This crosswalk maps the published early-access article’s numerical claims to frozen inputs, executable analysis, and machine-readable expected results. `make reproduce` recalculates the offline contract; `make test` compares it with `results/reference/`.
 
+[`metadata/output_manifest.csv`](../metadata/output_manifest.csv) is the
+strict machine-readable companion to this table. It assigns stable output IDs,
+resolves input artifact IDs, and records comparison behavior and tolerances.
+
 | Result | Frozen input | Code | Reference output | Expected contract |
 |---|---|---|---|---|
 | Dataset description | Canonical CSV; source workbooks | `scripts/build_release_dataset.py`; `data_analysis.ipynb` | `main_metrics.json` | 700 rows; 30 conditions; reported LR 0.01 to about 145.89; median 1.0 |

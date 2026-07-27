@@ -42,6 +42,14 @@ boundaries, [`AGENTS.md`](AGENTS.md) for durable repository rules, and
 The versioned records under `release/contracts/` govern historical release
 facts and future release-candidate validation.
 
+The documentary scientific contract is
+[`ANALYSIS_SPEC.md`](ANALYSIS_SPEC.md). Its status remains draft pending
+independent statistical review. Stable decision, exception, and issue records
+are in [`DECISIONS.md`](DECISIONS.md), [`EXCEPTIONS.md`](EXCEPTIONS.md), and
+[`KNOWN_ISSUES.md`](KNOWN_ISSUES.md). Machine-readable source, variable,
+rights, and accepted-output contracts are under [`metadata/`](metadata/);
+`make validate-metadata` checks their schemas, hashes, and coverage offline.
+
 ## Run a new replication
 
 A live model rerun is a new replication. Model aliases, serving behavior, and sampling may change; new outputs must be written to a new run directory and must not overwrite the accepted-paper artifacts.
@@ -73,6 +81,8 @@ Replication is intentionally gated by a unique run ID, explicit model list, maxi
 | `prompts/` | Immutable historical prompt specifications |
 | `manifests/manuscript_run_v1.json` | Machine-readable accepted-run inventory and provenance |
 | `release/contracts/` | Versioned post-release governance records and release-history policy |
+| `ANALYSIS_SPEC.md` | Draft documentary contract for the frozen accepted-paper analysis |
+| `metadata/` | Source, variable, rights, and accepted-output registries |
 | `results/reference/` | Compact expected numerical results |
 | `data_analysis.ipynb` | Main accepted-paper analyses and figures |
 | `supplementary_analyses.ipynb` | Accepted supplementary analyses |
@@ -87,7 +97,10 @@ Literature-reported LRs were collected from TheNNT on 1 April 2025. Automated ex
 
 Some source rows repeat because distinct source tables reported the same condition–finding combination. They are preserved. Feature categories overlap by design. Missing row-level source URLs, response metadata, retry records, or curation rationales are left blank and recorded as provenance gaps rather than inferred.
 
-See [Data provenance](docs/DATA_PROVENANCE.md) and `data/README.md`.
+See [Data provenance](docs/DATA_PROVENANCE.md), the
+[data-source registry](metadata/data_sources.csv), the
+[variable dictionary](metadata/variable_dictionary.csv), and
+`data/README.md`.
 
 ## Accepted manuscript models and settings
 
@@ -113,7 +126,10 @@ The GPT-5 alias identifies the accepted historical run; it does not guarantee id
 | Reliability zones and laboratory discrepancies | `supplementary_analyses.ipynb` | `results/reference/reliability_zone_metrics.csv`, `laboratory_discrepancy_flags.json` |
 | Threshold perturbation | `threshold_perturbation_sensitivity_analysis.ipynb` | `data/model_outputs/threshold_perturbation_v1/` |
 
-The detailed mapping, including expected values and commands, is in [Accepted-paper crosswalk](docs/ACCEPTED_PAPER_CROSSWALK.md).
+The detailed mapping, including expected values and commands, is in
+[Accepted-paper crosswalk](docs/ACCEPTED_PAPER_CROSSWALK.md). Its
+machine-validatable companion is the
+[accepted-output manifest](metadata/output_manifest.csv).
 
 ## Expected validation results
 
@@ -147,6 +163,10 @@ Please cite the article and the `v1.0.0` GitHub release. Citation metadata are i
 The MIT License in [`LICENSE`](LICENSE) applies to original repository software only. It does not place TheNNT-derived material, literature-reported values, model-provider outputs, or article text under MIT terms.
 
 `llms-full.txt` is a format-only representation of the pre-production author manuscript and is shared under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) ([legal code](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode.en)). It includes attribution and source hashes, omits embedded images and document-package metadata, and must not be treated as the publisher Version of Record. The representation changes format only; it may be shared with attribution for noncommercial use, but adapted material may not be distributed. See [Data provenance](docs/DATA_PROVENANCE.md) for the remaining reuse boundaries.
+
+The class-level [rights registry](metadata/rights_and_licenses.yml) records
+these boundaries without converting unresolved legal questions into approval.
+Its overall status remains `PENDING_HUMAN_RIGHTS_REVIEW`.
 
 ## Maintainer and contact
 

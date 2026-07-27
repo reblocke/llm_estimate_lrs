@@ -12,6 +12,11 @@ All notable changes to this repository are documented here.
   protected-artifact parity checks.
 - Truthful offline `smoke` and `audit` entry points and contract validation in
   continuous integration.
+- A draft scientific analysis specification, stable decision/exception/issue
+  registers, and strict source, variable, rights, and accepted-output
+  registries.
+- Offline metadata validation with exact artifact, column, rights-class,
+  crosswalk, and output coverage.
 
 ### Changed
 
@@ -24,6 +29,8 @@ All notable changes to this repository are documented here.
   contracted refs before success.
 - Historical Git reads reject partial/promisor clones and disable lazy
   fetching and replacement objects.
+- Every successor release contract must declare and validate the complete
+  Stage 2 metadata and schema set; historical v1 remains tag-scoped.
 
 ### Scientific results
 

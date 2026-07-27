@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Variable dictionary row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset_id",
+    "column_name",
+    "display_name",
+    "description",
+    "data_type",
+    "unit",
+    "allowed_values",
+    "missing_value_meaning",
+    "source_or_derivation",
+    "analysis_role",
+    "sensitivity",
+    "required",
+    "notes"
+  ],
+  "properties": {
+    "dataset_id": {
+      "$ref": "#/$defs/id"
+    },
+    "column_name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "display_name": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "description": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "data_type": {
+      "enum": [
+        "boolean",
+        "date",
+        "datetime",
+        "integer",
+        "number",
+        "string",
+        "uri"
+      ]
+    },
+    "unit": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "allowed_values": {
+      "type": "string"
+    },
+    "missing_value_meaning": {
+      "enum": [
+        "blank_means_unavailable_or_not_applicable",
+        "not_permitted",
+        "unavailable_historical_provenance"
+      ]
+    },
+    "source_or_derivation": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "analysis_role": {
+      "enum": [
+        "accepted_reference_metric",
+        "analysis_input",
+        "exploratory_sensitivity",
+        "identifier",
+        "model_output",
+        "provenance",
+        "raw_source_value",
+        "supporting_field"
+      ]
+    },
+    "sensitivity": {
+      "const": "public"
+    },
+    "required": {
+      "$ref": "#/$defs/boolean_string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$"
+    },
+    "nonempty": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boolean_string": {
+      "enum": [
+        "true",
+        "false"
+      ]
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Accepted output manifest row",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "output_id",
+    "publication_location",
+    "description",
+    "claim_type",
+    "producer",
+    "function_or_section",
+    "input_artifact_ids",
+    "output_file",
+    "seed",
+    "expected_value_or_hash",
+    "comparison_method",
+    "absolute_tolerance",
+    "relative_tolerance",
+    "required",
+    "publicly_reproducible",
+    "restricted_requirements",
+    "status",
+    "notes"
+  ],
+  "properties": {
+    "output_id": {
+      "type": "string",
+      "pattern": "^OUT-[0-9]{3}$"
+    },
+    "publication_location": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "description": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "claim_type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "producer": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "function_or_section": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "input_artifact_ids": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(?:;[a-z][a-z0-9_]*)*$"
+    },
+    "output_file": {
+      "$ref": "#/$defs/safe_relative_path"
+    },
+    "seed": {
+      "type": "string",
+      "pattern": "^(?:|[0-9]+)$"
+    },
+    "expected_value_or_hash": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "comparison_method": {
+      "enum": [
+        "json_fields",
+        "numeric_table",
+        "sha256"
+      ]
+    },
+    "absolute_tolerance": {
+      "$ref": "#/$defs/nonnegative_or_blank"
+    },
+    "relative_tolerance": {
+      "$ref": "#/$defs/nonnegative_or_blank"
+    },
+    "required": {
+      "$ref": "#/$defs/boolean_string"
+    },
+    "publicly_reproducible": {
+      "$ref": "#/$defs/boolean_string"
+    },
+    "restricted_requirements": {
+      "$ref": "#/$defs/nonempty"
+    },
+    "status": {
+      "enum": [
+        "accepted_frozen",
+        "PENDING_HUMAN_REVIEW"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "nonempty": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boolean_string": {
+      "enum": [
+        "true",
+        "false"
+      ]
+    },
+    "nonnegative_or_blank": {
+      "type": "string",
+      "pattern": "^(?:|0|[0-9]+(?:\\.[0-9]+)?)$"
+    },
+    "safe_relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)(?!.*//)[A-Za-z0-9._+@() -]+(?:/[A-Za-z0-9._+@() -]+)*$"
+    }
+  }
+}

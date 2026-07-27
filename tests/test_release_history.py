@@ -4,12 +4,14 @@ import hashlib
 import json
 import subprocess
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
 from scripts import validate_release as release_validation
 from scripts.git_safety import no_lazy_fetch_environment
 from scripts.validate_contracts import ContractValidationError
+from scripts.validate_metadata import STAGE2_REQUIRED_PATHS, MetadataValidationError
 from scripts.validate_release import (
     RELEASE_BRANCH,
     ReleaseValidationError,
@@ -88,6 +90,7 @@ def _future_contract(path: Path, release_ref: str = "v2.0.0") -> dict[str, objec
         "release_ref": release_ref,
         "audited_commit": head,
         "audited_tree": tree,
+        "required_paths": sorted(STAGE2_REQUIRED_PATHS),
         "history_policy": {
             "complete_history_required": True,
             "annotated_tag_required": True,
@@ -362,11 +365,20 @@ def test_release_candidate_checks_materialized_ref_not_governance_head(
         candidate_root = kwargs["current_files_root"]
         assert isinstance(candidate_root, Path)
         assert_candidate_root(candidate_root)
-        return {"required_paths": []}
+        return {"required_paths": sorted(STAGE2_REQUIRED_PATHS)}
 
     def fake_data(root: Path) -> dict[str, object]:
         assert_candidate_root(root)
         return {"dataset": {"rows": 700}}
+
+    def fake_metadata(
+        root: Path,
+        *,
+        schema_root: Path,
+    ) -> dict[str, object]:
+        assert_candidate_root(root)
+        assert schema_root == tmp_path
+        return {"data_sources": 31}
 
     def fake_manifest(root: Path) -> dict[str, object]:
         assert_candidate_root(root)
@@ -383,6 +395,7 @@ def test_release_candidate_checks_materialized_ref_not_governance_head(
 
     monkeypatch.setattr(release_validation, "validate_release_contract", fake_contract)
     monkeypatch.setattr(release_validation, "validate_data", fake_data)
+    monkeypatch.setattr(release_validation, "validate_metadata_contracts", fake_metadata)
     monkeypatch.setattr(
         release_validation,
         "validate_tracked_file_types",
@@ -440,6 +453,108 @@ def test_release_candidate_checks_materialized_ref_not_governance_head(
     assert observed_roots
     assert history_rechecks == [("prepare", candidate_a)]
     assert all(not root.exists() for root in observed_roots)
+
+
+def test_release_candidate_validates_stage2_metadata_from_materialized_ref(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    candidate_a, _governance_b = _initialize_candidate_repository(tmp_path)
+    observed_root: Path | None = None
+
+    monkeypatch.setattr(
+        release_validation,
+        "validate_release_contract",
+        lambda *_args, **_kwargs: {"required_paths": sorted(STAGE2_REQUIRED_PATHS)},
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_tracked_file_types",
+        lambda *_args, **_kwargs: None,
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_required_paths",
+        lambda *_args, **_kwargs: None,
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_candidate_checksums",
+        lambda *_args, **_kwargs: 1,
+    )
+    monkeypatch.setattr(release_validation, "validate_data", lambda _root: {})
+    monkeypatch.setattr(release_validation, "validate_notebooks", lambda _root: None)
+    monkeypatch.setattr(
+        release_validation,
+        "validate_manifest",
+        lambda _root: {"manifest_id": "test-manifest"},
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_documentation",
+        lambda *_args, **_kwargs: None,
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_history_policy",
+        lambda *_args, **_kwargs: None,
+    )
+
+    def reject_candidate_metadata(
+        root: Path,
+        *,
+        schema_root: Path,
+    ) -> dict[str, object]:
+        nonlocal observed_root
+        observed_root = root
+        assert root != tmp_path
+        assert (root / "candidate.txt").read_text(encoding="utf-8") == "candidate A\n"
+        assert schema_root == tmp_path
+        raise MetadataValidationError("candidate metadata sentinel")
+
+    monkeypatch.setattr(
+        release_validation,
+        "validate_metadata_contracts",
+        reject_candidate_metadata,
+    )
+
+    with pytest.raises(MetadataValidationError, match="candidate metadata sentinel"):
+        validate_release_candidate(
+            Path("governance-contract.json"),
+            mode="prepare",
+            candidate_ref=candidate_a,
+            repository=tmp_path,
+        )
+
+    assert observed_root is not None
+    assert not observed_root.exists()
+
+
+def test_release_cli_reports_metadata_validation_failure_without_traceback(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    monkeypatch.setattr(
+        release_validation,
+        "parse_args",
+        lambda: SimpleNamespace(
+            release=True,
+            data_only=False,
+            contract=Path("governance-contract.json"),
+            mode="prepare",
+            ref="candidate",
+        ),
+    )
+
+    def reject_candidate(*_args: object, **_kwargs: object) -> dict[str, object]:
+        raise MetadataValidationError("candidate metadata sentinel")
+
+    monkeypatch.setattr(release_validation, "validate_release_candidate", reject_candidate)
+
+    assert release_validation.main() == 1
+    captured = capsys.readouterr()
+    assert "Release validation failed: candidate metadata sentinel" in captured.err
+    assert "Traceback" not in captured.err
 
 
 @pytest.mark.parametrize(
@@ -540,6 +655,11 @@ def test_release_candidate_rechecks_contracted_refs_after_filesystem_validation(
         release_validation,
         "validate_data",
         lambda _root: {"dataset": {"rows": 1}},
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_metadata_contracts",
+        lambda *_args, **_kwargs: {"data_sources": 31},
     )
     monkeypatch.setattr(release_validation, "validate_notebooks", lambda _root: None)
     monkeypatch.setattr(
