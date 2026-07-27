@@ -4,6 +4,8 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-27
+
 ### Added
 
 - Public-safe repository instructions, machine-readable project metadata, and
@@ -17,6 +19,9 @@ All notable changes to this repository are documented here.
   registries.
 - Offline metadata validation with exact artifact, column, rights-class,
   crosswalk, and output coverage.
+- A reader-first repository guide aligned with the published article and a
+  separate current-release identifier that preserves `v1.0.0` as the
+  accepted-paper snapshot.
 
 ### Changed
 
@@ -30,7 +35,7 @@ All notable changes to this repository are documented here.
 - Historical Git reads reject partial/promisor clones and disable lazy
   fetching and replacement objects.
 - Every successor release contract must declare and validate the complete
-  Stage 2 metadata and schema set; historical v1 remains tag-scoped.
+  metadata and reproducibility contract set; historical v1 remains tag-scoped.
 
 ### Scientific results
 

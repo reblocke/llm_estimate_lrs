@@ -10,7 +10,12 @@ The accepted analysis compares literature-reported diagnostic likelihood ratios 
 4. When only a range was available, its geometric mean was used, consistent with the accepted methods.
 5. On 25 August 2025, the three manuscript model configurations generated comparator LRs.
 6. The accepted analysis workbook was assembled and manually validated.
-7. For `v1.0.0`, deterministic scripts export the frozen values into tidy CSV files and verify a one-to-one crosswalk without changing row order or accepted values.
+7. For the `v1.0.0` paper snapshot, deterministic scripts export the frozen
+   values into tidy CSV files and verify a one-to-one crosswalk without
+   changing row order or accepted values.
+
+Release `v1.1.0` retains these data and outputs unchanged while improving their
+documentation, metadata, and offline validation.
 
 ## Source workbooks
 
@@ -69,5 +74,5 @@ Users are responsible for evaluating the source terms that apply to their intend
 The machine-readable [data-source registry](../metadata/data_sources.csv)
 records artifact paths and hashes, while the
 [rights registry](../metadata/rights_and_licenses.yml) records these
-class-level boundaries. Pending entries require human rights review and are not
-automated approvals.
+class-level boundaries. An unresolved or unreviewed registry entry is not
+permission to reuse the associated material.

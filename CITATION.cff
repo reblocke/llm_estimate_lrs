@@ -1,19 +1,18 @@
 cff-version: 1.2.0
 message: >-
   Please cite both the accompanying article and the exact repository release
-  or commit used. The v1.0.0 GitHub release is the versioned reproducibility
-  record for this repository.
-title: LLM-Estimated Diagnostic Likelihood Ratios
-version: 1.0.0
-date-released: 2026-07-11
+  or commit used. v1.0.0 is the accepted-paper snapshot; v1.1.0 is the current
+  reproducibility and metadata maintenance release.
+title: Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion
+version: 1.1.0
+date-released: 2026-07-27
 type: software
 license: MIT
 repository-code: https://github.com/reblocke/llm_estimate_lrs
 url: https://github.com/reblocke/llm_estimate_lrs
 abstract: >-
-  Frozen data, prompts, model outputs, analysis code, and reference results
-  supporting the Scientific Reports article on LLM-generated diagnostic
-  likelihood ratios.
+  Code and frozen research artifacts supporting the Scientific Reports article
+  on large-language-model estimates of diagnostic likelihood ratios.
 keywords:
   - diagnostic likelihood ratios
   - large language models

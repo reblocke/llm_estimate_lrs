@@ -10,10 +10,10 @@ them:
 - `variable_dictionary.csv` contains exactly one row for every column in each
   tracked CSV under `data/` and `results/reference/`. Registry CSVs and ignored
   generated runs are intentionally outside that recursive rule.
-- `rights_and_licenses.yml` records class-level reuse boundaries. Pending human
-  rights review is not an approval. A reviewed registry cannot coexist with
-  pending or unresolved license, rights-holder, or access-contact fields in
-  the source registry.
+- `rights_and_licenses.yml` records class-level reuse boundaries. An unresolved
+  rights status is not permission to reuse an artifact. A reviewed registry
+  cannot coexist with unresolved license, rights-holder, or access-contact
+  fields in the source registry.
 - `output_manifest.csv` maps every accepted-paper crosswalk analysis and
   concrete reference or threshold artifact to inputs and comparison behavior.
 
@@ -30,7 +30,7 @@ tolerances and require at least one material check. A hash-only comparison has
 blank tolerance fields and no field checks. Every output row declares exactly
 one accepted-paper crosswalk marker.
 
-Run the complete offline validation with:
+Run the metadata validation offline with:
 
 ```bash
 make validate-metadata

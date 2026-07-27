@@ -1,6 +1,8 @@
 # Contributing
 
-Contributions should preserve the frozen accepted-paper record while keeping reproduction auditable and offline.
+Contributions should preserve the frozen accepted-paper record while keeping
+reproduction auditable and offline. Release `v1.0.0` is the immutable
+paper-release snapshot; the current maintenance line begins with `v1.1.0`.
 
 ## Environment
 
@@ -36,7 +38,11 @@ manuscript manifest and schema are historical tag-scoped records and must remain
 byte-identical. Raw values and curated values must remain separate. Missing
 provenance must be recorded as unavailable, never inferred.
 
-A change to the principal dataset, manuscript model set, prompt, inference settings, or accepted analysis contract requires a new major version. Documentation and packaging fixes may use a patch version when all frozen hashes and results remain unchanged.
+A change to the principal dataset, manuscript model set, prompt, inference
+settings, or accepted analysis contract requires scientific review and a
+major-version decision. Documentation, metadata, validation, and packaging
+changes may use a patch or minor version when all frozen hashes and results
+remain unchanged.
 
 ## Reproduction
 
@@ -65,7 +71,9 @@ Never write replication outputs over the accepted workbooks, `data/model_outputs
 ## Tests and documentation
 
 - Add or update a focused test for changed behavior.
-- Keep the article title, DOI, version, model identifiers, repository URL, and reproduction command consistent across public documentation.
+- Keep the article title, DOI, paper-snapshot version, current-release version,
+  model identifiers, repository URL, and reproduction commands consistent
+  across public documentation.
 - Keep [`PROJECT.yml`](PROJECT.yml), [`ARCHITECTURE.md`](ARCHITECTURE.md), and
   the affected versioned release contract consistent with implemented
   behavior.
@@ -78,4 +86,6 @@ Never write replication outputs over the accepted workbooks, `data/model_outputs
 - Run `make audit` before requesting review. Run `make release-check` with an
   explicit contract and candidate ref only when preparing a release candidate.
 
-Publishing a tag or GitHub release, replacing default-branch history, changing repository visibility, or deleting an existing release requires explicit maintainer approval.
+Publishing a tag or GitHub release, replacing default-branch history, changing
+repository visibility, or deleting an existing release requires explicit
+maintainer approval.

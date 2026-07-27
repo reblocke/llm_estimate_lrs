@@ -1,6 +1,9 @@
 # Accepted-paper result crosswalk
 
-This crosswalk maps the published early-access article’s numerical claims to frozen inputs, executable analysis, and machine-readable expected results. `make reproduce` recalculates the offline contract; `make test` compares it with `results/reference/`.
+This crosswalk maps the published article’s numerical claims to frozen inputs,
+executable analysis, and machine-readable expected results. `make reproduce`
+recalculates the offline contract; `make test` compares it with
+`results/reference/`.
 
 [`metadata/output_manifest.csv`](../metadata/output_manifest.csv) is the
 strict machine-readable companion to this table. It assigns stable output IDs,
@@ -41,8 +44,9 @@ The accepted author-manuscript sentence lists the o3 evidence-direction ratios a
 analysis and `evidence_direction_tests.csv` assign 1.0326838754 to negative evidence
 and 0.9504718609 to positive evidence (Welch P = 0.1454697). Thus, the rounded pair
 and inference are unchanged, but the stratum order in that sentence is reversed
-relative to the executable analysis. This release preserves both the submitted
-wording and the frozen calculation; it does not silently relabel either artifact.
+relative to the executable analysis. The maintained package preserves both the
+submitted wording and the frozen calculation; it does not silently relabel
+either artifact.
 
 ## Reliability-zone values
 

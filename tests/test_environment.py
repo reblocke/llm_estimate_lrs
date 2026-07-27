@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_project_version_and_python_contract() -> None:
     project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    assert project["project"]["version"] == "1.0.0"
+    assert project["project"]["version"] == "1.1.0"
     assert project["project"]["requires-python"] == ">=3.11"
     assert (ROOT / ".python-version").read_text(encoding="utf-8").strip() == "3.11"
 

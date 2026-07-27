@@ -1,11 +1,11 @@
-schema_version: 1
+schema_version: 2
 
 project:
   id: llm-estimate-lrs
-  title: LLM-Estimated Diagnostic Likelihood Ratios
+  title: Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion
   tier: T2
   high_risk: true
-  status: maintenance-hardening
+  status: maintenance-only
 
 roles:
   scientific_owner: Brian W. Locke
@@ -35,6 +35,7 @@ data:
 
 release:
   frozen_release: v1.0.0
+  current_release: v1.1.0
   code_license: MIT
   maintenance_status: maintenance-only
   archive_identifier: PENDING_DEPOSIT

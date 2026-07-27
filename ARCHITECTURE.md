@@ -120,7 +120,7 @@ only when they remain explicit.
 
 These are advancing-tree governance records. The v1 manifest, schema, release
 contract, and tag are not retroactively rewritten to include them. Every
-successor release contract must declare the complete Stage 2 metadata and
+successor release contract must declare the complete current metadata and
 schema set and validate it inside the materialized candidate tree.
 
 ## Trust boundaries

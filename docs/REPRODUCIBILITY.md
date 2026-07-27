@@ -1,6 +1,10 @@
 # Reproducing the accepted analysis
 
-This workflow supports “Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion” ([DOI: 10.1038/s41598-026-61766-2](https://doi.org/10.1038/s41598-026-61766-2)). Published online in *Scientific Reports* on 11 July 2026 as a citable, unedited early-access article; publisher production editing remains ongoing.
+This workflow supports “Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion” ([DOI: 10.1038/s41598-026-61766-2](https://doi.org/10.1038/s41598-026-61766-2)). The article was published online in *Scientific Reports* on 11 July 2026 as an unedited early-access article.
+
+Release `v1.0.0` is the immutable accepted-paper snapshot. Release `v1.1.0`
+is the current documentation, metadata, and reproducibility-maintenance
+package built around the same frozen scientific record.
 
 ## Definition
 
@@ -24,12 +28,11 @@ A live model call is a new replication and follows [Replication](REPLICATION.md)
 | `manifests/manuscript_run_v1.json` | Input, provenance, and expected-artifact inventory |
 | `results/reference/` | Frozen numerical contract |
 
-The canonical CSV is additive. It does not replace or modify either workbook.
-The advancing maintenance tree also carries a draft
-[`ANALYSIS_SPEC.md`](../ANALYSIS_SPEC.md) and machine-readable source,
-variable, rights, and output registries under [`metadata/`](../metadata/).
-These are post-release governance records and do not alter the tag-scoped v1
-manifest.
+The canonical CSV is additive and does not replace or modify either workbook.
+The maintained package also includes [`ANALYSIS_SPEC.md`](../ANALYSIS_SPEC.md)
+and machine-readable source, variable, rights, and output registries under
+[`metadata/`](../metadata/). These records document the frozen behavior
+without altering the `v1.0.0` manuscript manifest.
 
 ## Environment and commands
 
@@ -82,7 +85,11 @@ The contract includes 700 rows, 30 conditions, 2,100 positive finite manuscript-
 - `NNT_LRs_08-26-2025.xlsx`: `644f0558328a8f04f460a5ebfa2fc04e6d3571f655d084ea076488c7ba17da89`
 - `nnt_lrs_with_estimated.xlsx`: `c375229a27f0854957f6b8963ece145e94d00e4fa75e7e2756e5d130f6f7110d`
 
-The release validator also checks row order, stable IDs, crosswalk completeness, model scope, finite positive values, prompt hashes, threshold artifact hashes, documentation metadata, and numerical tolerances. `make validate-metadata` separately checks artifact hashes, exact public-CSV column coverage, rights classes, and accepted-output/crosswalk traceability.
+The release validator also checks row order, stable IDs, crosswalk completeness,
+model scope, finite positive values, prompt hashes, threshold artifact hashes,
+documentation metadata, and numerical tolerances. `make validate-metadata`
+separately checks artifact hashes, exact public-CSV column coverage, rights
+classes, and accepted-output/crosswalk traceability.
 
 ## Offline guarantee
 

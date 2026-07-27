@@ -1,8 +1,10 @@
 # Frozen release data
 
 This directory contains machine-readable exports supporting the published
-early-access article. `NNT_LRs_08-26-2025.xlsx` remains the numerical source of
-truth and
+article. The files belong to the immutable `v1.0.0` paper snapshot and remain
+unchanged in the `v1.1.0` maintenance release.
+
+`NNT_LRs_08-26-2025.xlsx` remains the numerical source of truth, and
 `nnt_lrs_with_estimated.xlsx` supplies the per-condition worksheet context and
 full condition labels. Neither workbook is modified by the release builders.
 
@@ -12,9 +14,9 @@ full condition labels. Neither workbook is modified by the release builders.
   original order, with stable row IDs, full condition labels, overlapping
   feature indicators, and qualitative LR bands.
 - `model_outputs/manuscript_model_outputs_v1.csv`: the frozen 700 by 3 outputs
-  for the three models analyzed in the published early-access article.
+  for the three models analyzed in the published article.
 - `model_outputs/auxiliary_gpt-4.1_outputs_v1.csv`: preserved historical GPT-4.1
-  values that were not analyzed in the published early-access article.
+  values that were not analyzed in the published article.
 - `model_outputs/manuscript_query_run_v1.csv`: recoverable run configuration;
   unavailable response metadata is left blank.
 - `model_outputs/threshold_perturbation_v1/`: byte-identical copies of the five

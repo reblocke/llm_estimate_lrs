@@ -1,27 +1,31 @@
-# LLM-Estimated Diagnostic Likelihood Ratios
+# Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion
 
 Repository: https://github.com/reblocke/llm_estimate_lrs
 Article: Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion
 DOI: https://doi.org/10.1038/s41598-026-61766-2
-Status: Published online in Scientific Reports on 11 July 2026 as a citable, unedited early-access article; publisher production editing remains ongoing
-Release: v1.0.0 GitHub reproducibility release, published 11 July 2026
+Article status: Published online in Scientific Reports on 11 July 2026 as an unedited early-access article
+Paper snapshot: v1.0.0, published 11 July 2026
+Current release: v1.1.0, published 27 July 2026
 
 ## Reproduce the accepted analysis
 
 ```bash
 pip install uv
-uv sync --frozen
+uv lock --check
+make setup
 make reproduce
 make test
 ```
 
-`make reproduce` uses frozen local artifacts only. It makes no OpenAI API calls and no live TheNNT requests.
+`make setup` may download locked dependencies. Reproduction and tests use frozen local artifacts only, make no OpenAI API calls or live TheNNT requests, and do not overwrite accepted inputs or reference results.
 
 ## Accepted manuscript models
 
 - GPT-4o: `gpt-4o-2024-11-20`
 - o3: `o3-2025-04-16`
 - GPT-5: `gpt-5`
+
+The GPT-5 alias identifies the accepted historical run and does not guarantee identical future hosted-model behavior.
 
 ## Canonical artifacts
 
@@ -31,16 +35,22 @@ make test
 - Model configuration: `config/manuscript_models_v1.json`
 - Main prompt: `prompts/main_estimator_v1.json`
 - Threshold prompt: `prompts/threshold_perturbation_v1.json`
-- Manifest: `manifests/manuscript_run_v1.json`
+- Paper manifest: `manifests/manuscript_run_v1.json`
 - Reference results: `results/reference/`
 - Main analysis: `data_analysis.ipynb`
 - Supplementary analysis: `supplementary_analyses.ipynb`
 - Pre-production author-manuscript text: `llms-full.txt`
 
+## Release boundary
+
+`v1.0.0` is the immutable accepted-paper snapshot. `v1.1.0` adds documentation, metadata, validation, and machine-readable guidance without changing an accepted input, output, prompt, configuration, notebook, statistic, figure, interpretation, or conclusion.
+
 ## Replication boundary
 
-A live rerun is a new replication, not reproduction of the accepted paper. It requires an API key, explicit models, a call ceiling, typed confirmation, and a new immutable directory under `runs/`. It must never overwrite the frozen workbooks, prompts, model outputs, or reference results. See `docs/REPLICATION.md`.
+A live rerun is a new replication, not reproduction of the accepted paper. It requires an API key, explicit models, a call ceiling, confirmation, and a new output directory; see `docs/REPLICATION.md`.
 
 ## Safety and reuse
 
-Do not add API keys, restricted data, private correspondence, publisher proofs, local execution artifacts, or unreviewed drafts. MIT covers original repository software only. TheNNT-derived values and model outputs retain their distinct provenance and reuse boundaries. `llms-full.txt` is shared separately under CC BY-NC-ND 4.0 and is not the Version of Record.
+Do not add API keys, restricted data, private correspondence, publisher proofs, local execution artifacts, or unreviewed drafts. MIT covers original repository software only; literature-derived values, model outputs, and article text retain distinct provenance and reuse boundaries.
+
+`llms-full.txt` is shared separately under CC BY-NC-ND 4.0 and is not the publisher Version of Record. See `docs/DATA_PROVENANCE.md` and `metadata/rights_and_licenses.yml`.
