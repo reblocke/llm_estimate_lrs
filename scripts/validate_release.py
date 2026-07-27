@@ -58,16 +58,18 @@ else:
     from verify_checksums import verify_checksums
 
 ROOT = Path(__file__).resolve().parents[1]
-ARTICLE_TITLE = "Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion"
-ARTICLE_DOI = "10.1038/s41598-026-61766-2"
-RELEASE_VERSION = "1.0.0"
-RELEASE_REF = "v1.0.0"
-RELEASE_COMMIT = "a6824fc712e6d5c7c58edde495c239629356ae35"
-RELEASE_TAG_MESSAGE = "Accepted-paper reproducibility release"
-LEGACY_MERGE_BASE = "9ab48f0244daff1b7c9ed58f2f4fca2572284f65"
-RELEASE_BRANCH = "release/accepted-paper-reproducibility-v1"
-PUBLISHER_URL = "https://doi.org/10.1038/s41598-026-61766-2"
-PUBLISHED_DATE = "2026-07-11"
+FROZEN_V1_ARTICLE_TITLE = (
+    "Large language models generate diagnostic likelihood ratios with low mean bias but wide dispersion"
+)
+FROZEN_V1_ARTICLE_DOI = "10.1038/s41598-026-61766-2"
+FROZEN_V1_RELEASE_VERSION = "1.0.0"
+FROZEN_V1_RELEASE_REF = "v1.0.0"
+FROZEN_V1_RELEASE_COMMIT = "a6824fc712e6d5c7c58edde495c239629356ae35"
+FROZEN_V1_RELEASE_TAG_MESSAGE = "Accepted-paper reproducibility release"
+FROZEN_V1_LEGACY_MERGE_BASE = "9ab48f0244daff1b7c9ed58f2f4fca2572284f65"
+FROZEN_V1_RELEASE_BRANCH = "release/accepted-paper-reproducibility-v1"
+FROZEN_V1_PUBLISHER_URL = "https://doi.org/10.1038/s41598-026-61766-2"
+FROZEN_V1_PUBLISHED_DATE = "2026-07-11"
 
 WORKBOOK_HASHES = {
     "NNT_LRs_08-26-2025.xlsx": "644f0558328a8f04f460a5ebfa2fc04e6d3571f655d084ea076488c7ba17da89",
@@ -470,15 +472,30 @@ def validate_manifest(root: Path = ROOT) -> dict[str, object]:
     manifest = json.loads((root / "manifests/manuscript_run_v1.json").read_text(encoding="utf-8"))
     schema = json.loads((root / "manifests/manifest.schema.json").read_text(encoding="utf-8"))
     jsonschema.validate(manifest, schema)
-    require(manifest["release_version"] == RELEASE_VERSION, "Manifest release version is inconsistent")
-    require(manifest["release_ref"] == RELEASE_REF, "Manifest release ref is inconsistent")
-    require(manifest["article"]["doi"] == ARTICLE_DOI, "Manifest article DOI is inconsistent")
-    require(manifest["article"]["published_date"] == PUBLISHED_DATE, "Manifest publication date is inconsistent")
+    require(
+        manifest["release_version"] == FROZEN_V1_RELEASE_VERSION,
+        "Frozen v1 manifest release version is inconsistent",
+    )
+    require(
+        manifest["release_ref"] == FROZEN_V1_RELEASE_REF,
+        "Frozen v1 manifest release ref is inconsistent",
+    )
+    require(
+        manifest["article"]["doi"] == FROZEN_V1_ARTICLE_DOI,
+        "Frozen v1 manifest article DOI is inconsistent",
+    )
+    require(
+        manifest["article"]["published_date"] == FROZEN_V1_PUBLISHED_DATE,
+        "Frozen v1 manifest publication date is inconsistent",
+    )
     require(
         manifest["article"]["publication_status"] == "published_unedited_early_access",
         "Manifest article publication status is inconsistent",
     )
-    require(manifest["article"]["publisher_url"] == PUBLISHER_URL, "Manifest publisher URL is inconsistent")
+    require(
+        manifest["article"]["publisher_url"] == FROZEN_V1_PUBLISHER_URL,
+        "Frozen v1 manifest publisher URL is inconsistent",
+    )
     return manifest
 
 
@@ -519,6 +536,16 @@ def validate_documentation(
     require(mode in {"prepare", "final"}, f"Unsupported release validation mode: {mode}")
     require("date-released" in cff, "Release candidate CITATION.cff requires date-released")
     release_date = str(cff["date-released"])
+    if "release_date" in contract:
+        require(
+            contract["release_date"] == release_date,
+            "Release contract date must match CITATION.cff date-released",
+        )
+    else:
+        require(
+            release_ref == FROZEN_V1_RELEASE_REF,
+            "Successor release contract must record release_date",
+        )
     require(
         f"## [{release_version}] - {release_date}" in changelog,
         "Release candidate changelog date must match CITATION.cff date-released",
@@ -599,7 +626,7 @@ def validate_tracked_file_types(
 def validate_final_history(
     repository: Path = ROOT,
     *,
-    legacy_merge_base: str = LEGACY_MERGE_BASE,
+    legacy_merge_base: str = FROZEN_V1_LEGACY_MERGE_BASE,
     contract: Mapping[str, Any] | None = None,
     candidate_ref: str = "HEAD",
     context: Literal["prepare", "final"] = "final",
@@ -632,31 +659,42 @@ def validate_final_history(
 
     head = git(repository, "rev-parse", "HEAD^{commit}")
     main = git(repository, "rev-parse", "refs/remotes/origin/main^{commit}")
-    tag = git(repository, "rev-parse", f"refs/tags/{RELEASE_REF}^{{commit}}")
+    tag = git(repository, "rev-parse", f"refs/tags/{FROZEN_V1_RELEASE_REF}^{{commit}}")
     require(head.returncode == 0, f"Could not resolve final HEAD: {head.stderr.strip()}")
     require(main.returncode == 0, "Final release requires refs/remotes/origin/main")
-    require(tag.returncode == 0, f"Final release tag does not exist: {RELEASE_REF}")
+    require(tag.returncode == 0, f"Final release tag does not exist: {FROZEN_V1_RELEASE_REF}")
     require(
         head.stdout.strip() == main.stdout.strip() == tag.stdout.strip(),
-        f"HEAD, origin/main, and {RELEASE_REF} must resolve to the same commit",
+        f"HEAD, origin/main, and {FROZEN_V1_RELEASE_REF} must resolve to the same commit",
     )
-    tag_type = git(repository, "cat-file", "-t", f"refs/tags/{RELEASE_REF}")
+    tag_type = git(repository, "cat-file", "-t", f"refs/tags/{FROZEN_V1_RELEASE_REF}")
     require(tag_type.returncode == 0, f"Could not inspect final release tag object: {tag_type.stderr.strip()}")
-    require(tag_type.stdout.strip() == "tag", f"{RELEASE_REF} must be an annotated tag, not a lightweight tag")
-    tag_message = git(repository, "for-each-ref", "--format=%(contents)", f"refs/tags/{RELEASE_REF}")
+    require(
+        tag_type.stdout.strip() == "tag",
+        f"{FROZEN_V1_RELEASE_REF} must be an annotated tag, not a lightweight tag",
+    )
+    tag_message = git(
+        repository,
+        "for-each-ref",
+        "--format=%(contents)",
+        f"refs/tags/{FROZEN_V1_RELEASE_REF}",
+    )
     require(tag_message.returncode == 0, f"Could not inspect final tag annotation: {tag_message.stderr.strip()}")
     require(
-        tag_message.stdout.strip() == RELEASE_TAG_MESSAGE,
-        f"{RELEASE_REF} annotation must exactly match the reviewed neutral release message",
+        tag_message.stdout.strip() == FROZEN_V1_RELEASE_TAG_MESSAGE,
+        f"{FROZEN_V1_RELEASE_REF} annotation must exactly match the reviewed neutral release message",
     )
     legacy_exists = git(repository, "cat-file", "-e", f"{legacy_merge_base}^{{commit}}")
     if legacy_exists.returncode == 0:
         ancestor = git(repository, "merge-base", "--is-ancestor", legacy_merge_base, "HEAD")
-        require(ancestor.returncode == 1, f"Legacy merge base remains an ancestor of {RELEASE_REF}")
+        require(
+            ancestor.returncode == 1,
+            f"Legacy merge base remains an ancestor of {FROZEN_V1_RELEASE_REF}",
+        )
 
     forbidden_refs = (
-        f"refs/heads/{RELEASE_BRANCH}",
-        f"refs/remotes/origin/{RELEASE_BRANCH}",
+        f"refs/heads/{FROZEN_V1_RELEASE_BRANCH}",
+        f"refs/remotes/origin/{FROZEN_V1_RELEASE_BRANCH}",
         "refs/tags/v0.1.0",
     )
     for reference in forbidden_refs:
@@ -678,7 +716,8 @@ def validate_final_history(
     tag_refs = git(repository, "for-each-ref", "--format=%(refname)", "refs/tags")
     require(tag_refs.returncode == 0, "Could not inspect fetched tags")
     require(
-        {line for line in tag_refs.stdout.splitlines() if line} == {f"refs/tags/{RELEASE_REF}"},
+        {line for line in tag_refs.stdout.splitlines() if line}
+        == {f"refs/tags/{FROZEN_V1_RELEASE_REF}"},
         "Final release clone contains unexpected local tags",
     )
 
@@ -697,8 +736,8 @@ def requires_stage2_metadata(contract: Mapping[str, Any]) -> bool:
 
     declared_stage2_paths = set(contract.get("required_paths", ())) & STAGE2_REQUIRED_PATHS
     if (
-        contract.get("release_ref") == RELEASE_REF
-        and contract.get("audited_commit") == RELEASE_COMMIT
+        contract.get("release_ref") == FROZEN_V1_RELEASE_REF
+        and contract.get("audited_commit") == FROZEN_V1_RELEASE_COMMIT
     ):
         require(
             not declared_stage2_paths,
@@ -753,6 +792,69 @@ def validate_clean_tree(repository: Path = ROOT) -> None:
     require(not status.stdout, "Release validation requires a clean tracked and untracked working tree")
 
 
+def validate_governance_delta(
+    repository: Path,
+    candidate_commit: str,
+    contract_path: Path,
+) -> str:
+    """Require one post-candidate commit containing only the contract and checksums."""
+
+    repository = repository.resolve()
+    requested_contract = contract_path if contract_path.is_absolute() else repository / contract_path
+    try:
+        contract_relative = requested_contract.resolve().relative_to(repository).as_posix()
+    except ValueError as exc:
+        raise ReleaseValidationError(
+            f"Governance contract must be inside the repository: {contract_path}"
+        ) from exc
+
+    head = git(repository, "rev-parse", "--verify", "HEAD^{commit}")
+    require(head.returncode == 0, f"Could not resolve governance HEAD: {head.stderr.strip()}")
+    governance_commit = head.stdout.strip()
+    parents = git(repository, "rev-list", "--parents", "-n", "1", governance_commit)
+    require(parents.returncode == 0, f"Could not inspect governance parents: {parents.stderr.strip()}")
+    require(
+        parents.stdout.split() == [governance_commit, candidate_commit],
+        "Governance HEAD must be the direct single-parent child of the release candidate",
+    )
+
+    changed = git(
+        repository,
+        "diff-tree",
+        "--no-commit-id",
+        "--name-only",
+        "-r",
+        "-z",
+        candidate_commit,
+        governance_commit,
+    )
+    require(changed.returncode == 0, f"Could not inspect governance delta: {changed.stderr.strip()}")
+    changed_paths = {path for path in changed.stdout.split("\0") if path}
+    allowed_paths = {contract_relative, "checksums/SHA256SUMS"}
+    require(
+        changed_paths == allowed_paths,
+        "Governance commit must change exactly the selected release contract and "
+        f"checksums/SHA256SUMS; observed {sorted(changed_paths)}",
+    )
+
+    contract_at_candidate = git(repository, "cat-file", "-e", f"{candidate_commit}:{contract_relative}")
+    require(
+        contract_at_candidate.returncode != 0,
+        "Selected post-release contract must be absent from the release candidate",
+    )
+    for revision, relative in (
+        (candidate_commit, "checksums/SHA256SUMS"),
+        (governance_commit, contract_relative),
+        (governance_commit, "checksums/SHA256SUMS"),
+    ):
+        present = git(repository, "cat-file", "-e", f"{revision}:{relative}")
+        require(
+            present.returncode == 0,
+            f"Required governance path is missing at {revision}: {relative}",
+        )
+    return governance_commit
+
+
 def validate_data(root: Path = ROOT) -> dict[str, object]:
     """Run the frozen, offline semantic data checks in one filesystem root."""
 
@@ -775,6 +877,11 @@ def validate_release_candidate(
 
     validate_clean_tree(repository)
     with materialized_candidate(repository, candidate_ref) as candidate:
+        governance_commit = validate_governance_delta(
+            repository,
+            candidate.commit,
+            contract_path,
+        )
         contract = validate_release_contract(
             contract_path,
             repository,
@@ -817,6 +924,7 @@ def validate_release_candidate(
                 "candidate_commit": candidate.commit,
                 "candidate_tree": candidate.tree,
                 "candidate_checksum_entries": checksum_count,
+                "governance_commit": governance_commit,
                 "release_mode": mode,
             }
         )
@@ -830,7 +938,7 @@ def parse_args() -> argparse.Namespace:
     mode.add_argument("--release", action="store_true")
     parser.add_argument("--mode", choices=("prepare", "final"), default="prepare")
     parser.add_argument("--contract", type=Path, help="Versioned release contract for release validation")
-    parser.add_argument("--ref", default="HEAD", help="Candidate Git ref for release validation")
+    parser.add_argument("--ref", help="Candidate Git ref for release validation")
     return parser.parse_args()
 
 
@@ -840,6 +948,10 @@ def main() -> int:
         require(
             not args.release or args.contract is not None,
             "--release requires an explicit --contract",
+        )
+        require(
+            not args.release or args.ref is not None,
+            "--release requires an explicit --ref",
         )
         if args.release:
             summary = validate_release_candidate(

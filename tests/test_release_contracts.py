@@ -132,8 +132,10 @@ def _future_prepare_repository(tmp_path: Path) -> tuple[Path, Path, str]:
     contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
     contract.update(
         {
+            "contract_schema_version": "1.1.0",
             "release_version": "1.1.0",
             "release_ref": "v1.1.0",
+            "release_date": "2026-07-27",
             "audited_commit": candidate_commit,
             "audited_tree": candidate_tree,
         }
@@ -184,6 +186,8 @@ def test_repository_contracts_validate_against_v1_git_objects() -> None:
 def test_v1_protected_inventory_and_origins_are_exact() -> None:
     contract = load_release_contract(CONTRACT_PATH, schema_path=CONTRACT_SCHEMA)
 
+    assert contract["contract_schema_version"] == "1.0.0"
+    assert "release_date" not in contract
     observed = {
         artifact["path"]: artifact["origin_ref"]
         for artifact in contract["protected_artifacts"]
@@ -269,6 +273,41 @@ def test_release_contract_rejects_schema_and_path_failures(
     message: str,
 ) -> None:
     contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+    mutation(contract)
+    candidate = tmp_path / "contract.json"
+    _write_json(candidate, contract)
+
+    with pytest.raises(ContractValidationError, match=message):
+        load_release_contract(candidate, schema_path=CONTRACT_SCHEMA)
+
+
+@pytest.mark.parametrize(
+    ("mutation", "message"),
+    [
+        (lambda contract: contract.pop("release_date"), "release_date"),
+        (
+            lambda contract: contract.update({"contract_schema_version": "1.0.0"}),
+            "schema 1.1.0",
+        ),
+    ],
+)
+def test_successor_contract_requires_schema_1_1_and_release_date(
+    tmp_path: Path,
+    mutation: object,
+    message: str,
+) -> None:
+    contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+    contract.update(
+        {
+            "contract_schema_version": "1.1.0",
+            "release_version": "1.1.0",
+            "release_ref": "v1.1.0",
+            "release_date": "2026-07-27",
+            "audited_commit": "b" * 40,
+            "audited_tree": "c" * 40,
+        }
+    )
+    contract["history_policy"]["allowed_tags"].append("refs/tags/v1.1.0")
     mutation(contract)
     candidate = tmp_path / "contract.json"
     _write_json(candidate, contract)

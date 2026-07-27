@@ -9,18 +9,20 @@ import json
 import os
 import stat
 import subprocess
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from pathlib import Path
+from typing import Any
 
 if __package__:
     from scripts.build_release_archive import write_bytes_atomically
     from scripts.git_safety import no_lazy_fetch_environment
+    from scripts.validate_contracts import load_contract
 else:
     from build_release_archive import write_bytes_atomically
     from git_safety import no_lazy_fetch_environment
+    from validate_contracts import load_contract
 
 REPOSITORY_URL = "https://github.com/reblocke/llm_estimate_lrs"
-ARTICLE_DOI = "10.1038/s41598-026-61766-2"
 
 
 def git_blob_bytes(repository: Path, commit: str, relative_path: str) -> bytes:
@@ -99,6 +101,7 @@ def generate_attestation(
     assets: Path | Iterable[Path],
     output: Path,
     *,
+    contract: Mapping[str, Any],
     asset_root: Path | None = None,
     expected_commit: str | None = None,
 ) -> Path:
@@ -130,18 +133,32 @@ def generate_attestation(
     commit = git_output(repository, "rev-parse", f"{ref}^{{commit}}")
     if expected_commit is not None and commit != expected_commit:
         raise ValueError(f"Release ref moved during asset construction: expected {expected_commit}, observed {commit}")
+    contracted_commit = str(contract["audited_commit"])
+    if commit != contracted_commit:
+        raise ValueError(
+            "Attested release candidate does not match the contract: "
+            f"expected {contracted_commit}, observed {commit}"
+        )
+    release_version = str(contract["release_version"])
+    release_ref = str(contract["release_ref"])
+    if release_ref != f"v{release_version}":
+        raise ValueError("Contract release_ref must be v followed by release_version")
     commit_date = git_output(repository, "show", "-s", "--format=%cI", commit)
     manifest_bytes = git_blob_bytes(repository, commit, "manifests/manuscript_run_v1.json")
     checksums_bytes = git_blob_bytes(repository, commit, "checksums/SHA256SUMS")
     payload = {
-        "schema_version": 1,
-        "release_version": "1.0.0",
-        "release_ref": ref,
+        "schema_version": 2,
+        "release_version": release_version,
+        "release_ref": release_ref,
+        "release_date": str(
+            contract.get("release_date", contract["article"]["published_date"])
+        ),
+        "requested_ref": ref,
         "resolved_ref": _resolved_symbolic_ref(repository, ref),
         "release_commit": commit,
         "release_commit_date": commit_date,
         "repository": REPOSITORY_URL,
-        "article_doi": ARTICLE_DOI,
+        "article_doi": str(contract["article"]["doi"]),
         "assets": records,
         "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
         "repository_checksums_sha256": hashlib.sha256(checksums_bytes).hexdigest(),
@@ -153,7 +170,7 @@ def generate_attestation(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repository", type=Path, default=Path("."))
-    parser.add_argument("--ref", default="HEAD")
+    parser.add_argument("--ref", required=True)
     parser.add_argument(
         "--asset",
         action="append",
@@ -167,20 +184,24 @@ def parse_args() -> argparse.Namespace:
         help="Backward-compatible alias for one --asset value.",
     )
     parser.add_argument("--asset-root", type=Path)
+    parser.add_argument("--contract", required=True, type=Path)
     parser.add_argument("--output", type=Path, required=True)
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    repository = args.repository.resolve()
+    contract = load_contract(args.contract, repository)
     assets = [*args.asset]
     if args.archive is not None:
         assets.append(args.archive)
     output = generate_attestation(
-        args.repository.resolve(),
+        repository,
         args.ref,
         assets,
         args.output.resolve(),
+        contract=contract,
         asset_root=args.asset_root.resolve() if args.asset_root else None,
     )
     print(output)

@@ -2,6 +2,27 @@ name: Release check
 
 on:
   workflow_dispatch:
+    inputs:
+      governance_ref:
+        description: Full commit or branch containing the reviewed release contract
+        required: true
+        type: string
+      release_contract:
+        description: Repository-relative versioned release-contract path
+        required: true
+        type: string
+      candidate_ref:
+        description: Full candidate commit validated by the contract
+        required: true
+        type: string
+      mode:
+        description: Contract-validation context
+        required: true
+        default: prepare
+        type: choice
+        options:
+          - prepare
+          - final
   push:
     tags:
       - "v*"
@@ -19,6 +40,7 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
           fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.governance_ref || github.ref }}
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.11"
@@ -27,15 +49,26 @@ jobs:
           version: ${{ env.UV_VERSION }}
           enable-cache: true
       - run: make setup
-      - run: make hygiene HYGIENE_ARGS="--github-event $GITHUB_EVENT_PATH --head-commit $GITHUB_SHA"
-      - name: Validate release candidate
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        run: make release-check
-      - name: Validate final tagged release
+      - run: make hygiene HYGIENE_ARGS="--github-event $GITHUB_EVENT_PATH --head-commit HEAD"
+      - name: Audit tagged candidate tree offline
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: make audit
+        env:
+          OPENAI_API_KEY: ""
+      - name: Validate contracted release candidate
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'prepare' }}
+        env:
+          RELEASE_CONTRACT: ${{ inputs.release_contract }}
+          RELEASE_REF: ${{ inputs.candidate_ref }}
+        run: make release-check
+      - name: Validate contracted final release
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'final' }}
+        env:
+          RELEASE_CONTRACT: ${{ inputs.release_contract }}
+          RELEASE_REF: ${{ inputs.candidate_ref }}
         run: make release-check-final
       - name: Upload prepare-mode verification artifacts
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'prepare' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: release-candidate-${{ github.sha }}

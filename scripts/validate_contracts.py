@@ -28,6 +28,8 @@ RELEASE_SCHEMA = ROOT / "release/schemas/release-contract.schema.json"
 PROJECT_SCHEMA = ROOT / "schemas/project.schema.json"
 ValidationContext = Literal["historical", "prepare", "final"]
 VALIDATION_CONTEXTS = {"historical", "prepare", "final"}
+FROZEN_V1_RELEASE_REF = "v1.0.0"
+FROZEN_V1_RELEASE_COMMIT = "a6824fc712e6d5c7c58edde495c239629356ae35"
 
 REQUIRED_AGENT_HEADINGS = (
     "# Repository instructions",
@@ -142,6 +144,19 @@ def _validate_contract_semantics(contract: Mapping[str, Any]) -> None:
     release_ref = contract["release_ref"]
     require(release_ref == f"v{contract['release_version']}", "release_ref must be v followed by release_version")
     _validate_revision(release_ref, "release_ref")
+    is_frozen_v1 = (
+        release_ref == FROZEN_V1_RELEASE_REF
+        and contract["audited_commit"] == FROZEN_V1_RELEASE_COMMIT
+    )
+    if not is_frozen_v1:
+        require(
+            contract["contract_schema_version"] == "1.1.0",
+            "Successor release contracts must use contract schema 1.1.0",
+        )
+        require(
+            isinstance(contract.get("release_date"), str),
+            "Successor release contracts must record release_date",
+        )
 
     required_paths = contract["required_paths"]
     for path in required_paths:

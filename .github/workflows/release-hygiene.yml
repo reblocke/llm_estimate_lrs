@@ -17,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.release.tag_name }}
-      - name: Check exact release title, body, tree, and commit
+      - name: Check published text and tagged tree
         run: >-
           python3 scripts/check_release_hygiene.py
           --repository .

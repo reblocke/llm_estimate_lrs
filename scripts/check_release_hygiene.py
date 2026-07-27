@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import io
 import json
 import re
@@ -12,8 +13,10 @@ import subprocess
 import sys
 import tokenize
 import zipfile
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
+from typing import Any
 
 BINARY_SUFFIXES = {
     ".docx",
@@ -130,6 +133,8 @@ PROSE_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 
 TEXT_PATTERNS = (*CREDENTIAL_PATTERNS, *PROSE_PATTERNS)
 CREDENTIAL_REASONS = {"OpenAI credential pattern", "GitHub credential pattern"}
+ASSET_CHECKSUM_LINE = re.compile(r"^([0-9a-f]{64})  ([^\r\n]+)$")
+RELEASE_TAG_PATTERN = re.compile(r"^v(?P<version>[0-9]+\.[0-9]+\.[0-9]+)$")
 
 
 @dataclass(frozen=True)
@@ -383,7 +388,11 @@ def scan_github_event(path: Path) -> list[Finding]:
     return findings
 
 
-def scan_release_json(path: Path, repository: Path) -> list[Finding]:
+def scan_release_json(
+    path: Path,
+    repository: Path,
+    contract: Mapping[str, Any] | None = None,
+) -> list[Finding]:
     """Scan and verify the exact title/body fetched for a draft or published release."""
     try:
         release = json.loads(path.read_text(encoding="utf-8"))
@@ -395,23 +404,235 @@ def scan_release_json(path: Path, repository: Path) -> list[Finding]:
         release = release["release"]
 
     findings: list[Finding] = []
-    expected_name = "v1.0.0 — Accepted-paper reproducibility release"
-    expected_body_path = repository / "RELEASE_NOTES_v1.0.0.md"
+    if contract is None:
+        tag_name = release.get("tag_name")
+        match = RELEASE_TAG_PATTERN.fullmatch(tag_name) if isinstance(tag_name, str) else None
+        if match is None:
+            findings.append(Finding("release-json:tag_name", "release tag is not a versioned vX.Y.Z tag"))
+            release_version = None
+            expected_name = None
+        else:
+            release_version = match.group("version")
+            tag_ref = f"refs/tags/{tag_name}"
+            tag_type = _git(repository, "cat-file", "-t", tag_ref)
+            tag_commit = _git(repository, "rev-parse", "--verify", f"{tag_ref}^{{commit}}")
+            head_commit = _git(repository, "rev-parse", "--verify", "HEAD^{commit}")
+            tag_message = _git(repository, "for-each-ref", "--format=%(contents)", tag_ref)
+            if tag_type.returncode != 0 or tag_type.stdout.strip() != "tag":
+                findings.append(Finding("release-json:tag_name", "release tag is missing or not annotated"))
+            if tag_commit.returncode != 0 or head_commit.returncode != 0:
+                findings.append(
+                    Finding(
+                        "release-json:tag_name",
+                        "release tag or checked-out HEAD could not be resolved",
+                    )
+                )
+            elif tag_commit.stdout.strip() != head_commit.stdout.strip():
+                findings.append(Finding("release-json:tag_name", "release tag does not match checked-out HEAD"))
+            normalized_message = tag_message.stdout.strip() if tag_message.returncode == 0 else ""
+            if not normalized_message or "\n" in normalized_message:
+                findings.append(
+                    Finding(
+                        "release-json:tag_name",
+                        "annotated release tag must have one non-empty title message",
+                    )
+                )
+                expected_name = None
+            else:
+                expected_name = f"{tag_name} — {normalized_message}"
+    else:
+        release_version = str(contract["release_version"])
+        release_ref = str(contract["release_ref"])
+        tag_message = str(contract["history_policy"]["tag_message"])
+        expected_name = f"{release_ref} — {tag_message}"
+
+    expected_body_path = (
+        repository / f"RELEASE_NOTES_v{release_version}.md"
+        if release_version is not None
+        else None
+    )
     try:
+        if (
+            expected_body_path is None
+            or expected_body_path.is_symlink()
+            or not expected_body_path.is_file()
+        ):
+            raise OSError("reviewed release-notes file is missing or unsafe")
         expected_body = expected_body_path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:
-        return [Finding("release-json", f"could not read reviewed release notes: {exc}")]
+        findings.append(Finding("release-json", f"could not read reviewed release notes: {exc}"))
+        expected_body = None
 
     name = release.get("name")
     body = release.get("body")
-    if name != expected_name:
+    if expected_name is not None and name != expected_name:
         findings.append(Finding("release-json:name", "release title differs from the reviewed title"))
-    if body != expected_body:
-        findings.append(Finding("release-json:body", "release body differs from RELEASE_NOTES_v1.0.0.md"))
+    if expected_body is not None and body != expected_body:
+        findings.append(
+            Finding(
+                "release-json:body",
+                f"release body differs from RELEASE_NOTES_v{release_version}.md",
+            )
+        )
     if isinstance(name, str):
         findings.extend(_text_findings("release-json:name", name))
     if isinstance(body, str):
         findings.extend(_text_findings("release-json:body", body))
+    return findings
+
+
+def _safe_checksum_path(relative: str) -> bool:
+    path = PurePosixPath(relative)
+    return (
+        bool(relative)
+        and bool(path.parts)
+        and "\\" not in relative
+        and not path.is_absolute()
+        and relative != "."
+        and path.as_posix() == relative
+        and all(part not in {"", ".", ".."} for part in path.parts)
+    )
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _asset_checksum_findings(
+    asset_dir: Path,
+    expected_paths: set[str] | frozenset[str],
+    actual_paths: set[str],
+) -> list[Finding]:
+    manifest_relative = "SHA256SUMS"
+    manifest = asset_dir / manifest_relative
+    expected_entries = set(expected_paths) - {manifest_relative}
+    if manifest_relative not in actual_paths or manifest.is_symlink() or not manifest.is_file():
+        return [Finding(f"asset:{manifest_relative}", "asset checksum manifest is missing or unsafe")]
+
+    findings: list[Finding] = []
+    entries: dict[str, str] = {}
+    ordered_paths: list[str] = []
+    try:
+        lines = manifest.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeDecodeError) as exc:
+        return [Finding(f"asset:{manifest_relative}", f"could not read asset checksum manifest: {exc}")]
+
+    for line_number, line in enumerate(lines, start=1):
+        match = ASSET_CHECKSUM_LINE.fullmatch(line)
+        if match is None:
+            findings.append(
+                Finding(
+                    f"asset:{manifest_relative}",
+                    "invalid asset checksum line",
+                    line_number,
+                )
+            )
+            continue
+        expected_hash, relative = match.groups()
+        if not _safe_checksum_path(relative):
+            findings.append(
+                Finding(
+                    f"asset:{manifest_relative}",
+                    "unsafe asset checksum path",
+                    line_number,
+                )
+            )
+            continue
+        if relative in entries:
+            findings.append(
+                Finding(
+                    f"asset:{manifest_relative}",
+                    "duplicate asset checksum entry",
+                    line_number,
+                )
+            )
+            continue
+        entries[relative] = expected_hash
+        ordered_paths.append(relative)
+
+    if ordered_paths != sorted(ordered_paths):
+        findings.append(Finding(f"asset:{manifest_relative}", "asset checksum entries are not sorted"))
+
+    missing_entries = sorted(expected_entries - entries.keys())
+    unexpected_entries = sorted(entries.keys() - expected_entries)
+    if missing_entries:
+        findings.append(
+            Finding(
+                f"asset:{manifest_relative}",
+                f"asset checksum manifest is missing entries: {missing_entries}",
+            )
+        )
+    if unexpected_entries:
+        findings.append(
+            Finding(
+                f"asset:{manifest_relative}",
+                f"asset checksum manifest has unexpected entries: {unexpected_entries}",
+            )
+        )
+
+    for relative in sorted(expected_entries & entries.keys() & actual_paths):
+        path = asset_dir / relative
+        if path.is_symlink() or not path.is_file():
+            continue
+        try:
+            observed_hash = _sha256_file(path)
+        except OSError as exc:
+            findings.append(Finding(f"asset:{relative}", f"could not hash release asset: {exc}"))
+            continue
+        if observed_hash != entries[relative]:
+            findings.append(Finding(f"asset:{relative}", "release asset checksum mismatch"))
+    return findings
+
+
+def scan_asset_directory(
+    asset_dir: Path,
+    contract: Mapping[str, Any],
+) -> list[Finding]:
+    """Verify and scan the exact contract-versioned release-asset inventory."""
+    if __package__:
+        from scripts.build_release_assets import expected_asset_paths
+    else:
+        from build_release_assets import expected_asset_paths
+
+    release_version = str(contract["release_version"])
+    expected = expected_asset_paths(release_version)
+    if not asset_dir.is_dir() or asset_dir.is_symlink():
+        return [Finding(f"asset-dir:{asset_dir}", "release asset directory is missing or unsafe")]
+
+    actual: set[str] = set()
+    findings: list[Finding] = []
+    for path in sorted(asset_dir.rglob("*")):
+        relative = path.relative_to(asset_dir).as_posix()
+        if path.is_symlink():
+            findings.append(Finding(f"asset:{relative}", "release asset is a symbolic link"))
+            continue
+        if path.is_dir():
+            continue
+        if not path.is_file():
+            findings.append(Finding(f"asset:{relative}", "release asset is not a regular file"))
+            continue
+        actual.add(relative)
+
+    for relative in sorted(expected - actual):
+        findings.append(Finding(f"asset:{relative}", "expected release asset is missing"))
+    for relative in sorted(actual - expected):
+        findings.append(Finding(f"asset:{relative}", "unexpected release asset"))
+
+    findings.extend(_asset_checksum_findings(asset_dir, expected, actual))
+
+    for relative in sorted(expected & actual):
+        path = asset_dir / relative
+        if path.suffix.lower() == ".zip":
+            try:
+                findings.extend(scan_archive(path))
+            except (OSError, zipfile.BadZipFile) as exc:
+                findings.append(Finding(f"asset:{relative}", f"could not scan release archive: {exc}"))
+        else:
+            findings.extend(scan_text_file(path, label=f"asset:{relative}"))
     return findings
 
 
@@ -434,6 +655,16 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--github-event", type=Path, help="GitHub event JSON containing PR or release text")
     parser.add_argument("--release-json", type=Path, help="GitHub release JSON containing exact name and body fields")
+    parser.add_argument(
+        "--contract",
+        type=Path,
+        help="Versioned release contract required for asset verification and optional for exact release verification",
+    )
+    parser.add_argument(
+        "--asset-dir",
+        type=Path,
+        help="Complete release-asset directory to verify against --contract",
+    )
     parser.add_argument("--base-commit", help="Base commit for the commit-message range")
     parser.add_argument("--head-commit", help="Head commit for the commit-message range (defaults to HEAD)")
     parser.add_argument("--skip-commit-messages", action="store_true")
@@ -444,6 +675,24 @@ def main() -> int:
     args = parse_args()
     repository = args.repository.resolve()
     findings = scan_repository(repository)
+    contract: Mapping[str, Any] | None = None
+    if args.contract is not None:
+        try:
+            if __package__:
+                from scripts.validate_contracts import load_contract
+            else:
+                from validate_contracts import load_contract
+
+            contract = load_contract(args.contract, repository)
+        except (ImportError, OSError, RuntimeError, UnicodeError, ValueError) as exc:
+            findings.append(Finding("release-contract", f"could not load release contract: {exc}"))
+    elif args.asset_dir:
+        findings.append(
+            Finding(
+                "release-contract",
+                "--contract is required with --asset-dir",
+            )
+        )
     if not args.skip_commit_messages:
         findings.extend(
             scan_commit_messages(repository, base_commit=args.base_commit, head_commit=args.head_commit)
@@ -455,7 +704,9 @@ def main() -> int:
     if args.github_event:
         findings.extend(scan_github_event(args.github_event.resolve()))
     if args.release_json:
-        findings.extend(scan_release_json(args.release_json.resolve(), repository))
+        findings.extend(scan_release_json(args.release_json.resolve(), repository, contract))
+    if args.asset_dir and contract is not None:
+        findings.extend(scan_asset_directory(args.asset_dir.resolve(), contract))
 
     unique = sorted({finding.render() for finding in findings})
     if unique:

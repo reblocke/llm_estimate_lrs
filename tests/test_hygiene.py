@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
+import sys
+import zipfile
 from pathlib import Path
 
+import pytest
 import yaml
 
 from scripts.check_release_hygiene import (
@@ -11,6 +15,7 @@ from scripts.check_release_hygiene import (
     _notebook_text,
     _path_findings,
     _text_findings,
+    scan_asset_directory,
     scan_commit_messages,
     scan_github_event,
     scan_release_json,
@@ -19,12 +24,41 @@ from scripts.check_release_hygiene import (
 )
 
 
+def _release_contract(version: str, tag_message: str) -> dict[str, object]:
+    return {
+        "release_version": version,
+        "release_ref": f"v{version}",
+        "history_policy": {"tag_message": tag_message},
+    }
+
+
 def _assistant_product() -> str:
     return "Chat" + "GPT"
 
 
 def _fake_openai_token() -> str:
     return "sk-" + "proj-" + "abcdefghijklmnopqrstuvwxyz012345"
+
+
+def _write_asset_checksums(asset_dir: Path, relative_paths: set[str]) -> None:
+    lines = []
+    for relative in sorted(relative_paths - {"SHA256SUMS"}):
+        digest = hashlib.sha256((asset_dir / relative).read_bytes()).hexdigest()
+        lines.append(f"{digest}  {relative}")
+    (asset_dir / "SHA256SUMS").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def _initialize_tagged_release(repository: Path) -> tuple[str, str]:
+    tag_message = "Reproducibility and metadata maintenance release"
+    notes = "Reviewed release notes.\n"
+    subprocess.run(["git", "init", "-q"], cwd=repository, check=True)
+    subprocess.run(["git", "config", "user.name", "Release Test"], cwd=repository, check=True)
+    subprocess.run(["git", "config", "user.email", "release@example.invalid"], cwd=repository, check=True)
+    (repository / "RELEASE_NOTES_v1.1.0.md").write_text(notes, encoding="utf-8")
+    subprocess.run(["git", "add", "RELEASE_NOTES_v1.1.0.md"], cwd=repository, check=True)
+    subprocess.run(["git", "commit", "-qm", "Release candidate"], cwd=repository, check=True)
+    subprocess.run(["git", "tag", "-a", "v1.1.0", "-m", tag_message], cwd=repository, check=True)
+    return tag_message, notes
 
 
 def test_hygiene_rejects_process_residue() -> None:
@@ -198,29 +232,208 @@ def test_hygiene_has_no_whole_file_credential_exemption(tmp_path: Path) -> None:
 
 def test_hygiene_verifies_exact_release_json(tmp_path: Path) -> None:
     notes = "Reviewed release notes.\n"
-    (tmp_path / "RELEASE_NOTES_v1.0.0.md").write_text(notes, encoding="utf-8")
+    contract = _release_contract("1.1.0", "Reproducibility and metadata maintenance release")
+    (tmp_path / "RELEASE_NOTES_v1.1.0.md").write_text(notes, encoding="utf-8")
     release = tmp_path / "release.json"
     release.write_text(
-        '{"name":"v1.0.0 — Accepted-paper reproducibility release","body":"Reviewed release notes.\\n"}',
+        '{"name":"v1.1.0 — Reproducibility and metadata maintenance release",'
+        '"body":"Reviewed release notes.\\n"}',
         encoding="utf-8",
     )
-    assert scan_release_json(release, tmp_path) == []
+    assert scan_release_json(release, tmp_path, contract) == []
 
     release.write_text(
-        '{"release":{"name":"v1.0.0 — Accepted-paper reproducibility release",'
+        '{"release":{"name":"v1.1.0 — Reproducibility and metadata maintenance release",'
         '"body":"Reviewed release notes.\\n"}}',
         encoding="utf-8",
     )
-    assert scan_release_json(release, tmp_path) == []
+    assert scan_release_json(release, tmp_path, contract) == []
 
     release.write_text(
-        '{"name":"v1.0.0 — Accepted-paper reproducibility release","body":"Prepared by an '
+        '{"name":"v1.1.0 — Reproducibility and metadata maintenance release","body":"Prepared by an '
         + 'AI system"}',
         encoding="utf-8",
     )
-    reasons = {finding.reason for finding in scan_release_json(release, tmp_path)}
-    assert "release body differs from RELEASE_NOTES_v1.0.0.md" in reasons
+    reasons = {finding.reason for finding in scan_release_json(release, tmp_path, contract)}
+    assert "release body differs from RELEASE_NOTES_v1.1.0.md" in reasons
     assert "AI authorship claim" in reasons
+
+
+def test_hygiene_derives_exact_release_text_from_checked_out_annotated_tag(tmp_path: Path) -> None:
+    tag_message, notes = _initialize_tagged_release(tmp_path)
+    release = tmp_path / "release.json"
+    release.write_text(
+        json.dumps(
+            {
+                "release": {
+                    "tag_name": "v1.1.0",
+                    "name": f"v1.1.0 — {tag_message}",
+                    "body": notes,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert scan_release_json(release, tmp_path) == []
+
+    release.write_text(
+        json.dumps(
+            {
+                "release": {
+                    "tag_name": "v1.1.0",
+                    "name": "v1.1.0 — Changed title",
+                    "body": "Changed release notes.\n",
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    reasons = {finding.reason for finding in scan_release_json(release, tmp_path)}
+    assert "release title differs from the reviewed title" in reasons
+    assert "release body differs from RELEASE_NOTES_v1.1.0.md" in reasons
+
+
+def test_release_event_cli_verifies_exact_tag_derived_text_without_contract(tmp_path: Path) -> None:
+    tag_message, notes = _initialize_tagged_release(tmp_path)
+    release = tmp_path / "release.json"
+    release.write_text(
+        json.dumps(
+            {
+                "release": {
+                    "tag_name": "v1.1.0",
+                    "name": f"v1.1.0 — {tag_message}",
+                    "body": notes,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    script = Path(__file__).resolve().parents[1] / "scripts" / "check_release_hygiene.py"
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            "--repository",
+            str(tmp_path),
+            "--head-commit",
+            "HEAD",
+            "--github-event",
+            str(release),
+            "--release-json",
+            str(release),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "Release hygiene check passed." in result.stdout
+
+
+def test_hygiene_requires_release_event_tag_to_match_annotated_head(tmp_path: Path) -> None:
+    tag_message, notes = _initialize_tagged_release(tmp_path)
+    (tmp_path / "next.txt").write_text("next\n", encoding="utf-8")
+    subprocess.run(["git", "add", "next.txt"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "commit", "-qm", "Later commit"], cwd=tmp_path, check=True)
+    release = tmp_path / "release.json"
+    release.write_text(
+        json.dumps(
+            {
+                "release": {
+                    "tag_name": "v1.1.0",
+                    "name": f"v1.1.0 — {tag_message}",
+                    "body": notes,
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    reasons = {finding.reason for finding in scan_release_json(release, tmp_path)}
+    assert "release tag does not match checked-out HEAD" in reasons
+
+
+def test_hygiene_derives_exact_asset_inventory_from_contract_version(tmp_path: Path) -> None:
+    contract = _release_contract("1.1.0", "Reproducibility and metadata maintenance release")
+    expected = {
+        "SHA256SUMS",
+        "llm-estimate-lrs-v1.1.0.zip",
+        "notebooks/data_analysis.executed.ipynb",
+        "notebooks/supplementary_analyses.executed.ipynb",
+        "reference-tables-v1.1.0.zip",
+        "release-attestation.json",
+        "validation-report.json",
+    }
+    for relative in expected:
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if path.suffix == ".zip":
+            with zipfile.ZipFile(path, "w"):
+                pass
+        else:
+            path.write_text("{}\n", encoding="utf-8")
+    _write_asset_checksums(tmp_path, expected)
+
+    assert scan_asset_directory(tmp_path, contract) == []
+    (tmp_path / "reference-tables-v1.1.0.zip").unlink()
+    reasons = {finding.reason for finding in scan_asset_directory(tmp_path, contract)}
+    assert "expected release asset is missing" in reasons
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected_reason"),
+    [
+        ("changed_asset", "release asset checksum mismatch"),
+        ("missing_entry", "asset checksum manifest is missing entries"),
+        ("extra_entry", "asset checksum manifest has unexpected entries"),
+    ],
+)
+def test_hygiene_rejects_invalid_asset_checksum_manifest(
+    tmp_path: Path,
+    mutation: str,
+    expected_reason: str,
+) -> None:
+    contract = _release_contract("1.1.0", "Reproducibility and metadata maintenance release")
+    expected = {
+        "SHA256SUMS",
+        "llm-estimate-lrs-v1.1.0.zip",
+        "notebooks/data_analysis.executed.ipynb",
+        "notebooks/supplementary_analyses.executed.ipynb",
+        "reference-tables-v1.1.0.zip",
+        "release-attestation.json",
+        "validation-report.json",
+    }
+    for relative in expected - {"SHA256SUMS"}:
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if path.suffix == ".zip":
+            with zipfile.ZipFile(path, "w"):
+                pass
+        else:
+            path.write_text("{}\n", encoding="utf-8")
+    _write_asset_checksums(tmp_path, expected)
+
+    manifest = tmp_path / "SHA256SUMS"
+    if mutation == "changed_asset":
+        (tmp_path / "validation-report.json").write_text('{"changed": true}\n', encoding="utf-8")
+    elif mutation == "missing_entry":
+        retained = [
+            line
+            for line in manifest.read_text(encoding="utf-8").splitlines()
+            if not line.endswith("  validation-report.json")
+        ]
+        manifest.write_text("\n".join(retained) + "\n", encoding="utf-8")
+    else:
+        manifest.write_text(
+            manifest.read_text(encoding="utf-8") + f"{'0' * 64}  unexpected.txt\n",
+            encoding="utf-8",
+        )
+
+    reasons = {finding.reason for finding in scan_asset_directory(tmp_path, contract)}
+    assert any(reason.startswith(expected_reason) for reason in reasons)
 
 
 def test_current_release_tree_passes_hygiene() -> None:
@@ -250,3 +463,21 @@ def test_ci_integrity_lane_runs_smoke_contract() -> None:
         if isinstance(step, dict) and "run" in step
     }
     assert "make smoke" in commands
+
+
+def test_published_release_workflow_checks_exact_tag_derived_text() -> None:
+    repository = Path(__file__).resolve().parents[1]
+    workflow = yaml.load(
+        (repository / ".github/workflows/release-hygiene.yml").read_text(encoding="utf-8"),
+        Loader=yaml.BaseLoader,
+    )
+    assert set(workflow["on"]["release"]["types"]) == {"published", "edited"}
+    commands = [
+        step["run"]
+        for step in workflow["jobs"]["release-text"]["steps"]
+        if isinstance(step, dict) and "run" in step
+    ]
+    assert len(commands) == 1
+    assert '--github-event "$GITHUB_EVENT_PATH"' in commands[0]
+    assert '--release-json "$GITHUB_EVENT_PATH"' in commands[0]
+    assert "--contract" not in commands[0]

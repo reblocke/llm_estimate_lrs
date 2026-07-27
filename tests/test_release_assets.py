@@ -14,13 +14,13 @@ import pytest
 
 from scripts import build_release_assets
 from scripts.build_release_assets import (
-    EXPECTED_ASSET_PATHS,
     VERIFICATION_INPUTS,
     ReleaseAssetError,
     _network_guard_source,
     _scrub_execution_metadata,
     _validation_report,
     execute_verification_notebooks,
+    expected_asset_paths,
     materialize_reviewed_inputs,
     require_clean_ref,
     verify_release_asset_determinism,
@@ -29,6 +29,19 @@ from scripts.build_release_assets import (
 from scripts.generate_release_attestation import generate_attestation
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _contract(commit: str, version: str = "1.1.0") -> dict[str, object]:
+    return {
+        "release_version": version,
+        "release_ref": f"v{version}",
+        "release_date": "2026-07-27",
+        "audited_commit": commit,
+        "article": {
+            "doi": "10.1038/s41598-026-61766-2",
+            "published_date": "2026-07-11",
+        },
+    }
 
 
 def sha256(path: Path) -> str:
@@ -266,6 +279,11 @@ def test_asset_build_requires_complete_local_candidate_objects(
     pinned_commit = "a" * 40
     monkeypatch.setattr(
         build_release_assets,
+        "load_contract",
+        lambda _contract_path, _repository: _contract(pinned_commit),
+    )
+    monkeypatch.setattr(
+        build_release_assets,
         "require_clean_ref",
         lambda _repository, _ref: pinned_commit,
     )
@@ -297,6 +315,7 @@ def test_asset_build_requires_complete_local_candidate_objects(
             repository / "dist",
             "HEAD",
             "prepare",
+            contract=Path("release/contracts/future.json"),
         )
 
     assert not (repository / "dist").exists()
@@ -310,6 +329,11 @@ def test_failed_candidate_validation_prevents_notebook_execution(
     repository.mkdir()
     marker = tmp_path / "notebook-executed"
     pinned_commit = "a" * 40
+    monkeypatch.setattr(
+        build_release_assets,
+        "load_contract",
+        lambda _contract_path, _repository: _contract(pinned_commit),
+    )
     monkeypatch.setattr(build_release_assets, "require_full_local_clone", lambda _root: None)
     monkeypatch.setattr(
         build_release_assets,
@@ -370,6 +394,11 @@ def test_ref_movement_after_validation_prevents_notebook_execution(
     marker = tmp_path / "notebook-executed"
     pinned_commit = "a" * 40
     moved_commit = "b" * 40
+    monkeypatch.setattr(
+        build_release_assets,
+        "load_contract",
+        lambda _contract_path, _repository: _contract(pinned_commit),
+    )
     resolved = iter((pinned_commit, moved_commit))
     monkeypatch.setattr(build_release_assets, "require_full_local_clone", lambda _root: None)
     monkeypatch.setattr(
@@ -474,6 +503,7 @@ def test_validation_report_propagates_contract_and_pinned_candidate_commit(tmp_p
 
 def _fake_asset_builder(tmp_path: Path, *, divergence: str | None = None):
     calls: list[int] = []
+    expected_paths = expected_asset_paths("1.1.0")
 
     def builder(
         _repository: Path,
@@ -483,11 +513,11 @@ def _fake_asset_builder(tmp_path: Path, *, divergence: str | None = None):
         *,
         contract: Path | None = None,
     ) -> dict[str, Path]:
-        assert contract is None
+        assert contract == Path("release/contracts/future.json")
         calls.append(len(calls) + 1)
         if output_dir.exists():
             shutil.rmtree(output_dir)
-        for relative in EXPECTED_ASSET_PATHS:
+        for relative in expected_paths:
             path = output_dir / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(f"stable:{relative}\n", encoding="utf-8")
@@ -507,13 +537,24 @@ def test_two_build_full_asset_determinism_accepts_identical_inventories(
 ) -> None:
     calls, builder = _fake_asset_builder(tmp_path)
     monkeypatch.setattr(build_release_assets, "build_release_assets", builder)
+    monkeypatch.setattr(
+        build_release_assets,
+        "load_contract",
+        lambda _contract_path, _repository: _contract("a" * 40),
+    )
     output_dir = tmp_path / "dist"
 
-    assets = verify_release_asset_determinism(tmp_path, output_dir, "HEAD", "prepare")
+    assets = verify_release_asset_determinism(
+        tmp_path,
+        output_dir,
+        "HEAD",
+        "prepare",
+        contract=Path("release/contracts/future.json"),
+    )
 
     assert calls == [1, 2]
     assert assets == {"asset_checksums": output_dir / "SHA256SUMS"}
-    assert set(build_release_assets.asset_inventory(output_dir)) == EXPECTED_ASSET_PATHS
+    assert set(build_release_assets.asset_inventory(output_dir)) == expected_asset_paths("1.1.0")
 
 
 @pytest.mark.parametrize("divergence", ["changed", "missing", "extra"])
@@ -522,10 +563,72 @@ def test_two_build_full_asset_determinism_rejects_inventory_drift(
 ) -> None:
     calls, builder = _fake_asset_builder(tmp_path, divergence=divergence)
     monkeypatch.setattr(build_release_assets, "build_release_assets", builder)
+    monkeypatch.setattr(
+        build_release_assets,
+        "load_contract",
+        lambda _contract_path, _repository: _contract("a" * 40),
+    )
 
     with pytest.raises(ReleaseAssetError):
-        verify_release_asset_determinism(tmp_path, tmp_path / "dist", "HEAD", "prepare")
+        verify_release_asset_determinism(
+            tmp_path,
+            tmp_path / "dist",
+            "HEAD",
+            "prepare",
+            contract=Path("release/contracts/future.json"),
+        )
     assert calls == [1, 2]
+
+
+def test_expected_asset_paths_are_derived_from_contract_version() -> None:
+    assert expected_asset_paths("1.0.0") == {
+        "SHA256SUMS",
+        "llm-estimate-lrs-v1.0.0.zip",
+        "notebooks/data_analysis.executed.ipynb",
+        "notebooks/supplementary_analyses.executed.ipynb",
+        "reference-tables-v1.0.0.zip",
+        "release-attestation.json",
+        "validation-report.json",
+    }
+    assert {
+        "llm-estimate-lrs-v1.1.0.zip",
+        "reference-tables-v1.1.0.zip",
+    } <= expected_asset_paths("1.1.0")
+
+
+@pytest.mark.parametrize(
+    "script_name",
+    ["build_release_assets.py", "generate_release_attestation.py"],
+)
+def test_release_asset_clis_require_explicit_ref(
+    tmp_path: Path,
+    script_name: str,
+) -> None:
+    script = ROOT / "scripts" / script_name
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            "--contract",
+            "release/contracts/v1.0.0.json",
+            "--output",
+            str(tmp_path / "output.json"),
+        ]
+        if script_name == "generate_release_attestation.py"
+        else [
+            sys.executable,
+            str(script),
+            "--contract",
+            "release/contracts/v1.0.0.json",
+        ],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 2
+    assert "--ref" in result.stderr
 
 
 def test_asset_checksum_inventory_covers_attestation_but_not_itself(tmp_path: Path) -> None:
@@ -618,12 +721,26 @@ def test_attestation_resolves_requested_ref_and_hashes_assets(tmp_path: Path) ->
     subprocess.run(["git", "commit", "-qm", "Initial release tree"], cwd=repository, check=True)
     (repository / "manifests/manuscript_run_v1.json").write_text('{"changed":true}\n', encoding="utf-8")
     (repository / "checksums/SHA256SUMS").write_text("changed\n", encoding="utf-8")
+    commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
 
     assets = tmp_path / "assets"
     assets.mkdir()
     asset = assets / "source.zip"
     asset.write_bytes(b"source")
-    output = generate_attestation(repository, "HEAD", [asset], assets / "attestation.json", asset_root=assets)
+    output = generate_attestation(
+        repository,
+        "HEAD",
+        [asset],
+        assets / "attestation.json",
+        contract=_contract(commit),
+        asset_root=assets,
+    )
     document = json.loads(output.read_text(encoding="utf-8"))
     assert (
         document["release_commit"]
@@ -632,6 +749,12 @@ def test_attestation_resolves_requested_ref_and_hashes_assets(tmp_path: Path) ->
         ).stdout.strip()
     )
     assert document["assets"] == [{"bytes": 6, "path": "source.zip", "sha256": sha256(asset)}]
+    assert document["schema_version"] == 2
+    assert document["release_version"] == "1.1.0"
+    assert document["release_ref"] == "v1.1.0"
+    assert document["release_date"] == "2026-07-27"
+    assert document["requested_ref"] == "HEAD"
+    assert document["article_doi"] == "10.1038/s41598-026-61766-2"
     assert document["manifest_sha256"] == hashlib.sha256(committed_manifest).hexdigest()
     assert document["repository_checksums_sha256"] == hashlib.sha256(committed_checksums).hexdigest()
 
@@ -648,6 +771,13 @@ def test_attestation_rejects_asset_symlink_and_atomically_replaces_output_symlin
     (repository / "checksums/SHA256SUMS").write_text("inventory\n", encoding="utf-8")
     subprocess.run(["git", "add", "."], cwd=repository, check=True)
     subprocess.run(["git", "commit", "-qm", "Initial release tree"], cwd=repository, check=True)
+    commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=repository,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
 
     assets = tmp_path / "assets"
     assets.mkdir()
@@ -656,7 +786,14 @@ def test_attestation_rejects_asset_symlink_and_atomically_replaces_output_symlin
     linked_asset = assets / "source.zip"
     linked_asset.symlink_to(outside_asset)
     with pytest.raises(ValueError, match="symbolic link"):
-        generate_attestation(repository, "HEAD", [linked_asset], assets / "attestation.json", asset_root=assets)
+        generate_attestation(
+            repository,
+            "HEAD",
+            [linked_asset],
+            assets / "attestation.json",
+            contract=_contract(commit),
+            asset_root=assets,
+        )
     assert outside_asset.read_bytes() == b"outside asset bytes"
 
     linked_asset.unlink()
@@ -664,7 +801,14 @@ def test_attestation_rejects_asset_symlink_and_atomically_replaces_output_symlin
     outside_output = tmp_path / "outside-attestation.json"
     output = assets / "attestation.json"
     output.symlink_to(outside_output)
-    generated = generate_attestation(repository, "HEAD", [linked_asset], output, asset_root=assets)
+    generated = generate_attestation(
+        repository,
+        "HEAD",
+        [linked_asset],
+        output,
+        contract=_contract(commit),
+        asset_root=assets,
+    )
     assert generated == output
     assert output.is_file() and not output.is_symlink()
     assert not outside_output.exists()

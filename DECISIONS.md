@@ -16,3 +16,8 @@ legal, or reproducibility approval.
 | `DEC-008` | Use hybrid output-manifest granularity: every accepted crosswalk analysis and concrete reference/threshold artifact, with material scalar claims in expected-value fields. | Current accepted-output registry design | File-only coverage or exhaustive cell-by-cell manuscript transcription | Provides machine coverage without inventing unsupported publication coordinates. | None; documentary only. | Maintainer-selected; independent review pending |
 | `DEC-009` | Point `PROJECT.yml` to the rights registry while keeping unresolved reuse decisions explicitly pending. | Existing reuse-boundary documentation | Treat the MIT code license as governing all data | The repository contains mixed-rights material. | None. | Human rights review pending |
 | `DEC-010` | Package only the existing public v1 artifacts in `v1.1.0`, with unchanged reuse warnings and no claim of new rights clearance. | Maintainer release instruction, 27 July 2026; rights registry | Omit the existing reproducibility assets or claim blanket clearance | Preserves the public reproducibility package while keeping mixed-rights boundaries explicit. | None; distribution scope is unchanged. | Maintainer-approved for v1.1 packaging; independent rights review remains pending |
+
+This decision is the release-specific maintainer authorization required by the
+`v1.1.0` plan to redistribute the unchanged existing public v1 artifacts in
+the seven approved release assets. It does not resolve the class-level pending
+rights entries or constitute independent rights certification.

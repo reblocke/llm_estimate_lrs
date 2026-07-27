@@ -34,6 +34,7 @@ if __package__:
         require_complete_local_objects,
         require_full_local_clone,
     )
+    from scripts.validate_contracts import ContractValidationError, load_contract
 else:
     from build_release_archive import (
         FIXED_ZIP_TIME,
@@ -50,6 +51,7 @@ else:
         require_complete_local_objects,
         require_full_local_clone,
     )
+    from validate_contracts import ContractValidationError, load_contract
 
 REFERENCE_MEMBERS = (
     "checksums/SHA256SUMS",
@@ -85,19 +87,25 @@ REFERENCE_MEMBERS = (
 NOTEBOOKS = ("data_analysis.ipynb", "supplementary_analyses.ipynb")
 WORKBOOKS = ("NNT_LRs_08-26-2025.xlsx", "nnt_lrs_with_estimated.xlsx")
 VERIFICATION_INPUTS = (*WORKBOOKS, *NOTEBOOKS)
-EXPECTED_ASSET_PATHS = {
-    "SHA256SUMS",
-    "llm-estimate-lrs-v1.0.0.zip",
-    "notebooks/data_analysis.executed.ipynb",
-    "notebooks/supplementary_analyses.executed.ipynb",
-    "reference-tables-v1.0.0.zip",
-    "release-attestation.json",
-    "validation-report.json",
-}
 
 
 class ReleaseAssetError(RuntimeError):
     """Raised when release assets cannot be built safely."""
+
+
+def expected_asset_paths(release_version: str) -> frozenset[str]:
+    """Return the exact contract-versioned release-asset path inventory."""
+    return frozenset(
+        {
+            "SHA256SUMS",
+            f"llm-estimate-lrs-v{release_version}.zip",
+            "notebooks/data_analysis.executed.ipynb",
+            "notebooks/supplementary_analyses.executed.ipynb",
+            f"reference-tables-v{release_version}.zip",
+            "release-attestation.json",
+            "validation-report.json",
+        }
+    )
 
 
 def sha256_file(path: Path) -> str:
@@ -386,7 +394,11 @@ def write_asset_checksums(output_dir: Path, output: Path) -> Path:
     return output
 
 
-def asset_inventory(output_dir: Path, *, require_expected_paths: bool = False) -> dict[str, str]:
+def asset_inventory(
+    output_dir: Path,
+    *,
+    expected_paths: frozenset[str] | set[str] | None = None,
+) -> dict[str, str]:
     """Return the exact relative-path/SHA-256 inventory for a complete asset directory."""
     output_dir = output_dir.resolve()
     inventory: dict[str, str] = {}
@@ -400,9 +412,9 @@ def asset_inventory(output_dir: Path, *, require_expected_paths: bool = False) -
         inventory[path.relative_to(output_dir).as_posix()] = sha256_file(path)
     if not inventory:
         raise ReleaseAssetError("Release asset inventory is empty")
-    if require_expected_paths and set(inventory) != EXPECTED_ASSET_PATHS:
-        missing = sorted(EXPECTED_ASSET_PATHS - set(inventory))
-        extra = sorted(set(inventory) - EXPECTED_ASSET_PATHS)
+    if expected_paths is not None and set(inventory) != set(expected_paths):
+        missing = sorted(set(expected_paths) - set(inventory))
+        extra = sorted(set(inventory) - set(expected_paths))
         raise ReleaseAssetError(f"Release asset path inventory differs: missing={missing}, extra={extra}")
     return inventory
 
@@ -461,6 +473,11 @@ def build_release_assets(
     contract: Path | None = None,
 ) -> dict[str, Path]:
     repository = repository.resolve()
+    if contract is None:
+        raise ReleaseAssetError("Release asset construction requires an explicit versioned contract")
+    contract_data = load_contract(contract, repository)
+    release_version = contract_data["release_version"]
+    expected_paths = expected_asset_paths(release_version)
     unresolved_output = _lexical_absolute(output_dir)
     expected_unresolved = repository / "dist"
     _reject_symlink_components(unresolved_output)
@@ -487,10 +504,14 @@ def build_release_assets(
     if require_clean_ref(repository, ref) != pinned_commit:
         raise ReleaseAssetError("Release ref or working tree changed during candidate validation")
 
-    source_archive = build_archive(repository, output_dir / "llm-estimate-lrs-v1.0.0.zip", pinned_commit)
+    source_archive = build_archive(
+        repository,
+        output_dir / f"llm-estimate-lrs-v{release_version}.zip",
+        pinned_commit,
+    )
     reference_archive = build_reference_archive(
         repository,
-        output_dir / "reference-tables-v1.0.0.zip",
+        output_dir / f"reference-tables-v{release_version}.zip",
         pinned_commit,
     )
     executed = execute_verification_notebooks(repository, output_dir / "notebooks", pinned_commit)
@@ -511,11 +532,12 @@ def build_release_assets(
         ref,
         pre_attestation,
         output_dir / "release-attestation.json",
+        contract=contract_data,
         asset_root=output_dir,
         expected_commit=pinned_commit,
     )
     asset_checksums = write_asset_checksums(output_dir, output_dir / "SHA256SUMS")
-    asset_inventory(output_dir, require_expected_paths=True)
+    asset_inventory(output_dir, expected_paths=expected_paths)
     if require_clean_ref(repository, ref) != pinned_commit:
         raise ReleaseAssetError("Release ref or working tree changed before asset construction completed")
     return {
@@ -537,10 +559,14 @@ def verify_release_asset_determinism(
     contract: Path | None = None,
 ) -> dict[str, Path]:
     """Build the complete asset set twice and require identical path/hash inventories."""
+    if contract is None:
+        raise ReleaseAssetError("Release asset determinism requires an explicit versioned contract")
+    contract_data = load_contract(contract, repository.resolve())
+    expected_paths = expected_asset_paths(contract_data["release_version"])
     first_assets = build_release_assets(repository, output_dir, ref, mode, contract=contract)
-    first_inventory = asset_inventory(output_dir, require_expected_paths=True)
+    first_inventory = asset_inventory(output_dir, expected_paths=expected_paths)
     second_assets = build_release_assets(repository, output_dir, ref, mode, contract=contract)
-    second_inventory = asset_inventory(output_dir, require_expected_paths=True)
+    second_inventory = asset_inventory(output_dir, expected_paths=expected_paths)
     if first_inventory != second_inventory:
         missing = sorted(first_inventory.keys() - second_inventory.keys())
         extra = sorted(second_inventory.keys() - first_inventory.keys())
@@ -562,7 +588,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repository", type=Path, default=Path("."))
     parser.add_argument("--output-dir", type=Path, default=Path("dist"))
-    parser.add_argument("--ref", default="HEAD")
+    parser.add_argument("--ref", required=True)
     parser.add_argument("--mode", choices=("prepare", "final"), default="prepare")
     parser.add_argument("--contract", required=True, type=Path)
     parser.add_argument(
@@ -584,7 +610,13 @@ def main() -> int:
             args.mode,
             contract=args.contract,
         )
-    except (OSError, ValueError, ReleaseAssetError, subprocess.CalledProcessError) as exc:
+    except (
+        OSError,
+        ValueError,
+        ContractValidationError,
+        ReleaseAssetError,
+        subprocess.CalledProcessError,
+    ) as exc:
         print(f"Release-asset build failed: {exc}", file=sys.stderr)
         return 1
     for name, path in sorted(assets.items()):

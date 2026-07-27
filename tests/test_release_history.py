@@ -13,12 +13,13 @@ from scripts.git_safety import no_lazy_fetch_environment
 from scripts.validate_contracts import ContractValidationError
 from scripts.validate_metadata import STAGE2_REQUIRED_PATHS, MetadataValidationError
 from scripts.validate_release import (
-    RELEASE_BRANCH,
+    FROZEN_V1_RELEASE_BRANCH,
     ReleaseValidationError,
     materialized_candidate,
     validate_candidate_checksums,
     validate_documentation,
     validate_final_history,
+    validate_governance_delta,
     validate_release_candidate,
     validate_required_paths,
     validate_tracked_file_types,
@@ -59,8 +60,25 @@ def _initialize_candidate_repository(path: Path) -> tuple[str, str]:
         capture_output=True,
         text=True,
     ).stdout.strip()
-    (path / "candidate.txt").write_text("governance B\n", encoding="utf-8")
-    subprocess.run(["git", "commit", "-qam", "Governance B"], cwd=path, check=True)
+    (path / "checksums").mkdir()
+    (path / "checksums/SHA256SUMS").write_text("candidate inventory\n", encoding="utf-8")
+    subprocess.run(["git", "add", "checksums/SHA256SUMS"], cwd=path, check=True)
+    subprocess.run(["git", "commit", "--amend", "--no-edit", "-q"], cwd=path, check=True)
+    candidate_a = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=path,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    (path / "governance-contract.json").write_text("{}\n", encoding="utf-8")
+    (path / "checksums/SHA256SUMS").write_text("governance inventory\n", encoding="utf-8")
+    subprocess.run(
+        ["git", "add", "governance-contract.json", "checksums/SHA256SUMS"],
+        cwd=path,
+        check=True,
+    )
+    subprocess.run(["git", "commit", "-qm", "Governance B"], cwd=path, check=True)
     governance_b = subprocess.run(
         ["git", "rev-parse", "HEAD"],
         cwd=path,
@@ -148,11 +166,16 @@ def test_final_history_rejects_lightweight_or_unreviewed_tag_annotation(tmp_path
 
 def test_final_history_rejects_multiple_commits_and_release_branch(tmp_path: Path) -> None:
     _initialize_release_repository(tmp_path)
-    subprocess.run(["git", "branch", RELEASE_BRANCH], cwd=tmp_path, check=True)
+    subprocess.run(["git", "branch", FROZEN_V1_RELEASE_BRANCH], cwd=tmp_path, check=True)
     with pytest.raises(ReleaseValidationError, match="Stale release reference remains"):
         validate_final_history(tmp_path, legacy_merge_base="f" * 40)
 
-    subprocess.run(["git", "branch", "-D", RELEASE_BRANCH], cwd=tmp_path, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "branch", "-D", FROZEN_V1_RELEASE_BRANCH],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+    )
     (tmp_path / "README.md").write_text("Second commit\n", encoding="utf-8")
     subprocess.run(["git", "commit", "-qam", "Update release tree"], cwd=tmp_path, check=True)
     with pytest.raises(ReleaseValidationError, match="exactly one root commit"):
@@ -337,6 +360,9 @@ def test_prepare_rejects_wrong_candidate_commit_and_contracted_tree(tmp_path: Pa
 
 def test_prepare_and_final_accept_the_same_release_ready_metadata() -> None:
     contract = json.loads((ROOT / "release/contracts/v1.0.0.json").read_text(encoding="utf-8"))
+    contract["release_version"] = "1.1.0"
+    contract["release_ref"] = "v1.1.0"
+    contract["release_date"] = "2026-07-27"
 
     validate_documentation("prepare", contract)
     validate_documentation("final", contract)
@@ -557,6 +583,27 @@ def test_release_cli_reports_metadata_validation_failure_without_traceback(
     assert "Traceback" not in captured.err
 
 
+def test_release_cli_requires_explicit_ref(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    monkeypatch.setattr(
+        release_validation,
+        "parse_args",
+        lambda: SimpleNamespace(
+            release=True,
+            data_only=False,
+            contract=Path("governance-contract.json"),
+            mode="prepare",
+            ref=None,
+        ),
+    )
+
+    assert release_validation.main() == 1
+    captured = capsys.readouterr()
+    assert "--release requires an explicit --ref" in captured.err
+
+
 @pytest.mark.parametrize(
     "mutation",
     ["default_branch", "release_tag", "unexpected_ref"],
@@ -635,6 +682,11 @@ def test_release_candidate_rechecks_contracted_refs_after_filesystem_validation(
         release_validation,
         "validate_release_contract",
         validate_initial_contract,
+    )
+    monkeypatch.setattr(
+        release_validation,
+        "validate_governance_delta",
+        lambda *_args, **_kwargs: "governance-test-commit",
     )
     monkeypatch.setattr(
         release_validation,
@@ -1067,6 +1119,80 @@ def test_release_make_targets_propagate_contract_and_ref() -> None:
         capture_output=True,
         text=True,
     ).stdout
-    assert "--contract release/contracts/future.json" in output
-    assert "--ref v2.0.0" in output
-    assert "--candidate-contract release/contracts/future.json" in output
+    assert '--contract "$RELEASE_CONTRACT"' in output
+    assert '--ref "$RELEASE_REF"' in output
+    assert '--candidate-contract "$RELEASE_CONTRACT"' in output
+
+
+def test_release_make_targets_have_no_implicit_contract_or_ref() -> None:
+    output = subprocess.run(
+        ["make", "-n", "release-archive"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    assert "RELEASE_CONTRACT is required" in output
+    assert "RELEASE_REF is required" in output
+
+
+def test_governance_delta_accepts_only_direct_contract_and_checksum_commit(
+    tmp_path: Path,
+) -> None:
+    candidate, governance = _initialize_candidate_repository(tmp_path)
+
+    assert (
+        validate_governance_delta(
+            tmp_path,
+            candidate,
+            Path("governance-contract.json"),
+        )
+        == governance
+    )
+
+
+@pytest.mark.parametrize("mutation", ["extra_path", "second_commit"])
+def test_governance_delta_rejects_expanded_or_non_direct_changes(
+    tmp_path: Path,
+    mutation: str,
+) -> None:
+    candidate, _governance = _initialize_candidate_repository(tmp_path)
+    if mutation == "extra_path":
+        subprocess.run(["git", "reset", "--soft", "HEAD^"], cwd=tmp_path, check=True)
+        (tmp_path / "validator.py").write_text("print('changed')\n", encoding="utf-8")
+        subprocess.run(["git", "add", "validator.py"], cwd=tmp_path, check=True)
+        subprocess.run(["git", "commit", "-qm", "Expanded governance"], cwd=tmp_path, check=True)
+        expected = "change exactly"
+    else:
+        (tmp_path / "checksums/SHA256SUMS").write_text(
+            "second governance inventory\n",
+            encoding="utf-8",
+        )
+        subprocess.run(["git", "commit", "-qam", "Second governance"], cwd=tmp_path, check=True)
+        expected = "direct single-parent child"
+
+    with pytest.raises(ReleaseValidationError, match=expected):
+        validate_governance_delta(
+            tmp_path,
+            candidate,
+            Path("governance-contract.json"),
+        )
+
+
+def test_release_workflow_routes_dispatch_values_through_environment() -> None:
+    workflow = (ROOT / ".github/workflows/release-check.yml").read_text(encoding="utf-8")
+
+    assert 'RELEASE_CONTRACT: ${{ inputs.release_contract }}' in workflow
+    assert 'RELEASE_REF: ${{ inputs.candidate_ref }}' in workflow
+    assert 'RELEASE_CONTRACT="${{ inputs.release_contract }}"' not in workflow
+    assert 'RELEASE_REF="${{ inputs.candidate_ref }}"' not in workflow
+    assert 'run: make release-check' in workflow
+
+
+def test_release_make_recipes_do_not_interpolate_untrusted_values() -> None:
+    makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
+
+    assert "$(RELEASE_CONTRACT)" not in makefile
+    assert "$(RELEASE_REF)" not in makefile
+    assert '"$$RELEASE_CONTRACT"' in makefile
+    assert '"$$RELEASE_REF"' in makefile
