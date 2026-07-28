@@ -87,6 +87,10 @@ def _clone_v1_repository(tmp_path: Path) -> Path:
         ["git", "clone", "-q", "--no-hardlinks", str(ROOT), str(repository)],
         check=True,
     )
+    tags = _git(repository, "tag", "--list").splitlines()
+    for tag in tags:
+        if tag != "v1.0.0":
+            subprocess.run(["git", "tag", "-d", tag], cwd=repository, check=True)
     current_branch = subprocess.run(
         ["git", "symbolic-ref", "--quiet", "--short", "HEAD"],
         cwd=repository,
