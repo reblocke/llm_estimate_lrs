@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -169,18 +170,38 @@ def _future_prepare_repository(tmp_path: Path) -> tuple[Path, Path, str]:
 
 
 def test_repository_contracts_validate_against_v1_git_objects() -> None:
-    summary = validate_all_contracts(ROOT)
+    candidate_contract = os.environ.get("RELEASE_CONTRACT") or None
+    summary = validate_all_contracts(
+        ROOT,
+        candidate_contract=candidate_contract,
+    )
 
     assert summary["project"] == "llm-estimate-lrs"
     assert summary["agents"]["required_headings"] == 9
     assert summary["agents"]["required_commands"] == 8
-    assert summary["releases"] == [
+    expected_releases = [
         {
             "release_ref": "v1.0.0",
             "audited_commit": "a6824fc712e6d5c7c58edde495c239629356ae35",
             "protected_artifacts": 39,
         }
     ]
+    successor_contract = ROOT / "release/contracts/v1.1.0.json"
+    if successor_contract.is_file():
+        successor = load_release_contract(
+            successor_contract,
+            schema_path=CONTRACT_SCHEMA,
+        )
+        expected_successor = {
+            "release_ref": successor["release_ref"],
+            "audited_commit": successor["audited_commit"],
+            "protected_artifacts": len(successor["protected_artifacts"]),
+        }
+        if candidate_contract is not None:
+            expected_successor["validation_context"] = "candidate_deferred"
+        expected_releases.append(expected_successor)
+
+    assert summary["releases"] == expected_releases
 
 
 def test_v1_protected_inventory_and_origins_are_exact() -> None:
