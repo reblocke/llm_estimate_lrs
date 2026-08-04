@@ -5,7 +5,7 @@
 [![Offline checks](https://github.com/reblocke/llm_estimate_lrs/actions/workflows/ci.yml/badge.svg)](https://github.com/reblocke/llm_estimate_lrs/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/Code%20license-MIT-yellow.svg)](LICENSE)
 
-> Code and frozen research artifacts supporting the *Scientific Reports* article on large-language-model estimates of diagnostic likelihood ratios.
+> Code and frozen research artifacts supporting the *Scientific Reports* article: an overview of large-language-model estimates of diagnostic likelihood ratios.
 
 > **Release status:** [`v1.0.0`](https://github.com/reblocke/llm_estimate_lrs/releases/tag/v1.0.0) is the immutable accepted-paper snapshot. [`v1.1.0`](https://github.com/reblocke/llm_estimate_lrs/releases/tag/v1.1.0) is the current maintenance release; it changes documentation, metadata, and reproducibility tooling without changing any accepted input, output, analysis, figure, or conclusion.
 
