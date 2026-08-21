@@ -20,6 +20,17 @@ def test_dev_dependencies_use_dependency_groups() -> None:
     assert "dev-dependencies" not in project.get("tool", {}).get("uv", {})
 
 
+def test_jiter_security_floor_is_declared_and_locked() -> None:
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
+    assert "jiter>=0.16.0,<1" in project["tool"]["uv"]["constraint-dependencies"]
+
+    lock = tomllib.loads((ROOT / "uv.lock").read_text(encoding="utf-8"))
+    versions = [package["version"] for package in lock["package"] if package["name"] == "jiter"]
+    assert len(versions) == 1
+    release = tuple(int(part) for part in versions[0].split("."))
+    assert (0, 16, 0) <= release < (1, 0, 0)
+
+
 def test_cff_validator_uses_a_separately_locked_python_311_environment() -> None:
     tool_root = ROOT / "tools/cff"
     tool = tomllib.loads((tool_root / "pyproject.toml").read_text(encoding="utf-8"))
