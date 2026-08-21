@@ -4,6 +4,16 @@ All notable changes to this repository are documented here.
 
 ## [Unreleased]
 
+### Security
+
+- Raised the locked jiter security floor to 0.16.0 while retaining OpenAI
+  1.102.0 and Pydantic 2.11.7.
+
+### Scientific results
+
+- No accepted-paper input, prompt, model output, analysis, statistic, figure,
+  or conclusion changed.
+
 ## [1.1.0] - 2026-07-27
 
 ### Added

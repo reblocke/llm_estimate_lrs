@@ -45,6 +45,11 @@ dev = [
   "pyyaml>=6.0",
 ]
 
+[tool.uv]
+constraint-dependencies = [
+  "jiter>=0.16.0,<1",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra --disable-socket"
